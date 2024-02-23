@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SportsAuthorityAccount extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -19,22 +21,23 @@ class SportsAuthorityAccount extends StatelessWidget {
             Color.fromARGB(255, 3, 201, 227),
             Color.fromARGB(255, 2, 155, 175)
           ])),
-          child: Padding(padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 80),
-              const Text(
-                'Sports Authority',
-                style: TextStyle(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 80),
+                const Text(
+                  'Sports Authority',
+                  style: TextStyle(
                       fontSize: 30,
                       //fontFamily: 'NovaSquare',
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                       // color: Color.fromARGB(255, 78, 66, 66),
                       ),
-              ),
-              const SizedBox(
+                ),
+                const SizedBox(
                   height: 80,
                 ),
                 Container(
@@ -112,8 +115,10 @@ class SportsAuthorityAccount extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(20.0)))),
                       ),
                       const SizedBox(height: 40.0),
-                      ElevatedButton(onPressed: () {
-                        String name = nameController.text;
+                      ElevatedButton(
+                        onPressed: () async {
+                          final supabase = Supabase.instance.client;
+                          String name = nameController.text;
                           String email = emailController.text;
                           String password = passwordController.text;
                           String phone = phoneController.text;
@@ -137,11 +142,30 @@ class SportsAuthorityAccount extends StatelessWidget {
                                 duration: Duration(seconds: 3),
                               ));
                               return;
+                            } else {
+                              final AuthResponse res = await supabase.auth
+                                  .signUp(email: email, password: password);
+
+                              final Map<String, dynamic> userDetails = {
+                                'user_id': res.user!.id,
+                                'name': name,
+                                'phone': phone
+                              };
+                              await supabase
+                                  .from('profile')
+                                  .upsert([userDetails]);
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text('Account Created Successfully.'),
+                                duration: Duration(seconds: 3),
+                              ));
                             }
                           }
-                          Navigator.pushNamed(context, '/sports_authority_login');
-                      },
-                      style: ElevatedButton.styleFrom(
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(
+                              context, '/sports_authority_login');
+                        },
+                        style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 99, 172, 172),
                           padding: const EdgeInsets.symmetric(
@@ -149,7 +173,7 @@ class SportsAuthorityAccount extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                         ),
-                      child: const Text(
+                        child: const Text(
                           'Create Account',
                           style: TextStyle(
                             // color: Colors.black,
@@ -159,12 +183,12 @@ class SportsAuthorityAccount extends StatelessWidget {
                             // fontFamily: 'RobotoSlab',
                           ),
                         ),
-                    )
+                      )
                     ],
                   ),
                 ),
-            ],
-          ),
+              ],
+            ),
           ),
         ),
       ),

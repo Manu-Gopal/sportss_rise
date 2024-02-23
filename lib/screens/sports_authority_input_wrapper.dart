@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SportsAuthorityInputWrapper extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -65,7 +66,8 @@ class SportsAuthorityInputWrapper extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              final supabase = Supabase.instance.client;
               String email = emailController.text;
               String password = passwordController.text;
 
@@ -74,6 +76,23 @@ class SportsAuthorityInputWrapper extends StatelessWidget {
                   content: Text('Fill the details.'),
                   duration: Duration(seconds: 2),
                 ));
+                return;
+              }
+              try{
+                await supabase.auth.signInWithPassword(
+                  email: email,
+                  password: password
+                );
+                // ignore: use_build_context_synchronously
+                Navigator.pushNamedAndRemoveUntil(context, '/sports_authority_home', (route) => false);
+              } catch(e){
+                // ignore: use_build_context_synchronously
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Invalid Entry.'),
+                    duration: Duration(seconds: 3),
+                  )
+                );
                 return;
               }
             },
