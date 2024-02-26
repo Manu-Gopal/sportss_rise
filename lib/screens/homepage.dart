@@ -198,7 +198,7 @@ class HomePage extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/sports_authority_login');
+                      // Navigator.pushNamed(context, '/sports_authority_login');
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -230,7 +230,7 @@ class HomePage extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                       onPressed: () {
-                        // Navigator.pushNamed(context, '/athlete_login');
+                        Navigator.pushNamed(context, '/athlete_login');
                       },
                       style: ButtonStyle(
                         backgroundColor:

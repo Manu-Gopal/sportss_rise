@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SportsAuthorityHome extends StatelessWidget {
-  const SportsAuthorityHome({super.key});
+class AthleteHome extends StatelessWidget {
+  const AthleteHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class SportsAuthorityHome extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text('Sports Authority Home', style: TextStyle(fontSize: 30),)
+            Text('Athlete HomePage', style: TextStyle(fontSize: 30),)
           ],
         )
       ),

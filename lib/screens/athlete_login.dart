@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'header.dart';
-import 'sports_authority_input_wrapper.dart';
+import 'athlete_input_wrapper.dart';
 
-class SportsAuthorityLogin extends StatelessWidget {
-  const SportsAuthorityLogin({super.key});
+class AthleteLogin extends StatelessWidget {
+  const AthleteLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class SportsAuthorityLogin extends StatelessWidget {
                     )
                   ),
 
-                  child: SportsAuthorityInputWrapper(),
+                  child: AthleteInputWrapper(),
                 ),
               )
             ],

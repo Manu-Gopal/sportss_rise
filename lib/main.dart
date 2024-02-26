@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:sportss_rise/screens/athlete_account.dart';
-// import 'package:sportss_rise/screens/athlete_login.dart';
 import 'package:sportss_rise/screens/homepage.dart';
-import 'package:sportss_rise/screens/sports_authority_account.dart';
-import 'package:sportss_rise/screens/sports_authority_home.dart';
-import 'package:sportss_rise/screens/sports_authority_login.dart';
+import 'package:sportss_rise/screens/athlete_account.dart';
+import 'package:sportss_rise/screens/athlete_home.dart';
+import 'package:sportss_rise/screens/athlete_login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,11 +27,9 @@ class SportsRise extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => const HomePage(),
-        '/sports_authority_login' :(context) => const SportsAuthorityLogin(),
-        // '/athlete_login' :(context) => const AthleteLogin(),
-        '/sports_authority_account' :(context) => SportsAuthorityAccount(),
-        // '/athlete_account' :(context) => AthleteAccount(),
-        '/sports_authority_home' :(context) => const SportsAuthorityHome(),
+        '/athlete_login' :(context) => const AthleteLogin(),
+        '/athlete_account' :(context) => AthleteAccount(),
+        '/athlete_home' :(context) => const AthleteHome(),
       },
     );
   }

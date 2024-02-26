@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SportsAuthorityAccount extends StatelessWidget {
+class AthleteAccount extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  SportsAuthorityAccount({super.key});
+  AthleteAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SportsAuthorityAccount extends StatelessWidget {
               children: [
                 const SizedBox(height: 80),
                 const Text(
-                  'Sports Authority',
+                  'Athlete',
                   style: TextStyle(
                       fontSize: 30,
                       //fontFamily: 'NovaSquare',
@@ -163,7 +163,7 @@ class SportsAuthorityAccount extends StatelessWidget {
                           }
                           // ignore: use_build_context_synchronously
                           Navigator.pushNamed(
-                              context, '/sports_authority_login');
+                              context, '/athlete_login');
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
