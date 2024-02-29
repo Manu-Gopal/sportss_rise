@@ -5,14 +5,28 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(20),
+    return  Padding(
+      padding: const EdgeInsets.all(20),
       
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 110),
-          Center(
+          const SizedBox(height: 30),
+          Align(
+            alignment: Alignment.center, // Positions the image to the right
+            child: Image.asset(
+              'images/sai_logo.png',
+              height: 100,
+              width: 100,
+            ),
+          ),
+          // Image.asset(
+          //   'images/sai_logo.png',
+          //   height: 100,
+          //   width: 100,
+          // ),
+          const SizedBox(height: 5),
+          const Center(
             child: Text('Login',
             style: TextStyle(
               color: Colors.white,
@@ -21,8 +35,8 @@ class Header extends StatelessWidget {
               fontSize: 40
             ),),
           ),
-          SizedBox(height: 10,),
-          Center(
+          const SizedBox(height: 10,),
+          const Center(
             child: Text("Welcome...!",
             style: TextStyle(
               color: Colors.white,

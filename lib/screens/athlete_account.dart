@@ -26,22 +26,31 @@ class AthleteAccount extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 80),
+                const SizedBox(height: 30),
+                Align(
+                  alignment: Alignment.center, // Positions the image to the right
+                  child: Image.asset(
+                    'images/sai_logo.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                const SizedBox(height: 5),
                 const Text(
                   'Athlete',
                   style: TextStyle(
                       fontSize: 30,
                       //fontFamily: 'NovaSquare',
                       fontWeight: FontWeight.bold,
-                      color: Colors.white
+                      color: Colors.black
                       // color: Color.fromARGB(255, 78, 66, 66),
                       ),
                 ),
                 const SizedBox(
-                  height: 80,
+                  height: 60,
                 ),
                 Container(
-                  height: 470, // Set the desired height for the container
+                  height: 460, // Set the desired height for the container
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors
