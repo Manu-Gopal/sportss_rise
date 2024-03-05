@@ -84,7 +84,7 @@ class AthleteInputWrapper extends StatelessWidget {
                   password: password
                 );
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamedAndRemoveUntil(context, '/athlete_home', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(context, '/athlete_main', (route) => false);
               } catch(e){
                 // ignore: use_build_context_synchronously
                 ScaffoldMessenger.of(context).showSnackBar(
