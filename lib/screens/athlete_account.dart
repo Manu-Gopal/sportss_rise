@@ -1,13 +1,30 @@
-import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:io';
 
-class AthleteAccount extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+
+class AthleteAccount extends StatefulWidget {
+  const AthleteAccount({Key? key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _AthleteAccountState createState() => _AthleteAccountState();
+}
+
+class _AthleteAccountState extends State<AthleteAccount> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  AthleteAccount({super.key});
+  final TextEditingController dateOfBirthController = TextEditingController();
+
+  final ImagePicker imagePicker = ImagePicker();
+  dynamic imageFile;
+  bool image = false;
+
+  bool _obscureText = true; // State variable to control password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +33,15 @@ class AthleteAccount extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Color.fromARGB(255, 3, 144, 163),
-            Color.fromARGB(255, 3, 201, 227),
-            Color.fromARGB(255, 2, 155, 175)
-          ])),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              colors: [
+                Color.fromARGB(255, 3, 144, 163),
+                Color.fromARGB(255, 3, 201, 227),
+                Color.fromARGB(255, 2, 155, 175),
+              ],
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -28,7 +49,7 @@ class AthleteAccount extends StatelessWidget {
               children: [
                 const SizedBox(height: 30),
                 Align(
-                  alignment: Alignment.center, // Positions the image to the right
+                  alignment: Alignment.center,
                   child: Image.asset(
                     'images/sai_logo.png',
                     height: 100,
@@ -39,157 +60,220 @@ class AthleteAccount extends StatelessWidget {
                 const Text(
                   'Athlete',
                   style: TextStyle(
-                      fontSize: 30,
-                      //fontFamily: 'NovaSquare',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                      // color: Color.fromARGB(255, 78, 66, 66),
-                      ),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-                const SizedBox(
-                  height: 60,
-                ),
+                const SizedBox(height: 60),
                 Container(
-                  height: 460, // Set the desired height for the container
+                  height: 800, // Set the desired height for the container
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors
-                        .white, // Set the background color for the container
+                    color: Colors.white, // Set the background color for the container
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     children: [
+                      const SizedBox(height: 15.0),
                       TextFormField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                            hintText: 'Name',
-                            labelText: 'Name',
-                            prefixIcon: Icon(
-                              Icons.person,
+                          hintText: 'Name',
+                          labelText: 'Name',
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Color.fromARGB(255, 78, 66, 66),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextField(
+                            controller: dateOfBirthController,
+                            onTap: () async {
+                              DateTime? picked = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime(1950),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime.now());
+                                dateOfBirthController.text=DateFormat('yyyy-MM-dd').format(picked!);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Date of Birth',
+                              hintText: 'yyyy-mm-dd',
+                              prefixIcon: const Icon(
+                              Icons.calendar_month,
                               color: Color.fromARGB(255, 78, 66, 66),
                             ),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)))),
+                              // contentPadding: EdgeInsets.all(12.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 20.0),
                       TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Email',
-                            prefixIcon: Icon(
-                              Icons.mail,
-                              color: Color.fromARGB(255, 78, 66, 66),
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)))),
+                          hintText: 'Email',
+                          labelText: 'Email',
+                          prefixIcon: Icon(
+                            Icons.mail,
+                            color: Color.fromARGB(255, 78, 66, 66),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 20.0),
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                            hintText: 'Password',
-                            labelText: 'Password',
-                            prefixIcon: Icon(
-                              Icons.key,
-                              color: Color.fromARGB(255, 78, 66, 66),
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          labelText: 'Password',
+                          prefixIcon: const Icon(
+                            Icons.lock,
+                            color: Color.fromARGB(255, 78, 66, 66),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText ? Icons.visibility_off : Icons.visibility,
+                              color: const Color.fromARGB(255, 78, 66, 66),
                             ),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)))),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 20.0),
                       TextFormField(
                         controller: phoneController,
                         keyboardType: TextInputType.number,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   FilteringTextInputFormatter.digitsOnly
-                        // ],
                         decoration: const InputDecoration(
-                            hintText: 'Phone No',
-                            labelText: 'Phone No',
-                            prefixIcon: Icon(
-                              Icons.phone,
-                              color: Color.fromARGB(255, 78, 66, 66),
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)))),
+                          hintText: 'Phone No',
+                          labelText: 'Phone No',
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: Color.fromARGB(255, 78, 66, 66),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 40.0),
+                      const SizedBox(height: 20.0),
+                      if (imageFile != null)
+                        Image.file(
+                          File(imageFile!.path),
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            uploadImage();
+                          },
+                          
+                          child: const Text("Upload Profile Image")),
+
+                      const SizedBox(height: 35.0),
                       ElevatedButton(
                         onPressed: () async {
                           final supabase = Supabase.instance.client;
                           String name = nameController.text;
+                          String dob = dateOfBirthController.text;
                           String email = emailController.text;
                           String password = passwordController.text;
                           String phone = phoneController.text;
 
                           if (name.isEmpty ||
+                              dob.isEmpty ||
                               email.isEmpty ||
                               password.isEmpty ||
                               phone.isEmpty) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text('Please fill all details.'),
                               duration: Duration(seconds: 3),
                             ));
                             return;
                           } else {
                             if (phone.length != 10) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content:
-                                    Text('Phone number should be 10 digits.'),
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Phone number should be 10 digits.'),
                                 duration: Duration(seconds: 3),
                               ));
                               return;
                             } else {
-                              final AuthResponse res = await supabase.auth
-                                  .signUp(email: email, password: password);
+                              final AuthResponse res = await supabase.auth.signUp(email: email, password: password);
+                              if (imageFile != null) {
+                              image = true;
+                            }
 
                               final Map<String, dynamic> userDetails = {
                                 'user_id': res.user!.id,
                                 'name': name,
-                                'phone': phone
+                                'phone': phone,
+                                'dob': dob,
+                                'image': image
                               };
-                              await supabase
-                                  .from('profile')
-                                  .upsert([userDetails]);
+
+                              final response = await supabase.from('profile').upsert([userDetails]);
+
+                              if (imageFile != null) {
+                              await Supabase.instance.client.storage
+                                  .from('images')
+                                  .upload(
+                                    'item_images/${response[0]['id']}',
+                                    imageFile,
+                                    fileOptions: const FileOptions(
+                                        cacheControl: '3600', upsert: false),
+                                  );
+                            }
+
                               // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(content: Text('Account Created Successfully.'),
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Account Created Successfully.'),
                                 duration: Duration(seconds: 3),
                               ));
                             }
                           }
                           // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(
-                              context, '/athlete_login');
+                          Navigator.pushNamed(context, '/athlete_login');
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 99, 172, 172),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 65, vertical: 17),
+                          backgroundColor: const Color.fromARGB(255, 99, 172, 172),
+                          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 17),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                         child: const Text(
                           'Create Account',
                           style: TextStyle(
-                            // color: Colors.black,
                             color: Colors.white,
                             fontSize: 23.0,
-                            //fontFamily: 'NovaSquare',
-                            // fontFamily: 'RobotoSlab',
                           ),
                         ),
                       )
@@ -202,5 +286,16 @@ class AthleteAccount extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future uploadImage() async {
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      final imagePath = pickedImage.path;
+      setState(() {
+        imageFile = File(imagePath);
+      });
+    }
   }
 }

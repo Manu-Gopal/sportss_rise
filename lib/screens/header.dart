@@ -20,11 +20,6 @@ class Header extends StatelessWidget {
               width: 100,
             ),
           ),
-          // Image.asset(
-          //   'images/sai_logo.png',
-          //   height: 100,
-          //   width: 100,
-          // ),
           const SizedBox(height: 5),
           const Center(
             child: Text('Login',

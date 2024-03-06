@@ -38,7 +38,7 @@ class AthleteLogin extends StatelessWidget {
                     )
                   ),
 
-                  child: AthleteInputWrapper(),
+                  child: const AthleteInputWrapper(),
                 ),
               )
             ],

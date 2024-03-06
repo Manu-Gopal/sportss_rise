@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AthleteInputWrapper extends StatelessWidget {
+class AthleteInputWrapper extends StatefulWidget {
+  const AthleteInputWrapper({Key? key}) : super(key: key);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _AthleteInputWrapperState createState() => _AthleteInputWrapperState();
+}
+
+class _AthleteInputWrapperState extends State<AthleteInputWrapper> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  AthleteInputWrapper({super.key});
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,7 @@ class AthleteInputWrapper extends StatelessWidget {
                         labelText: 'Email',
                         prefixIcon: const Icon(
                           Icons.email,
-                          color: Colors.lightBlue,
+                          color: Color.fromARGB(255, 78, 66, 66),
                         ),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.red),
@@ -47,14 +55,27 @@ class AthleteInputWrapper extends StatelessWidget {
                               ))),
                   child: TextFormField(
                     controller: passwordController,
-                    obscureText: true,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
                         hintText: 'Password',
                         labelText: 'Password',
                         prefixIcon: const Icon(
-                          Icons.key,
-                          color: Colors.lightBlue,
+                          Icons.lock,
+                          color: Color.fromARGB(255, 78, 66, 66),
                         ),
+                        suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: const Color.fromARGB(255, 78, 66, 66),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
                         border: OutlineInputBorder(
                           borderSide: const BorderSide(color: Colors.red),
                           borderRadius: BorderRadius.circular(20.0),
@@ -78,21 +99,18 @@ class AthleteInputWrapper extends StatelessWidget {
                 ));
                 return;
               }
-              try{
+              try {
                 await supabase.auth.signInWithPassword(
-                  email: email,
-                  password: password
-                );
+                    email: email, password: password);
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamedAndRemoveUntil(context, '/athlete_main', (route) => false);
-              } catch(e){
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/athlete_main', (route) => false);
+              } catch (e) {
                 // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Invalid Entry.'),
-                    duration: Duration(seconds: 3),
-                  )
-                );
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Invalid Entry.'),
+                  duration: Duration(seconds: 3),
+                ));
                 return;
               }
             },
@@ -106,10 +124,8 @@ class AthleteInputWrapper extends StatelessWidget {
             child: const Text(
               'Sign In',
               style: TextStyle(
-                // color: Colors.black,
                 color: Colors.white,
                 fontSize: 20.0,
-                //fontFamily: 'NovaSquare',
               ),
             ),
           ),
@@ -124,7 +140,6 @@ class AthleteInputWrapper extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
-                  //fontFamily: 'NovaSquare',
                   color: Colors.black,
                 ),
               ),
@@ -137,7 +152,6 @@ class AthleteInputWrapper extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    //fontFamily: 'NovaSquare',
                     color: Colors.blue,
                     decoration: TextDecoration.underline,
                   ),

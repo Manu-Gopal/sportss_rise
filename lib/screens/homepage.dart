@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Sports Authority',
+                      'Coaches',
                       style: TextStyle(
                           fontSize: 20,
                           //fontFamily: 'NovaSquare',

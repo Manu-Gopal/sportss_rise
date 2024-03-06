@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportss_rise/screens/athlete_edit_profile.dart';
 import 'package:sportss_rise/screens/athlete_football.dart';
 import 'package:sportss_rise/screens/athlete_main.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
@@ -32,12 +33,14 @@ class SportsRise extends StatelessWidget {
       routes: {
         '/' : (context) => const HomePage(),
         '/athlete_login' :(context) => const AthleteLogin(),
-        '/athlete_account' :(context) => AthleteAccount(),
+        '/athlete_account' :(context) => const AthleteAccount(),
         '/athlete_main' :(context) => const AthleteMain(),
         '/athlete_profile' :(context) => const AthleteProfile(),
+        // '/athlete_edit_profile' :(context) => const AthleteEditProfile(),
         '/athlete_home' :(context) => const AthleteHome(),
         '/athlete_network' :(context) => const AthleteNetwork(),
         '/athlete_football':(context) => const AthleteFootball(),
+
       },
     );
   }
