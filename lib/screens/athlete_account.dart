@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,9 +19,14 @@ class _AthleteAccountState extends State<AthleteAccount> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
+  final userId = Supabase.instance.client.auth.currentUser!.id;
+
+  // final id = await Supabase.instance.client.from('profile').select().eq('user_id', userId);
+
   final ImagePicker imagePicker = ImagePicker();
   dynamic imageFile;
   bool image = false;
+  dynamic imageUrl;
 
   bool _obscureText = true; // State variable to control password visibility
 
@@ -101,7 +105,7 @@ class _AthleteAccountState extends State<AthleteAccount> {
                             onTap: () async {
                               DateTime? picked = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime(1950),
+                                initialDate: DateTime(2000),
                                 firstDate: DateTime(1950),
                                 lastDate: DateTime.now());
                                 dateOfBirthController.text=DateFormat('yyyy-MM-dd').format(picked!);
@@ -239,7 +243,10 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 'image': image
                               };
 
-                              final response = await supabase.from('profile').upsert([userDetails]);
+                              final response = await supabase
+                                  .from('profile')
+                                  .insert(userDetails)
+                                  .select();
 
                               if (imageFile != null) {
                               await Supabase.instance.client.storage

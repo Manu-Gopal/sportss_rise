@@ -19,8 +19,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  // Add a variable to store the profile picture URL (if available)
-  String profilePictureUrl = "";
+  dynamic imageUrl;
 
   @override
   void initState() {
@@ -32,16 +31,24 @@ class _AthleteProfileState extends State<AthleteProfile> {
     setState(() {
       isLoading = true;
     });
+
     athlete_profile =
         await supabase.from('profile').select().match({'user_id': uId});
+    final id = athlete_profile[0]['id'];
+
     nameController.text = athlete_profile[0]['name'];
     phoneController.text = athlete_profile[0]['phone'];
-
     emailController.text = supabase.auth.currentUser!.email!;
 
-    // Check for profile picture URL in the retrieved data
-    if (athlete_profile[0].containsKey('profile_picture')) {
-      profilePictureUrl = athlete_profile[0]['profile_picture'];
+    if(athlete_profile[0]['image'] == true){
+      final String publicUrl = Supabase.instance.client
+          .storage
+          .from('images')
+          .getPublicUrl('item_images/$id');
+
+          setState(() {
+          imageUrl = publicUrl;
+        });
     }
 
     setState(() {
@@ -88,19 +95,18 @@ class _AthleteProfileState extends State<AthleteProfile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Profile picture (if available)
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: profilePictureUrl.isNotEmpty
-                  ? CircleAvatar(
-                      backgroundImage: NetworkImage(profilePictureUrl),
-                      radius: 50.0,
-                    )
-                  : const CircleAvatar(
-                      radius: 50.0,
-                      child: Icon(Icons.person, size: 40.0, color: Colors.grey),
-                    ),
-            ),
+              child: imageUrl != null
+                ? CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: NetworkImage(imageUrl),
+                )
+              : const CircleAvatar(
+                radius: 50.0,
+                child: Icon(Icons.person, size: 40.0, color: Colors.grey),
+              )
+            )
           ],
         ),
       const SizedBox(height: 15),
@@ -128,7 +134,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                 backgroundColor: MaterialStateProperty.all(Colors.grey),
               ),
               onPressed: () async {
-                Navigator.pushNamed(context, '/athlete_edit_profile');
+                Navigator.pushNamed(context, '/athlete_edit_profile1');
               },
               child: const Padding(
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
