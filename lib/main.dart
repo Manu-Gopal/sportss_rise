@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-// import 'package:sportss_rise/screens/athlete_edit_profile.dart';
-// import 'package:sportss_rise/screens/athlete_edit_profile1.dart';
+import 'package:sportss_rise/screens/athlete_badminton.dart';
+import 'package:sportss_rise/screens/athlete_basketball.dart';
+import 'package:sportss_rise/screens/athlete_cricket.dart';
+import 'package:sportss_rise/screens/athlete_edit_profile.dart';
 import 'package:sportss_rise/screens/athlete_football.dart';
 import 'package:sportss_rise/screens/athlete_main.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
 import 'package:sportss_rise/screens/athlete_profile.dart';
+import 'package:sportss_rise/screens/athlete_swimming.dart';
+import 'package:sportss_rise/screens/athlete_volleyball.dart';
 import 'package:sportss_rise/screens/homepage.dart';
 import 'package:sportss_rise/screens/athlete_account.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
@@ -37,12 +41,15 @@ class SportsRise extends StatelessWidget {
         '/athlete_account' :(context) => const AthleteAccount(),
         '/athlete_main' :(context) => const AthleteMain(),
         '/athlete_profile' :(context) => const AthleteProfile(),
-        // '/athlete_edit_profile' :(context) => const AthleteEditProfile(),
-        // '/athlete_edit_profile1' :(context) => const AthleteEditProfile1(),
+        '/athlete_edit_profile' :(context) => const AthleteEditProfile(),
         '/athlete_home' :(context) => const AthleteHome(),
         '/athlete_network' :(context) => const AthleteNetwork(),
         '/athlete_football':(context) => const AthleteFootball(),
-
+        '/athlete_cricket':(context) => const AthleteCricket(),
+        'athlete_badminton':(context) => const AthleteBadminton(),
+        '/athlete_basketball':(context) => const AthleteBasketball(),
+        '/athlete_swimming':(context) => const AthleteSwimming(),
+        '/athlete_volleyball':(context) => const AthleteVolleyball(),
       },
     );
   }

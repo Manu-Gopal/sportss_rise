@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:sportss_rise/screens/athlete_main.dart';
 
 class AthleteHome extends StatelessWidget {
   const AthleteHome({super.key});
@@ -34,49 +33,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/cricket_2.jpg'), // Replace with your image path
+                            'images/cricket_2.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Cricket',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust text color for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality (optional)
                         Positioned.fill(
-                          // Fills the entire container
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle cricket tap
+                                Navigator.pushNamed(
+                              context, '/athlete_cricket');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),
@@ -88,51 +81,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/football_2.jpg'), // Replace with your image path
+                            'images/football_2.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Football',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality
                         Positioned.fill(
-                          // Fills the entire container for clicks
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle football tap (implement your desired action)
                                 Navigator.pushNamed(
                               context, '/athlete_football');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),
@@ -144,49 +129,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/badminton_4.jpg'), // Replace with your image path
+                            'images/badminton_4.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Badminton',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality
                         Positioned.fill(
-                          // Fills the entire container for clicks
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle badminton tap (implement your desired action)
+                                Navigator.pushNamed(
+                              context, '/athlete_badminton');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),
@@ -198,49 +177,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/basketball_5.png'), // Replace with your image path
+                            'images/basketball_5.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Basketball',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust text color for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality
                         Positioned.fill(
-                          // Fills the entire container
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle basketball tap
+                                Navigator.pushNamed(
+                              context, '/athlete_basketball');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),
@@ -252,49 +225,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/volley_1.jpg'), // Replace with your image path
+                            'images/volley_1.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Volleyball',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust text color for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality
                         Positioned.fill(
-                          // Fills the entire container
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle basketball tap
+                                Navigator.pushNamed(
+                              context, '/athlete_volleyball');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),
@@ -306,49 +273,43 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/swim_4.png'), // Replace with your image path
+                            'images/swim_4.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
-                      // Use Stack for positioning
                       children: [
-                        // Background image (already defined)
                         Positioned(
-                          // Text at top center
                           top: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Container(
-                            // Container for styling and centering
                             padding: const EdgeInsets.all(
-                                8.0), // Adjust padding if needed
+                                8.0),
                             child: const Text(
                               'Swimming',
                               style: TextStyle(
                                 color: Colors
-                                    .black, // Adjust text color for better visibility on image
-                                fontSize: 18.0, // Adjust font size as needed
+                                    .black,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight
-                                    .bold, // Add boldness for emphasis (optional)
+                                    .bold,
                               ),
                               textAlign:
-                                  TextAlign.center, // Center text horizontally
+                                  TextAlign.center,
                             ),
                           ),
                         ),
-                        // InkWell on top for click functionality
                         Positioned.fill(
-                          // Fills the entire container
                           child: Material(
-                            // Transparent background for InkWell
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle basketball tap
+                                Navigator.pushNamed(
+                              context, '/athlete_swimming');
                               },
                               child:
-                                  Container(), // Empty container to capture taps
+                                  Container(),
                             ),
                           ),
                         ),

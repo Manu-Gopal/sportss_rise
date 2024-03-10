@@ -19,16 +19,12 @@ class _AthleteAccountState extends State<AthleteAccount> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
-  final userId = Supabase.instance.client.auth.currentUser!.id;
-
-  // final id = await Supabase.instance.client.from('profile').select().eq('user_id', userId);
-
   final ImagePicker imagePicker = ImagePicker();
   dynamic imageFile;
   bool image = false;
   dynamic imageUrl;
 
-  bool _obscureText = true; // State variable to control password visibility
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {

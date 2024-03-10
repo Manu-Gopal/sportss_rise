@@ -14,13 +14,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
       appBar: AppBar(
         title: const Text('Network'),
       ),
-      body: const Center(
-        child: Column(
-          children: [
-            Text('Athlete Network')
-          ],
-        ),
-      ),
+      
     );
   }
 }

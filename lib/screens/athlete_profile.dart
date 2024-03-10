@@ -134,7 +134,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                 backgroundColor: MaterialStateProperty.all(Colors.grey),
               ),
               onPressed: () async {
-                Navigator.pushNamed(context, '/athlete_edit_profile1');
+                Navigator.pushNamed(context, '/athlete_edit_profile');
               },
               child: const Padding(
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 15),

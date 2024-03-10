@@ -4,14 +4,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AthleteFootball extends StatefulWidget {
-  const AthleteFootball({super.key});
+class AthleteCricket extends StatefulWidget {
+  const AthleteCricket({super.key});
 
   @override
-  State<AthleteFootball> createState() => _AthleteFootballState();
+  State<AthleteCricket> createState() => _AthleteCricketState();
 }
 
-class _AthleteFootballState extends State<AthleteFootball> {
+class _AthleteCricketState extends State<AthleteCricket> {
   final ImagePicker imagePicker = ImagePicker();
   dynamic imageFile;
   bool isUploading = false;
@@ -21,7 +21,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Football'),
+        title: const Text('Cricket'),
       ),
       body: Center(
         child: Column(
@@ -68,7 +68,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
         imageFile = File(imagePath);
       });
       final String path = await supabase.storage
-          .from('videos/football_videos')
+          .from('videos/cricket_videos')
           .upload(
               supabase.auth.currentUser!.id + formattedDateTime, imageFile,
               fileOptions:
