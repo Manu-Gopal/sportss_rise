@@ -70,7 +70,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                   height: 800, // Set the desired height for the container
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white, // Set the background color for the container
+                    color: Colors
+                        .white, // Set the background color for the container
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -87,7 +88,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                       ),
@@ -100,23 +102,23 @@ class _AthleteAccountState extends State<AthleteAccount> {
                             controller: dateOfBirthController,
                             onTap: () async {
                               DateTime? picked = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime(2000),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime.now());
-                                dateOfBirthController.text=DateFormat('yyyy-MM-dd').format(picked!);
+                                  context: context,
+                                  initialDate: DateTime(2000),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime.now());
+                              dateOfBirthController.text =
+                                  DateFormat('yyyy-MM-dd').format(picked!);
                             },
                             decoration: InputDecoration(
                               labelText: 'Date of Birth',
                               hintText: 'yyyy-mm-dd',
                               prefixIcon: const Icon(
-                              Icons.calendar_month,
-                              color: Color.fromARGB(255, 78, 66, 66),
-                            ),
+                                Icons.calendar_month,
+                                color: Color.fromARGB(255, 78, 66, 66),
+                              ),
                               // contentPadding: EdgeInsets.all(12.0),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                                
                               ),
                             ),
                           ),
@@ -134,7 +136,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                       ),
@@ -151,7 +154,9 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                               color: const Color.fromARGB(255, 78, 66, 66),
                             ),
                             onPressed: () {
@@ -162,7 +167,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                           border: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                       ),
@@ -179,7 +185,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                       ),
@@ -191,13 +198,11 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           width: 100,
                           fit: BoxFit.cover,
                         ),
-                        ElevatedButton(
+                      ElevatedButton(
                           onPressed: () {
                             uploadImage();
                           },
-                          
                           child: const Text("Upload Profile Image")),
-
                       const SizedBox(height: 35.0),
                       ElevatedButton(
                         onPressed: () async {
@@ -213,23 +218,29 @@ class _AthleteAccountState extends State<AthleteAccount> {
                               email.isEmpty ||
                               password.isEmpty ||
                               phone.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text('Please fill all details.'),
                               duration: Duration(seconds: 3),
                             ));
                             return;
                           } else {
                             if (phone.length != 10) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text('Phone number should be 10 digits.'),
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text('Phone number should be 10 digits.'),
                                 duration: Duration(seconds: 3),
                               ));
                               return;
                             } else {
-                              final AuthResponse res = await supabase.auth.signUp(email: email, password: password);
-                              if (imageFile != null) {
-                              image = true;
-                            }
+                              try {
+                                final AuthResponse res = await supabase.auth
+                                    .signUp(email: email, password: password);
+
+                                if (imageFile != null) {
+                                image = true;
+                              }
 
                               final Map<String, dynamic> userDetails = {
                                 'user_id': res.user!.id,
@@ -244,19 +255,109 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                   .insert(userDetails)
                                   .select();
 
+                              final int profileId = response[0]['id'];
+
                               if (imageFile != null) {
-                              await Supabase.instance.client.storage
+                                await Supabase.instance.client.storage
+                                    .from('images')
+                                    .upload(
+                                      'item_images/$profileId',
+                                      imageFile,
+                                      fileOptions: const FileOptions(
+                                          cacheControl: '3600', upsert: false),
+                                    );
+                                }
+
+                                final String publicUrl = Supabase
+                                  .instance.client.storage
                                   .from('images')
-                                  .upload(
-                                    'item_images/${response[0]['id']}',
-                                    imageFile,
-                                    fileOptions: const FileOptions(
-                                        cacheControl: '3600', upsert: false),
-                                  );
-                            }
+                                  .getPublicUrl('item_images/$profileId');
+
+                              await supabase
+                                  .from('profile')
+                                  .update({'image_url': publicUrl}).match(
+                                      {'id': profileId});
+
+
+                                // final existingUser = await supabase.auth.(email: email);
+                                // if (existingUser != null) {
+                                //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                //     content: Text('Email address already registered.'),
+                                //     duration: Duration(seconds: 3),
+                                //   ));
+                                //   return;
+                                // }
+                              } on PostgrestException catch (error) {
+                                // Handle potential errors during email check (optional)
+                                // print('Error checking email: $error');
+                                // You can choose to display a generic error message here
+                                // or retry the check with exponential backoff if desired.
+                                if (error
+                                    .toString()
+                                    .contains('already registered')) {
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Email address already registered.'),
+                                    duration: Duration(seconds: 3),
+                                  ));
+                                  return;
+                                } else {
+                                  // Handle other potential Postgrest errors (optional)
+                                  // print('Signup error: ${error.toString()}');
+                                  // You can choose to display a generic error message here
+                                }
+                              } catch (error) {
+                                // Handle other potential errors (optional)
+                                // print('Unexpected error: $error');
+                                // You can choose to display a generic error message here
+                              }
+                              // final AuthResponse res = await supabase.auth
+                              //     .signUp(email: email, password: password);
+                              // if (imageFile != null) {
+                              //   image = true;
+                              // }
+
+                              // final Map<String, dynamic> userDetails = {
+                              //   'user_id': res.user!.id,
+                              //   'name': name,
+                              //   'phone': phone,
+                              //   'dob': dob,
+                              //   'image': image
+                              // };
+
+                              // final response = await supabase
+                              //     .from('profile')
+                              //     .insert(userDetails)
+                              //     .select();
+
+                              // final int profileId = response[0]['id'];
+
+                              // if (imageFile != null) {
+                              //   await Supabase.instance.client.storage
+                              //       .from('images')
+                              //       .upload(
+                              //         'item_images/$profileId',
+                              //         imageFile,
+                              //         fileOptions: const FileOptions(
+                              //             cacheControl: '3600', upsert: false),
+                              //       );
+                              //   }
+
+                              // final String publicUrl = Supabase
+                              //     .instance.client.storage
+                              //     .from('images')
+                              //     .getPublicUrl('item_images/$profileId');
+
+                              // await supabase
+                              //     .from('profile')
+                              //     .update({'image_url': publicUrl}).match(
+                              //         {'id': profileId});
 
                               // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
                                 content: Text('Account Created Successfully.'),
                                 duration: Duration(seconds: 3),
                               ));
@@ -266,8 +367,10 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           Navigator.pushNamed(context, '/athlete_login');
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 99, 172, 172),
-                          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 17),
+                          backgroundColor:
+                              const Color.fromARGB(255, 99, 172, 172),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 65, vertical: 17),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
