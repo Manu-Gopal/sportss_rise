@@ -7,7 +7,7 @@ class AthleteHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Athlete Home'),
+          title: const Text('Athlete'),
         ),
         body: CustomScrollView(
           primary: false,
@@ -16,7 +16,7 @@ class AthleteHome extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  'Athlete Home Page',
+                  'Choose Your Sport',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -33,7 +33,7 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/cricket_2.jpg'),
+                            'images/cricket_2BW.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -81,7 +81,7 @@ class AthleteHome extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                            'images/football_2.jpg'),
+                            'images/football_2BW.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),

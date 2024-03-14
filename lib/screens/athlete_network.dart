@@ -9,12 +9,15 @@ class AthleteNetwork extends StatefulWidget {
 }
 
 class _AthleteNetworkState extends State<AthleteNetwork> {
-  final athleteList = Supabase.instance.client
-      .from('profile')
-      .stream(primaryKey: ['id'])
-      .order('id');
+  dynamic athleteList;
+  // final athleteList = Supabase.instance.client
+  //     .from('profile')
+  //     .stream(primaryKey: ['id'])
+  //     .order('id');
   final supabase = Supabase.instance.client;
   dynamic userId = Supabase.instance.client.auth.currentUser!.id;
+
+  final TextEditingController searchController = TextEditingController();
 
   bool isLoading = false;
 
@@ -28,8 +31,12 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
     setState(() {
       isLoading = true;
     });
+    final athleteStream = supabase.from('profile')
+      .stream(primaryKey: ['id'])
+      .order('id');
     // exhibitions = await supabase.from('ex_manager').select();
     setState(() {
+      athleteList = athleteStream;
       isLoading = false;
     });
   }
@@ -46,6 +53,23 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      if (searchController.text.isNotEmpty){
+                        Navigator.pushNamed(context,'/athlete_search', arguments: {
+                          // 'user_id' : exId,
+                          // 'stallId': stallId['stall_id'],
+                          'searchText': searchController.text
+                        });
+                      }
+                    },
+                    child: const Icon(Icons.search),
+                  )
+                ),
+              ),
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,6 +110,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CircleAvatar(
+                                    radius: 40.0,
                                     backgroundColor: Colors.grey, // Placeholder color
                                     backgroundImage: athlete['image_url'] != null
                                         ? NetworkImage(athlete['image_url'])
@@ -102,17 +127,55 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          athlete['name'],
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              athlete['name'],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 60),
+                                              child: IconButton(
+                                                onPressed: () {},
+                                                icon: const Icon(
+                                                  Icons.keyboard_arrow_right_outlined,
+                                                  size: 35,
+                                                  color: Colors.black,
+                                                )
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              athlete['dob'],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              athlete['sport'] ?? '', // Use the null-aware operator (??)
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         // Add other athlete information here
                                         // (e.g., sport, bio, etc.) if available in the data
                                       ],
                                     ),
+                                    
                                   ),
                                 ],
                               ),

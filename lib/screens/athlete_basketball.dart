@@ -16,6 +16,7 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
   dynamic imageFile;
   bool isUploading = false;
   final supabase = Supabase.instance.client;
+  final uId = Supabase.instance.client.auth.currentUser!.id;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,14 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
             isUploading
                 ? const Text("Uploading")
                 : ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       uploadVideo();
+                      Navigator.pushNamed(context,
+                            '/athlete_main');
+                            await supabase
+                                  .from('profile')
+                                  .update({'sport': 'Basketball'}).match(
+                                      {'user_id': uId});
                     },
                     style: ButtonStyle(
                       backgroundColor:

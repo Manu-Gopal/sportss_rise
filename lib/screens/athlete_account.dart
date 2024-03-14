@@ -23,8 +23,26 @@ class _AthleteAccountState extends State<AthleteAccount> {
   dynamic imageFile;
   bool image = false;
   dynamic imageUrl;
+  dynamic sportDetails;
+  dynamic sport;
+  dynamic pos;
 
   bool _obscureText = true;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   Future.delayed(Duration.zero, () {
+  //     sportDetails = ModalRoute.of(context)?.settings.arguments as Map?;
+  //     getData();
+  //   });
+  // }
+
+  // void getData() async {
+  //   sport = sportDetails['sport'];
+  //   pos = sportDetails['pos'];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +208,31 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                         ),
                       ),
+                      // const SizedBox(height: 20),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.pushNamed(context, '/athlete_home');
+                      //   },
+                      //   child: Container(
+                      //     width: double.infinity,
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.blueGrey,
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     child: const Padding(
+                      //       padding: EdgeInsets.all(16),
+                      //       child: Center(
+                      //         child: Text(
+                      //           'Choose your sport',
+                      //           style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.bold
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(height: 20.0),
                       if (imageFile != null)
                         Image.file(
@@ -247,7 +290,9 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 'name': name,
                                 'phone': phone,
                                 'dob': dob,
-                                'image': image
+                                'image': image,
+                                // 'sport': sport,
+                                // 'position': pos
                               };
 
                               final response = await supabase
@@ -313,47 +358,6 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 // print('Unexpected error: $error');
                                 // You can choose to display a generic error message here
                               }
-                              // final AuthResponse res = await supabase.auth
-                              //     .signUp(email: email, password: password);
-                              // if (imageFile != null) {
-                              //   image = true;
-                              // }
-
-                              // final Map<String, dynamic> userDetails = {
-                              //   'user_id': res.user!.id,
-                              //   'name': name,
-                              //   'phone': phone,
-                              //   'dob': dob,
-                              //   'image': image
-                              // };
-
-                              // final response = await supabase
-                              //     .from('profile')
-                              //     .insert(userDetails)
-                              //     .select();
-
-                              // final int profileId = response[0]['id'];
-
-                              // if (imageFile != null) {
-                              //   await Supabase.instance.client.storage
-                              //       .from('images')
-                              //       .upload(
-                              //         'item_images/$profileId',
-                              //         imageFile,
-                              //         fileOptions: const FileOptions(
-                              //             cacheControl: '3600', upsert: false),
-                              //       );
-                              //   }
-
-                              // final String publicUrl = Supabase
-                              //     .instance.client.storage
-                              //     .from('images')
-                              //     .getPublicUrl('item_images/$profileId');
-
-                              // await supabase
-                              //     .from('profile')
-                              //     .update({'image_url': publicUrl}).match(
-                              //         {'id': profileId});
 
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context)

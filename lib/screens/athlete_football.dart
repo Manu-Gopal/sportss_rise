@@ -11,11 +11,18 @@ class AthleteFootball extends StatefulWidget {
   State<AthleteFootball> createState() => _AthleteFootballState();
 }
 
+// ignore: constant_identifier_names
+enum FootballPosition { Forward, Midfielder, Defender, Goalkeeper }
+
 class _AthleteFootballState extends State<AthleteFootball> {
+  FootballPosition? _selectedPosition;
+  FootballPosition pos = FootballPosition.Forward;
+
   final ImagePicker imagePicker = ImagePicker();
   dynamic imageFile;
   bool isUploading = false;
   final supabase = Supabase.instance.client;
+  final uId = Supabase.instance.client.auth.currentUser!.id;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +33,77 @@ class _AthleteFootballState extends State<AthleteFootball> {
       body: Center(
         child: Column(
           children: [
+            const SizedBox(height: 50),
+            const Text(
+              'Choose Your Position',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 10.0),
+            ListTile(
+              title: const Text('Forward'),
+              leading: Radio<FootballPosition>(
+                value: FootballPosition.Forward,
+                groupValue: _selectedPosition,
+                onChanged: (FootballPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Midfield'),
+              leading: Radio<FootballPosition>(
+                value: FootballPosition.Midfielder,
+                groupValue: _selectedPosition,
+                onChanged: (FootballPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Defender'),
+              leading: Radio<FootballPosition>(
+                value: FootballPosition.Defender,
+                groupValue: _selectedPosition,
+                onChanged: (FootballPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Goalkeeper'),
+              leading: Radio<FootballPosition>(
+                value: FootballPosition.Goalkeeper,
+                groupValue: _selectedPosition,
+                onChanged: (FootballPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
             isUploading
-                ? const Text("Uploading")
+                ? const Text("Loading")
                 : ElevatedButton(
-                    onPressed: () {
+                    onPressed: _selectedPosition != null ? () async {
+                      pos = _selectedPosition!;
                       uploadVideo();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
-                    ),
+                      Navigator.pushNamed(context,
+                            '/athlete_main');
+                            await supabase
+                                  .from('profile')
+                                  .update({'sport': 'Football', 'position' : pos.name}).match(
+                                      {'user_id': uId});
+                          
+                    } : null,
+                    style: ElevatedButton.styleFrom(
+                backgroundColor: _selectedPosition != null ? Colors.green : Colors.grey, // Set button color
+              ),
                     child: const Text(
                       'Upload Video',
                       style: TextStyle(

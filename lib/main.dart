@@ -7,6 +7,7 @@ import 'package:sportss_rise/screens/athlete_football.dart';
 import 'package:sportss_rise/screens/athlete_main.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
 import 'package:sportss_rise/screens/athlete_profile.dart';
+import 'package:sportss_rise/screens/athlete_search.dart';
 import 'package:sportss_rise/screens/athlete_swimming.dart';
 import 'package:sportss_rise/screens/athlete_volleyball.dart';
 import 'package:sportss_rise/screens/homepage.dart';
@@ -46,10 +47,11 @@ class SportsRise extends StatelessWidget {
         '/athlete_network' :(context) => const AthleteNetwork(),
         '/athlete_football':(context) => const AthleteFootball(),
         '/athlete_cricket':(context) => const AthleteCricket(),
-        'athlete_badminton':(context) => const AthleteBadminton(),
+        '/athlete_badminton':(context) => const AthleteBadminton(),
         '/athlete_basketball':(context) => const AthleteBasketball(),
         '/athlete_swimming':(context) => const AthleteSwimming(),
         '/athlete_volleyball':(context) => const AthleteVolleyball(),
+        '/athlete_search':(context) => const AthleteSearch(),
       },
     );
   }

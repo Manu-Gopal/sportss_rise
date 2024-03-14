@@ -11,11 +11,18 @@ class AthleteCricket extends StatefulWidget {
   State<AthleteCricket> createState() => _AthleteCricketState();
 }
 
+// ignore: constant_identifier_names
+enum CricketPosition { Batsman, Bowler }
+
 class _AthleteCricketState extends State<AthleteCricket> {
+  CricketPosition? _selectedPosition;
+  CricketPosition pos = CricketPosition.Batsman;
+
   final ImagePicker imagePicker = ImagePicker();
   dynamic imageFile;
   bool isUploading = false;
   final supabase = Supabase.instance.client;
+  final uId = Supabase.instance.client.auth.currentUser!.id;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +33,53 @@ class _AthleteCricketState extends State<AthleteCricket> {
       body: Center(
         child: Column(
           children: [
+            const SizedBox(height: 50),
+            const Text( 
+              'Choose Your Position',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            const SizedBox(height: 10.0),
+            ListTile(
+              title: const Text('Batsman'),
+              leading: Radio<CricketPosition>(
+                value: CricketPosition.Batsman,
+                groupValue: _selectedPosition,
+                onChanged: (CricketPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Bowler'),
+              leading: Radio<CricketPosition>(
+                value: CricketPosition.Bowler,
+                groupValue: _selectedPosition,
+                onChanged: (CricketPosition? value) {
+                  setState(() {
+                    _selectedPosition = value;
+                  });
+                },
+              ),
+            ),
             isUploading
-                ? const Text("Uploading")
+                ? const Text("Loading")
                 : ElevatedButton(
-                    onPressed: () {
+                    onPressed: _selectedPosition != null ? () async {
+                      pos = _selectedPosition!;
                       uploadVideo();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                      ),
-                    ),
+                      Navigator.pushNamed(context,
+                            '/athlete_main');
+                            await supabase
+                                  .from('profile')
+                                  .update({'sport': 'Cricket', 'position' : pos.name}).match(
+                                      {'user_id': uId});
+                          
+                    } : null,
+                    style: ElevatedButton.styleFrom(
+                backgroundColor: _selectedPosition != null ? Colors.green : Colors.grey, // Set button color
+              ),
                     child: const Text(
                       'Upload Video',
                       style: TextStyle(
