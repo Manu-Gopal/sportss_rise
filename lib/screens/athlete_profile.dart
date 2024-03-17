@@ -40,16 +40,16 @@ class _AthleteProfileState extends State<AthleteProfile> {
     phoneController.text = athlete_profile[0]['phone'];
     emailController.text = supabase.auth.currentUser!.email!;
 
-    if(athlete_profile[0]['image'] == true){
-      final String publicUrl = Supabase.instance.client
-          .storage
-          .from('images')
-          .getPublicUrl('item_images/$id');
+      if(athlete_profile[0]['image'] == true){
+        final String publicUrl = Supabase.instance.client
+            .storage
+            .from('images')
+            .getPublicUrl('item_images/$id');
 
-          setState(() {
-          imageUrl = publicUrl;
-        });
-    }
+            setState(() {
+            imageUrl = publicUrl;
+          });
+      }
 
     setState(() {
       isLoading = false;
@@ -199,5 +199,73 @@ class _AthleteProfileState extends State<AthleteProfile> {
         ),
       )
     ]);
+  }
+}
+
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+
+  final supabase = Supabase.instance.client;
+  dynamic useremail = '';
+  dynamic username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    useremail = supabase.auth.currentUser!.email;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: const Text(
+              '',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            accountEmail: Text(useremail,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            decoration: const BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: AssetImage('images/sai_logo.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              // Navigator.pushNamed(context, '/visitor_bookings');
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+            },
+            leading: const Icon(
+              Icons.newspaper_outlined,
+              color: Colors.black,
+            ),
+            title: const Text(
+              "Latest News",
+              style: TextStyle(
+                // fontFamily: 'RobotoSlab',
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

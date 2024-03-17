@@ -10,10 +10,6 @@ class AthleteNetwork extends StatefulWidget {
 
 class _AthleteNetworkState extends State<AthleteNetwork> {
   dynamic athleteList;
-  // final athleteList = Supabase.instance.client
-  //     .from('profile')
-  //     .stream(primaryKey: ['id'])
-  //     .order('id');
   final supabase = Supabase.instance.client;
   dynamic userId = Supabase.instance.client.auth.currentUser!.id;
 
@@ -34,7 +30,6 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
     final athleteStream = supabase.from('profile')
       .stream(primaryKey: ['id'])
       .order('id');
-    // exhibitions = await supabase.from('ex_manager').select();
     setState(() {
       athleteList = athleteStream;
       isLoading = false;
@@ -47,6 +42,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
       appBar: AppBar(
         title: const Text('Network'),
       ),
+      drawer: const CustomDrawer(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -60,8 +56,6 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                     onTap: () {
                       if (searchController.text.isNotEmpty){
                         Navigator.pushNamed(context,'/athlete_search', arguments: {
-                          // 'user_id' : exId,
-                          // 'stallId': stallId['stall_id'],
                           'searchText': searchController.text
                         });
                       }
@@ -111,16 +105,16 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                 children: [
                                   CircleAvatar(
                                     radius: 40.0,
-                                    backgroundColor: Colors.grey, // Placeholder color
+                                    backgroundColor: Colors.grey,
                                     backgroundImage: athlete['image_url'] != null
                                         ? NetworkImage(athlete['image_url'])
-                                        : null, // Prevent unnecessary widget creation
+                                        : null,
                                     child: athlete['image_url'] == null
                                         ? const Icon(
-                                            Icons.person, // Customizable icon
+                                            Icons.person,
                                             color: Colors.white,
                                           )
-                                        : null, // Don't display icon if image URL is available
+                                        : null,
                                   ),
                                   const SizedBox(width: 16.0),
                                   Expanded(
@@ -139,7 +133,13 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                             Padding(
                                               padding: const EdgeInsets.only(left: 60),
                                               child: IconButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Navigator.pushNamed(
+                                                  context, '/athlete_connect',
+                                                  arguments: {
+                                                    'uid': athlete['user_id'],
+                                                  });
+                                                },
                                                 icon: const Icon(
                                                   Icons.keyboard_arrow_right_outlined,
                                                   size: 35,
@@ -163,7 +163,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                         Row(
                                           children: [
                                             Text(
-                                              athlete['sport'] ?? '', // Use the null-aware operator (??)
+                                              athlete['sport'] ?? '',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
@@ -171,8 +171,6 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                             ),
                                           ],
                                         ),
-                                        // Add other athlete information here
-                                        // (e.g., sport, bio, etc.) if available in the data
                                       ],
                                     ),
                                     
@@ -191,6 +189,74 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+
+  final supabase = Supabase.instance.client;
+  dynamic useremail = '';
+  dynamic username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    useremail = supabase.auth.currentUser!.email;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: const Text(
+              '',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            accountEmail: Text(useremail,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            decoration: const BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: AssetImage('images/sai_logo.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              // Navigator.pushNamed(context, '/visitor_bookings');
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+            },
+            leading: const Icon(
+              Icons.newspaper_outlined,
+              color: Colors.black,
+            ),
+            title: const Text(
+              "Latest News",
+              style: TextStyle(
+                // fontFamily: 'RobotoSlab',
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AthleteHome extends StatelessWidget {
   const AthleteHome({super.key});
@@ -9,6 +10,7 @@ class AthleteHome extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Athlete'),
         ),
+        drawer: const CustomDrawer(),
         body: CustomScrollView(
           primary: false,
           slivers: <Widget>[
@@ -321,5 +323,73 @@ class AthleteHome extends StatelessWidget {
             ),
           ],
         ));
+  }
+}
+
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+
+  final supabase = Supabase.instance.client;
+  dynamic useremail = '';
+  dynamic username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    useremail = supabase.auth.currentUser!.email;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: const Text(
+              '',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            accountEmail: Text(useremail,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            decoration: const BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: AssetImage('images/sai_logo.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              // Navigator.pushNamed(context, '/visitor_bookings');
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+            },
+            leading: const Icon(
+              Icons.newspaper_outlined,
+              color: Colors.black,
+            ),
+            title: const Text(
+              "Latest News",
+              style: TextStyle(
+                // fontFamily: 'RobotoSlab',
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

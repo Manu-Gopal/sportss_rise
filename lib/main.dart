@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportss_rise/screens/athlete_badminton.dart';
 import 'package:sportss_rise/screens/athlete_basketball.dart';
+import 'package:sportss_rise/screens/athlete_connect.dart';
 import 'package:sportss_rise/screens/athlete_cricket.dart';
 import 'package:sportss_rise/screens/athlete_edit_profile.dart';
 import 'package:sportss_rise/screens/athlete_football.dart';
@@ -52,6 +53,7 @@ class SportsRise extends StatelessWidget {
         '/athlete_swimming':(context) => const AthleteSwimming(),
         '/athlete_volleyball':(context) => const AthleteVolleyball(),
         '/athlete_search':(context) => const AthleteSearch(),
+        '/athlete_connect':(context) => const AthleteConnect(),
       },
     );
   }
