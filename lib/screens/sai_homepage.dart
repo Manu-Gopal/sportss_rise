@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sportss_rise/screens/athlete_home.dart';
-import 'package:sportss_rise/screens/athlete_network.dart';
-import 'package:sportss_rise/screens/athlete_profile.dart';
+import 'package:sportss_rise/screens/sai_coaches.dart';
+import 'package:sportss_rise/screens/sai_news.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AthleteMain extends StatefulWidget {
-  const AthleteMain({super.key});
+class SaiHomePage extends StatefulWidget {
+  const SaiHomePage({super.key});
 
   @override
-  State<AthleteMain> createState() => _AthleteMainState();
+  State<SaiHomePage> createState() => _SaiHomePageState();
 }
 
-class _AthleteMainState extends State<AthleteMain> {
+class _SaiHomePageState extends State<SaiHomePage> {
 
   int _selectedIndex = 0;
-  
+
   void _onItemTapped( int index) {
     setState(() {
     _selectedIndex = index;
@@ -28,25 +27,20 @@ class _AthleteMainState extends State<AthleteMain> {
       body: IndexedStack(
         index: _selectedIndex,
         children: const [
-          AthleteHome(),
-          AthleteNetwork(),
-          AthleteProfile()
+          SaiNews(),
+          SaiCoaches()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.newspaper),
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
-            label: 'Connect',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Coaches',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -69,6 +63,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   final supabase = Supabase.instance.client;
   dynamic useremail = '';
+  dynamic username = '';
 
   @override
   void initState() {

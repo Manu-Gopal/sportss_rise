@@ -29,21 +29,6 @@ class _AthleteAccountState extends State<AthleteAccount> {
 
   bool _obscureText = true;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   Future.delayed(Duration.zero, () {
-  //     sportDetails = ModalRoute.of(context)?.settings.arguments as Map?;
-  //     getData();
-  //   });
-  // }
-
-  // void getData() async {
-  //   sport = sportDetails['sport'];
-  //   pos = sportDetails['pos'];
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,31 +193,6 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           ),
                         ),
                       ),
-                      // const SizedBox(height: 20),
-                      // InkWell(
-                      //   onTap: () {
-                      //     Navigator.pushNamed(context, '/athlete_home');
-                      //   },
-                      //   child: Container(
-                      //     width: double.infinity,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.blueGrey,
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     child: const Padding(
-                      //       padding: EdgeInsets.all(16),
-                      //       child: Center(
-                      //         child: Text(
-                      //           'Choose your sport',
-                      //           style: TextStyle(
-                      //             fontSize: 20,
-                      //             fontWeight: FontWeight.bold
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       const SizedBox(height: 20.0),
                       if (imageFile != null)
                         Image.file(
@@ -291,8 +251,8 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 'phone': phone,
                                 'dob': dob,
                                 'image': image,
-                                // 'sport': sport,
-                                // 'position': pos
+                                'followers': 0,
+                                'following': 0,
                               };
 
                               final response = await supabase
@@ -311,18 +271,16 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                       fileOptions: const FileOptions(
                                           cacheControl: '3600', upsert: false),
                                     );
-                                }
-
-                                final String publicUrl = Supabase
+                                  final String publicUrl = Supabase
                                   .instance.client.storage
                                   .from('images')
                                   .getPublicUrl('item_images/$profileId');
 
-                              await supabase
+                                  await supabase
                                   .from('profile')
                                   .update({'image_url': publicUrl}).match(
                                       {'id': profileId});
-
+                                }
 
                                 // final existingUser = await supabase.auth.(email: email);
                                 // if (existingUser != null) {
@@ -332,7 +290,7 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 //   ));
                                 //   return;
                                 // }
-                              } on PostgrestException catch (error) {
+                                } on PostgrestException catch (error) {
                                 // Handle potential errors during email check (optional)
                                 // print('Error checking email: $error');
                                 // You can choose to display a generic error message here

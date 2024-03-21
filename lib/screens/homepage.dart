@@ -56,6 +56,38 @@ class HomePage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                     onPressed: () {
+                      Navigator.pushNamed(context, '/sai_homepage');
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                    ),
+                    child: const Text(
+                      'Login as SAI',
+                      style: TextStyle(
+                          fontSize: 20,
+                          //fontFamily: 'NovaSquare',
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    )),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 280,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: () {
                       // Navigator.pushNamed(context, '/sports_authority_login');
                     },
                     style: ButtonStyle(
