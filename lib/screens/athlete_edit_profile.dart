@@ -34,7 +34,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future.delayed(Duration.zero, () async {  
       getData();
       // setState(() {});
     });

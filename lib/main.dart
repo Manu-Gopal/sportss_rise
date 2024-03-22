@@ -11,12 +11,16 @@ import 'package:sportss_rise/screens/athlete_profile.dart';
 import 'package:sportss_rise/screens/athlete_search.dart';
 import 'package:sportss_rise/screens/athlete_swimming.dart';
 import 'package:sportss_rise/screens/athlete_volleyball.dart';
+import 'package:sportss_rise/screens/coach_athlete_connect.dart';
+import 'package:sportss_rise/screens/coach_athlete_search.dart';
 import 'package:sportss_rise/screens/coach_homepage.dart';
+import 'package:sportss_rise/screens/coach_login.dart';
 import 'package:sportss_rise/screens/homepage.dart';
 import 'package:sportss_rise/screens/athlete_account.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
 import 'package:sportss_rise/screens/athlete_login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sportss_rise/screens/profile_picture_view.dart';
 import 'package:sportss_rise/screens/sai_add_coach.dart';
 import 'package:sportss_rise/screens/sai_coaches_search.dart';
 import 'package:sportss_rise/screens/sai_homepage.dart';
@@ -62,7 +66,10 @@ class SportsRise extends StatelessWidget {
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),
         '/coach_homepage':(context) => const CoachHomePage(),
-
+        '/coach_login':(context) => const CoachLogin(),
+        '/coach_athlete_search':(context) => const CoachAthleteSearch(),
+        '/coach_athlete_connect':(context) => const CoachAthleteConnect(),
+        '/profile_picture_view':(context) => const ProfilePictureView(),
       },
     );
   }

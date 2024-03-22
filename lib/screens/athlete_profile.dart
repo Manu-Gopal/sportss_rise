@@ -40,16 +40,15 @@ class _AthleteProfileState extends State<AthleteProfile> {
     phoneController.text = athlete_profile[0]['phone'];
     emailController.text = supabase.auth.currentUser!.email!;
 
-      if(athlete_profile[0]['image'] == true){
-        final String publicUrl = Supabase.instance.client
-            .storage
-            .from('images')
-            .getPublicUrl('item_images/$id');
+    if (athlete_profile[0]['image'] == true) {
+      final String publicUrl = Supabase.instance.client.storage
+          .from('images')
+          .getPublicUrl('item_images/$id');
 
-            setState(() {
-            imageUrl = publicUrl;
-          });
-      }
+      setState(() {
+        imageUrl = publicUrl;
+      });
+    }
 
     setState(() {
       isLoading = false;
@@ -75,40 +74,48 @@ class _AthleteProfileState extends State<AthleteProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 80),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-                  "Account Details",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-          ],
-        ),
-            const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const SizedBox(height: 80),
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Account Details",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context, '/profile_picture_view',
+                  arguments: {
+                    'imageUrl': imageUrl
+                  }
+                );
+              },
               child: imageUrl != null
-                ? CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: NetworkImage(imageUrl),
-                )
-              : const CircleAvatar(
-                radius: 50.0,
-                child: Icon(Icons.person, size: 40.0, color: Colors.grey),
-              )
-            )
-          ],
-        ),
+                  ? CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(imageUrl),
+                    )
+                  : const CircleAvatar(
+                      radius: 50.0,
+                      child: Icon(Icons.person, size: 40.0, color: Colors.grey),
+                    ),
+            ),
+          ),
+        ],
+      ),
       const SizedBox(height: 15),
       const Text('   Name'),
       textFields(nameController),
@@ -139,8 +146,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
               child: const Padding(
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
@@ -210,7 +216,6 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-
   final supabase = Supabase.instance.client;
   dynamic useremail = '';
   dynamic username = '';
@@ -258,10 +263,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: const Text(
               "Latest News",
               style: TextStyle(
-                // fontFamily: 'RobotoSlab',
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+                  // fontFamily: 'RobotoSlab',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ],

@@ -3,14 +3,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'video_player_screen.dart';
 
-class AthleteConnect extends StatefulWidget {
-  const AthleteConnect({super.key});
+class CoachAthleteConnect extends StatefulWidget {
+  const CoachAthleteConnect({super.key});
 
   @override
-  State<AthleteConnect> createState() => _AthleteConnectState();
+  State<CoachAthleteConnect> createState() => _CoachAthleteConnectState();
 }
 
-class _AthleteConnectState extends State<AthleteConnect> {
+class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   final supabase = Supabase.instance.client;
   dynamic athlete;
   dynamic athleteDetails;
@@ -68,27 +68,27 @@ class _AthleteConnectState extends State<AthleteConnect> {
     });
   }
 
-  Future updateFollowStatus() async {
-    final updateResponse1 = await supabase.from('profile').update({
-      'followers': isFollowing ? followers + 1 : followers - 1,
-    }).match({'user_id': athlete['uid']});
+  // Future updateFollowStatus() async {
+  //   final updateResponse1 = await supabase.from('profile').update({
+  //     'followers': isFollowing ? followers + 1 : followers - 1,
+  //   }).match({'user_id': athlete['uid']});
 
-    final updateResponse2 = await supabase.from('profile').update({
-      'following': isFollowing ? following + 1 : following - 1,
-    }).match({'user_id': uId});
+  //   final updateResponse2 = await supabase.from('profile').update({
+  //     'following': isFollowing ? following + 1 : following - 1,
+  //   }).match({'user_id': uId});
 
-    if (updateResponse1.error != null || updateResponse2.error != null) {
-      // Handle errors (optional)
-      // print('Error updating follower counts: ${updateResponse1.error}');
-      // print('Error updating following: ${updateResponse2.error}');
-    } else {
-      setState(() {
-        followers = isFollowing ? followers + 1 : followers - 1;
-        following = isFollowing ? following + 1 : following - 1;
-        isFollowing = !isFollowing;
-      });
-    }
-  }
+  //   if (updateResponse1.error != null || updateResponse2.error != null) {
+  //     // Handle errors (optional)
+  //     // print('Error updating follower counts: ${updateResponse1.error}');
+  //     // print('Error updating following: ${updateResponse2.error}');
+  //   } else {
+  //     setState(() {
+  //       followers = isFollowing ? followers + 1 : followers - 1;
+  //       following = isFollowing ? following + 1 : following - 1;
+  //       isFollowing = !isFollowing;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +119,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
               children: [
                 const SizedBox(width: 40),
                 Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/profile_picture_view',
-                          arguments: {'imageUrl': imageUrl});
-                    },
+                    padding: const EdgeInsets.only(right: 16.0),
                     child: imageUrl != null
                         ? CircleAvatar(
                             radius: 50.0,
@@ -134,9 +129,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                             radius: 50.0,
                             child: Icon(Icons.person,
                                 size: 40.0, color: Colors.grey),
-                          ),
-                  ),
-                ),
+                          )),
                 const SizedBox(width: 20),
                 Column(
                   children: [
@@ -216,37 +209,37 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     ],
                   ),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                const SizedBox(width: 40),
-                ElevatedButton(
-                  onPressed: () async {
-                    setState(() {
-                      isFollowing = !isFollowing;
-                    });
+            // Row(
+            //   children: [
+            //     const SizedBox(width: 40),
+            //     ElevatedButton(
+            //       onPressed: () async {
+            //         setState(() {
+            //           isFollowing = !isFollowing;
+            //         });
 
-                    await supabase.from('profile').update({
-                      'followers': isFollowing ? followers + 1 : followers - 1,
-                    }).match({'user_id': athlete['uid']});
+            //         await supabase.from('profile').update({
+            //           'followers': isFollowing ? followers + 1 : followers - 1,
+            //         }).match({'user_id': athlete['uid']});
 
-                    await supabase.from('profile').update({
-                      'following': isFollowing ? following + 1 : following - 1,
-                    }).match({'user_id': uId});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: isFollowing ? Colors.black : Colors.white,
-                    backgroundColor: isFollowing ? Colors.white : Colors.blue,
-                    minimumSize: const Size(110.0, 36.0),
-                  ),
-                  child: Text(isFollowing ? 'Following' : 'Follow'),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Message'),
-                ),
-              ],
-            ),
+            //         await supabase.from('profile').update({
+            //           'following': isFollowing ? following + 1 : following - 1,
+            //         }).match({'user_id': uId});
+            //       },
+            //       style: ElevatedButton.styleFrom(
+            //         foregroundColor: isFollowing ? Colors.black : Colors.white,
+            //         backgroundColor: isFollowing ? Colors.white : Colors.blue,
+            //         minimumSize: const Size(110.0, 36.0),
+            //       ),
+            //       child: Text(isFollowing ? 'Following' : 'Follow'),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     ElevatedButton(
+            //       onPressed: () {},
+            //       child: const Text('Message'),
+            //     ),
+            //   ],
+            // ),
             // const VideoPlayerScreen(),
           ],
         ),

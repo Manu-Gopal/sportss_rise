@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sportss_rise/screens/coach_input_wrapper.dart';
 import 'header.dart';
-import 'athlete_input_wrapper.dart';
 
 class CoachLogin extends StatelessWidget {
   const CoachLogin({super.key});
@@ -38,7 +38,7 @@ class CoachLogin extends StatelessWidget {
                     )
                   ),
 
-                  child: const AthleteInputWrapper(),
+                  child: const CoachInputWrapper(),
                 ),
               )
             ],

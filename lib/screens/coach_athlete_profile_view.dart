@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AthleteNetwork extends StatefulWidget {
-  const AthleteNetwork({super.key});
+class CoachAthleteProfileView extends StatefulWidget {
+  const CoachAthleteProfileView({super.key});
 
   @override
-  State<AthleteNetwork> createState() => _AthleteNetworkState();
+  State<CoachAthleteProfileView> createState() =>
+      _CoachAthleteProfileViewState();
 }
 
-class _AthleteNetworkState extends State<AthleteNetwork> {
+class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
   dynamic athleteList;
+  dynamic coachSport;
   final supabase = Supabase.instance.client;
-  dynamic userId = Supabase.instance.client.auth.currentUser!.id;
+  dynamic coachId = Supabase.instance.client.auth.currentUser!.id;
 
   final TextEditingController searchController = TextEditingController();
 
@@ -20,15 +22,28 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
   @override
   void initState() {
     super.initState();
+    // coachSport = supabase.from('coach_profile')
+    //   .select('sport')
+    //   .eq('coach_user_id', coachId);
     getAthletes();
   }
 
   Future getAthletes() async {
+    coachSport = await supabase
+        .from('coach_profile')
+        .select('sport')
+        .eq('coach_user_id', coachId);
+
     setState(() {
       isLoading = true;
     });
-    final athleteStream =
-        supabase.from('profile').stream(primaryKey: ['id']).order('id');
+
+    final athleteStream = supabase
+        .from('profile')
+        .stream(primaryKey: ['id'])
+        .eq('sport', coachSport[0]['sport'])
+        .order('id');
+
     setState(() {
       athleteList = athleteStream;
       isLoading = false;
@@ -39,7 +54,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Network'),
+        title: const Text('Athletes'),
       ),
       drawer: const CustomDrawer(),
       body: Center(
@@ -54,7 +69,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                     suffixIcon: GestureDetector(
                   onTap: () {
                     if (searchController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, '/athlete_search',
+                      Navigator.pushNamed(context, '/coach_athlete_search',
                           arguments: {'searchText': searchController.text});
                     }
                   },
@@ -68,7 +83,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                   SizedBox(width: 55),
                   Expanded(
                     child: Text(
-                      'Athlete Connect',
+                      'Athletes',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -144,7 +159,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                               child: IconButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
-                                                        '/athlete_connect',
+                                                        '/coach_athlete_connect',
                                                         arguments: {
                                                           'uid': athlete[
                                                               'user_id'],
@@ -213,7 +228,6 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   final supabase = Supabase.instance.client;
   dynamic useremail = '';
-  dynamic username = '';
 
   @override
   void initState() {
@@ -247,16 +261,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           ListTile(
-            onTap: () {
-              // Navigator.pushNamed(context, '/visitor_bookings');
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+            onTap: () async {
+              await Supabase.instance.client.auth.signOut();
+              // ignore: use_build_context_synchronously
+              Navigator.pushNamed(context, '/');
             },
             leading: const Icon(
-              Icons.newspaper_outlined,
+              Icons.logout_outlined,
               color: Colors.black,
             ),
             title: const Text(
-              "Latest News",
+              "Log Out",
               style: TextStyle(
                   // fontFamily: 'RobotoSlab',
                   fontSize: 20,
