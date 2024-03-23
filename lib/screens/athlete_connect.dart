@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'video_player_screen.dart';
+import 'video_player_screen.dart';
 
 class AthleteConnect extends StatefulWidget {
   const AthleteConnect({super.key});
@@ -247,7 +247,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 ),
               ],
             ),
-            // const VideoPlayerScreen(),
+            const VideoPlayerScreen(),
           ],
         ),
       ),

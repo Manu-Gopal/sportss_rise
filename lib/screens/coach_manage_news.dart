@@ -9,6 +9,10 @@ class CoachManageNews extends StatefulWidget {
 }
 
 class _CoachManageNewsState extends State<CoachManageNews> {
+
+  final TextEditingController searchController = TextEditingController();
+  final supabase = Supabase.instance.client;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +20,70 @@ class _CoachManageNewsState extends State<CoachManageNews> {
         title: const Text('News'),
       ),
       drawer: const CustomDrawer(),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                  onTap: () {
+                    if (searchController.text.isNotEmpty) {
+                      Navigator.pushNamed(context, '/news_search',
+                          arguments: {'searchText': searchController.text});
+                    }
+                  },
+                  child: const Icon(Icons.search),
+                )),
+              ),
+              const SizedBox(height: 30),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 55),
+                  Expanded(
+                    child: Text(
+                      'News',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/add_news');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 231, 162, 87),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        20), // Adjust the value for circular edges
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                      horizontal: 24), // Adjust the padding for size
+                ),
+                child: const Text(
+                  'Add News',
+                  style: TextStyle(
+                    color: Colors.white, // Set the text color
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
