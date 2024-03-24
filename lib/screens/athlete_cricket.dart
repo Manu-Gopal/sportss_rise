@@ -34,7 +34,7 @@ class _AthleteCricketState extends State<AthleteCricket> {
         child: Column(
           children: [
             const SizedBox(height: 50),
-            const Text( 
+            const Text(
               'Choose Your Position',
               style: TextStyle(fontSize: 20.0),
             ),
@@ -66,20 +66,22 @@ class _AthleteCricketState extends State<AthleteCricket> {
             isUploading
                 ? const Text("Loading")
                 : ElevatedButton(
-                    onPressed: _selectedPosition != null ? () async {
-                      pos = _selectedPosition!;
-                      uploadVideo();
-                      Navigator.pushNamed(context,
-                            '/athlete_main');
-                            await supabase
-                                  .from('profile')
-                                  .update({'sport': 'Cricket', 'position' : pos.name}).match(
-                                      {'user_id': uId});
-                          
-                    } : null,
+                    onPressed: _selectedPosition != null
+                        ? () async {
+                            pos = _selectedPosition!;
+                            uploadVideo();
+                            Navigator.pushNamed(context, '/athlete_main');
+                            await supabase.from('profile').update({
+                              'sport': 'Cricket',
+                              'position': pos.name
+                            }).match({'user_id': uId});
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                backgroundColor: _selectedPosition != null ? Colors.green : Colors.grey, // Set button color
-              ),
+                      backgroundColor: _selectedPosition != null
+                          ? Colors.green
+                          : Colors.grey, // Set button color
+                    ),
                     child: const Text(
                       'Upload Video',
                       style: TextStyle(
@@ -107,15 +109,23 @@ class _AthleteCricketState extends State<AthleteCricket> {
       setState(() {
         imageFile = File(imagePath);
       });
+      final videoName = supabase.auth.currentUser!.id + formattedDateTime;
       final String path = await supabase.storage
           .from('videos/cricket_videos')
-          .upload(
-              supabase.auth.currentUser!.id + formattedDateTime, imageFile,
+          .upload(videoName, imageFile,
               fileOptions:
                   const FileOptions(cacheControl: '3600', upsert: false));
       await supabase
           .from('videos')
           .insert({'user_id': supabase.auth.currentUser!.id, 'path': path});
+
+      final String publicUrl = Supabase.instance.client.storage
+          .from('videos')
+          .getPublicUrl('cricket_videos/$videoName');
+
+      await supabase
+          .from('profile')
+          .update({'video_url': publicUrl}).match({'user_id': uId});
     }
     setState(() {
       isUploading = false;

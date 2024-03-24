@@ -25,7 +25,6 @@ class _AthleteSearchState extends State<AthleteSearch> {
   }
 
   Future getData() async {
-    // exId = stallDetails['exhibition_id'];
     setState(() {
       isLoading = true;
     });
@@ -34,7 +33,6 @@ class _AthleteSearchState extends State<AthleteSearch> {
         .from('profile')
         .select()
         .ilike('name', '%${athleteDetails["searchText"]}%');
-    // .match({'stall_id': stallDetails['stallId']});
 
     setState(() {
       isLoading = false;

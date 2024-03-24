@@ -161,8 +161,8 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                                     Navigator.pushNamed(context,
                                                         '/coach_athlete_connect',
                                                         arguments: {
-                                                          'uid': athlete[
-                                                              'user_id'],
+                                                          'uid': athlete['user_id'],
+                                                          'videoUrl': athlete['video_url']
                                                         });
                                                   },
                                                   icon: const Icon(

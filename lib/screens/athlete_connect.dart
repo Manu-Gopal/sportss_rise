@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'video_player_screen.dart';
+import 'package:video_player/video_player.dart';
+// import 'video_player_screen.dart';
 
 class AthleteConnect extends StatefulWidget {
   const AthleteConnect({super.key});
@@ -11,9 +12,14 @@ class AthleteConnect extends StatefulWidget {
 }
 
 class _AthleteConnectState extends State<AthleteConnect> {
+
+  late VideoPlayerController controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
   final supabase = Supabase.instance.client;
   dynamic athlete;
   dynamic athleteDetails;
+  dynamic videoUrl;
   bool isLoading = true;
   bool isFollowing = false;
 
@@ -33,16 +39,35 @@ class _AthleteConnectState extends State<AthleteConnect> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
+
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
+
+      videoUrl = athlete['videoUrl'];
+      controller = VideoPlayerController.networkUrl(
+      Uri.parse(
+        videoUrl
+      ),
+    );
+
+    _initializeVideoPlayerFuture = controller.initialize();
+    controller.pause();
+
       await getProfile();
     });
   }
+
+    @override
+    void dispose() {
+      controller.dispose();
+      super.dispose();
+    }
 
   Future getProfile() async {
     athleteDetails = await supabase
         .from('profile')
         .select()
         .match({'user_id': athlete['uid']});
+    // videoUrl = athlete['videoUrl'];
     final id = athleteDetails[0]['id'];
     followers = athleteDetails[0]['followers'] as int;
     following = athleteDetails[0]['following'] as int;
@@ -247,7 +272,58 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 ),
               ],
             ),
-            const VideoPlayerScreen(),
+
+
+            // const VideoPlayerScreen(),
+            isLoading
+                ? const Text("Loading..."):ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.4,
+        maxWidth: MediaQuery.of(context).size.width * 0.9,
+      ),
+      // Wrap the FutureBuilder with a Scaffold to add the FAB
+      child: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: controller.value.aspectRatio,
+              child: Stack(
+                children: [
+                  VideoPlayer(controller),
+                  // Position the FAB at the bottom right corner
+                  Positioned(
+                    bottom: 20.0,
+                    right: 20.0,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        // Add functionality for the FAB button here
+                        // For example, you could pause/play the video
+                        
+                        setState(() {
+                          if (controller.value.isPlaying) {
+                          controller.pause();
+                        } else {
+                          controller.play();
+                        }
+                        });
+                      },
+                      child: Icon(
+                        controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    )
           ],
         ),
       ),
