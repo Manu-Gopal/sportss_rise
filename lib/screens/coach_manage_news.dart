@@ -88,7 +88,10 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                           final news = newsList[index];
                           return GestureDetector(
                             onTap: () {
-                              // Handle tap event
+                              Navigator.pushNamed(
+                                context, '/news_view',
+                                arguments: {'news_id':news['id']}
+                              );
                             },
                             child: Card(
                               elevation: 9,
