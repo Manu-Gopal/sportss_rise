@@ -267,7 +267,9 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/chat_page');
+                  },
                   child: const Text('Message'),
                 ),
               ],

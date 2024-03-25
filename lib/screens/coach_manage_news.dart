@@ -9,9 +9,28 @@ class CoachManageNews extends StatefulWidget {
 }
 
 class _CoachManageNewsState extends State<CoachManageNews> {
-
   final TextEditingController searchController = TextEditingController();
   final supabase = Supabase.instance.client;
+  dynamic newsList;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getNews();
+  }
+
+  Future getNews() async {
+    setState(() {
+      isLoading = true;
+    });
+    final newsStream =
+        supabase.from('news').stream(primaryKey: ['id']).order('id');
+    setState(() {
+      newsList = newsStream;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +76,106 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                 ],
               ),
               const SizedBox(height: 20),
+              Expanded(
+                child: StreamBuilder(
+                  stream: newsList,
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      final newsList = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: newsList.length,
+                        itemBuilder: (context, index) {
+                          final news = newsList[index];
+                          return GestureDetector(
+                            onTap: () {
+                              // Handle tap event
+                            },
+                            child: Card(
+                              elevation: 9,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Handle profile picture view navigation
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/profile_picture_view',
+                                          arguments: {
+                                            'imageUrl': news['image_url']
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 80.0,
+                                        height: 80.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          image: news['image_url'] != null
+                                              ? DecorationImage(
+                                                  image: NetworkImage(
+                                                      news['image_url']),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : null,
+                                        ),
+                                        child: news['image_url'] == null
+                                            ? const Icon(
+                                                Icons.person,
+                                                color: Colors.white,
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                    // const SizedBox(width: 16.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                // Wrap Text with Expanded
+                                                child: Text(
+                                                  news['description'],
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  softWrap:
+                                                      true, // Enable soft wrap
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          // Optionally add additional text widgets below headline
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/add_news');
@@ -96,7 +215,6 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-
   final supabase = Supabase.instance.client;
   dynamic useremail = '';
 
@@ -134,8 +252,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ListTile(
             onTap: () async {
               await Supabase.instance.client.auth.signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.pushNamed(context, '/');
+              // ignore: use_build_context_synchronously
+              Navigator.pushNamed(context, '/');
             },
             leading: const Icon(
               Icons.logout_outlined,
@@ -144,10 +262,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: const Text(
               "Log Out",
               style: TextStyle(
-                // fontFamily: 'RobotoSlab',
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+                  // fontFamily: 'RobotoSlab',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ],

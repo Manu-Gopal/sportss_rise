@@ -241,6 +241,10 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 final AuthResponse res = await supabase.auth
                                     .signUp(email: email, password: password);
 
+                                await supabase
+                                  .from('contact')
+                                  .insert({'id': res.user!.id, 'username': 'User'});
+
                                 if (imageFile != null) {
                                 image = true;
                               }

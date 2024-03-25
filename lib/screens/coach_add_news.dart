@@ -17,7 +17,8 @@ class _CoachAddNewsState extends State<CoachAddNews> {
   final ImagePicker imagePicker = ImagePicker();
 
   final supabase = Supabase.instance.client;
-  final newsController = TextEditingController(); // Text field controller
+  final newsHeadlineController = TextEditingController(); // Text field controller
+  final newsDescriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +43,18 @@ class _CoachAddNewsState extends State<CoachAddNews> {
               ),
               const SizedBox(height: 40), // Adjust spacing as needed
               TextField(
-                controller: newsController, // Link controller to text field
+                controller: newsHeadlineController, // Link controller to text field
                 decoration: const InputDecoration(
-                  labelText: 'Enter the news',
+                  labelText: 'Headline',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                keyboardType: TextInputType.multiline,
+                controller: newsDescriptionController, // Link controller to text field
+                decoration: const InputDecoration(
+                  labelText: 'Description',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -66,9 +76,10 @@ class _CoachAddNewsState extends State<CoachAddNews> {
               ElevatedButton(
                 onPressed: () async {
                   final supabase = Supabase.instance.client;
-                  String news = newsController.text;
+                  String newsHeadline = newsHeadlineController.text;
+                  String description = newsDescriptionController.text;
 
-                  if (news.isEmpty) {
+                  if (newsHeadline.isEmpty || description.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Please fill all details.'),
                       duration: Duration(seconds: 3),
@@ -81,7 +92,8 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                       }
 
                       final Map<String, dynamic> newsDetails = {
-                        'headline': news,
+                        'headline': newsHeadline,
+                        'description': description,
                         'image': image
                       };
 
