@@ -28,7 +28,6 @@ class _NewsViewState extends State<NewsView> {
   Future getNews() async {
     newsDetails =
         await supabase.from('news').select().match({'id': newsId['news_id']});
-    print(newsDetails);
 
     final id = newsDetails[0]['id'];
 

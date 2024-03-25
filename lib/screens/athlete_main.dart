@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
+import 'package:sportss_rise/screens/athlete_news.dart';
 import 'package:sportss_rise/screens/athlete_profile.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,6 +30,7 @@ class _AthleteMainState extends State<AthleteMain> {
         index: _selectedIndex,
         children: const [
           AthleteHome(),
+          AthleteNews(),
           AthleteNetwork(),
           AthleteProfile()
         ],
@@ -39,6 +41,10 @@ class _AthleteMainState extends State<AthleteMain> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper_outlined),
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
