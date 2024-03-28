@@ -11,7 +11,7 @@ import 'package:sportss_rise/screens/athlete_profile.dart';
 import 'package:sportss_rise/screens/athlete_search.dart';
 import 'package:sportss_rise/screens/athlete_swimming.dart';
 import 'package:sportss_rise/screens/athlete_volleyball.dart';
-// import 'package:sportss_rise/screens/chat_page.dart';
+import 'package:sportss_rise/screens/chat_page.dart';
 import 'package:sportss_rise/screens/coach_add_news.dart';
 import 'package:sportss_rise/screens/coach_athlete_connect.dart';
 import 'package:sportss_rise/screens/coach_athlete_search.dart';
@@ -79,7 +79,7 @@ class SportsRise extends StatelessWidget {
         '/news_search':(context) => const NewsSearch(),
         '/coach_manage_news':(context) => const CoachManageNews(),
         '/news_view':(context) => const NewsView(),
-        // '/chat_page':(context) => const ChatPage(),
+        '/chat_page':(context) => const ChatPage(),
       },
     );
   }

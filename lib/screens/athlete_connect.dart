@@ -16,17 +16,21 @@ class _AthleteConnectState extends State<AthleteConnect> {
   late Future<void> _initializeVideoPlayerFuture;
 
   final supabase = Supabase.instance.client;
+  dynamic userFrom;
+  dynamic userTo;
   dynamic athlete;
   dynamic athleteDetails;
   dynamic videoUrl;
+  dynamic follower;
+  // dynamic followedBy;
   bool isLoading = true;
   bool isFollowing = false;
 
   final email = Supabase.instance.client.auth.currentUser!.email!;
   dynamic uId = Supabase.instance.client.auth.currentUser!.id;
   dynamic accountEmail;
-  int followers = 0;
-  int following = 0;
+  int followerCount = 0;
+  int followingCount = 0;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -39,6 +43,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
+      follower = athlete['uid'];
 
       videoUrl = athlete['videoUrl'];
       if (videoUrl != null) {
@@ -49,13 +54,14 @@ class _AthleteConnectState extends State<AthleteConnect> {
       _initializeVideoPlayerFuture = controller.initialize();
       controller.pause();
     }
-
-      // controller = VideoPlayerController.networkUrl(
-      //   Uri.parse(videoUrl),
-      // );
-
-      // _initializeVideoPlayerFuture = controller.initialize();
-      // controller.pause();
+    final res = await supabase.from('follow').select('*').eq('follower', follower).eq('followed_by', uId);
+    if (res.length>0){
+      isFollowing = !isFollowing;
+    }
+    final followerResponse = await supabase.from('follow').select('*').eq('follower', follower);
+    followerCount = followerResponse.length;
+    final followingResponse = await supabase.from('follow').select('*').eq('followed_by', follower);
+    followingCount = followingResponse.length;
 
       await getProfile();
     });
@@ -74,8 +80,8 @@ class _AthleteConnectState extends State<AthleteConnect> {
         .match({'user_id': athlete['uid']});
     // videoUrl = athlete['videoUrl'];
     final id = athleteDetails[0]['id'];
-    followers = athleteDetails[0]['followers'] as int;
-    following = athleteDetails[0]['following'] as int;
+    userFrom = supabase.auth.currentUser!.id;
+    userTo = athleteDetails[0]['user_id'];
     final supabase1 =
         SupabaseClient(dotenv.env['URL']!, dotenv.env['SECRET_KEY']!);
 
@@ -97,28 +103,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
     setState(() {
       isLoading = false;
     });
-  }
-
-  Future updateFollowStatus() async {
-    final updateResponse1 = await supabase.from('profile').update({
-      'followers': isFollowing ? followers + 1 : followers - 1,
-    }).match({'user_id': athlete['uid']});
-
-    final updateResponse2 = await supabase.from('profile').update({
-      'following': isFollowing ? following + 1 : following - 1,
-    }).match({'user_id': uId});
-
-    if (updateResponse1.error != null || updateResponse2.error != null) {
-      // Handle errors (optional)
-      // print('Error updating follower counts: ${updateResponse1.error}');
-      // print('Error updating following: ${updateResponse2.error}');
-    } else {
-      setState(() {
-        followers = isFollowing ? followers + 1 : followers - 1;
-        following = isFollowing ? following + 1 : following - 1;
-        isFollowing = !isFollowing;
-      });
-    }
   }
 
   @override
@@ -174,7 +158,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     Row(
                       children: [
                         Text(
-                          '$followers',
+                          '$followerCount',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -194,7 +178,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     Row(
                       children: [
                         Text(
-                          '$following',
+                          '$followingCount',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -255,14 +239,15 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     setState(() {
                       isFollowing = !isFollowing;
                     });
-
-                    await supabase.from('profile').update({
-                      'followers': isFollowing ? followers + 1 : followers - 1,
-                    }).match({'user_id': athlete['uid']});
-
-                    await supabase.from('profile').update({
-                      'following': isFollowing ? following + 1 : following - 1,
-                    }).match({'user_id': uId});
+                    if (isFollowing){
+                      await supabase.from('follow').insert({'follower' : follower, 'followed_by' : uId});
+                    } else{
+                      await supabase
+                        .from('follow')
+                        .delete()
+                        .eq('follower', follower)
+                        .eq('followed_by', uId);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: isFollowing ? Colors.black : Colors.white,
@@ -273,17 +258,17 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {
-                    // Navigator.pushNamed(context, '/chat_page');
-                    // final userFrom = supabase.auth.currentUser!.id;
-                    // final userTo =
+                  onPressed: () async {
+                    await supabase.from('message').insert({'user_from' : userFrom, 'user_to' : userTo});
+
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, '/chat_page');
                   },
                   child: const Text('Message'),
                 ),
               ],
             ),
 
-            // const VideoPlayerScreen(),
             isLoading
                 ? const Text("Loading...")
                 : videoUrl == null
@@ -293,7 +278,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
                           maxHeight: MediaQuery.of(context).size.height * 0.4,
                           maxWidth: MediaQuery.of(context).size.width * 0.9,
                         ),
-                        // Wrap the FutureBuilder with a Scaffold to add the FAB
                         child: FutureBuilder(
                           future: _initializeVideoPlayerFuture,
                           builder: (context, snapshot) {
@@ -309,7 +293,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
                                   child: Stack(
                                     children: [
                                       VideoPlayer(controller),
-                                      // Position the FAB at the bottom right corner
                                       Positioned(
                                         bottom: 20.0,
                                         right: 20.0,
