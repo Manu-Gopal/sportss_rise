@@ -1,3 +1,5 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
@@ -13,12 +15,11 @@ class AthleteMain extends StatefulWidget {
 }
 
 class _AthleteMainState extends State<AthleteMain> {
-
   int _selectedIndex = 0;
-  
-  void _onItemTapped( int index) {
+
+  void _onItemTapped(int index) {
     setState(() {
-    _selectedIndex = index;
+      _selectedIndex = index;
     });
   }
 
@@ -35,31 +36,32 @@ class _AthleteMainState extends State<AthleteMain> {
           AthleteProfile()
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.blue,
+        index: _selectedIndex,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper_outlined),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.newspaper_outlined),
             label: 'News',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.group),
             label: 'Connect',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        iconSize: 25,
-        showUnselectedLabels: true,
-      )
+        onTap: (index) {
+          // Handle button tap
+          _onItemTapped(index);
+        },
+      ),
     );
   }
 }
@@ -72,7 +74,6 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-
   final supabase = Supabase.instance.client;
   dynamic useremail = '';
 
@@ -119,10 +120,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: const Text(
               "Latest News",
               style: TextStyle(
-                // fontFamily: 'RobotoSlab',
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
+                  // fontFamily: 'RobotoSlab',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ],

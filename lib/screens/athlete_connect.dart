@@ -12,7 +12,6 @@ class AthleteConnect extends StatefulWidget {
 }
 
 class _AthleteConnectState extends State<AthleteConnect> {
-
   late VideoPlayerController controller;
   late Future<void> _initializeVideoPlayerFuture;
 
@@ -39,28 +38,34 @@ class _AthleteConnectState extends State<AthleteConnect> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
 
       videoUrl = athlete['videoUrl'];
+      if (videoUrl != null) {
       controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-        videoUrl
-      ),
-    );
+        Uri.parse(videoUrl),
+      );
 
-    _initializeVideoPlayerFuture = controller.initialize();
-    controller.pause();
+      _initializeVideoPlayerFuture = controller.initialize();
+      controller.pause();
+    }
+
+      // controller = VideoPlayerController.networkUrl(
+      //   Uri.parse(videoUrl),
+      // );
+
+      // _initializeVideoPlayerFuture = controller.initialize();
+      // controller.pause();
 
       await getProfile();
     });
   }
 
-    @override
-    void dispose() {
-      controller.dispose();
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   Future getProfile() async {
     athleteDetails = await supabase
@@ -76,6 +81,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
 
     final res =
         await supabase1.auth.admin.getUserById(athleteDetails[0]['user_id']);
+    // print(athleteDetails[0]['user_id']); // user_id of the viewed account
 
     accountEmail = res.user!.email;
     if (athleteDetails[0]['image'] == true) {
@@ -268,64 +274,74 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/chat_page');
+                    // Navigator.pushNamed(context, '/chat_page');
+                    // final userFrom = supabase.auth.currentUser!.id;
+                    // final userTo =
                   },
                   child: const Text('Message'),
                 ),
               ],
             ),
 
-
             // const VideoPlayerScreen(),
             isLoading
-                ? const Text("Loading..."):ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.4,
-        maxWidth: MediaQuery.of(context).size.width * 0.9,
-      ),
-      // Wrap the FutureBuilder with a Scaffold to add the FAB
-      child: FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: Stack(
-                children: [
-                  VideoPlayer(controller),
-                  // Position the FAB at the bottom right corner
-                  Positioned(
-                    bottom: 20.0,
-                    right: 20.0,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        // Add functionality for the FAB button here
-                        // For example, you could pause/play the video
-                        
-                        setState(() {
-                          if (controller.value.isPlaying) {
-                          controller.pause();
-                        } else {
-                          controller.play();
-                        }
-                        });
-                      },
-                      child: Icon(
-                        controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    )
+                ? const Text("Loading...")
+                : videoUrl == null
+                    ? const Text('No Video Available')
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.4,
+                          maxWidth: MediaQuery.of(context).size.width * 0.9,
+                        ),
+                        // Wrap the FutureBuilder with a Scaffold to add the FAB
+                        child: FutureBuilder(
+                          future: _initializeVideoPlayerFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (videoUrl == null) {
+                                return const Center(
+                                  child: Text('No Video Available'),
+                                );
+                              } else {
+                                return AspectRatio(
+                                  aspectRatio: controller.value.aspectRatio,
+                                  child: Stack(
+                                    children: [
+                                      VideoPlayer(controller),
+                                      // Position the FAB at the bottom right corner
+                                      Positioned(
+                                        bottom: 20.0,
+                                        right: 20.0,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (controller.value.isPlaying) {
+                                                controller.pause();
+                                              } else {
+                                                controller.play();
+                                              }
+                                            });
+                                          },
+                                          child: Icon(
+                                            controller.value.isPlaying
+                                                ? Icons.pause
+                                                : Icons.play_arrow,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                      )
           ],
         ),
       ),
