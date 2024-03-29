@@ -76,7 +76,7 @@ class _NewsViewState extends State<NewsView> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      '/profile_picture_view',
+                      '/picture_view',
                       arguments: {'imageUrl': imageUrl},
                     );
                   },

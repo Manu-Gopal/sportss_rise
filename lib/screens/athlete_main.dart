@@ -58,7 +58,6 @@ class _AthleteMainState extends State<AthleteMain> {
           ),
         ],
         onTap: (index) {
-          // Handle button tap
           _onItemTapped(index);
         },
       ),

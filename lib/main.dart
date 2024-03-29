@@ -25,7 +25,7 @@ import 'package:sportss_rise/screens/athlete_login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sportss_rise/screens/news_search.dart';
 import 'package:sportss_rise/screens/news_view.dart';
-import 'package:sportss_rise/screens/profile_picture_view.dart';
+import 'package:sportss_rise/screens/picture_view.dart';
 import 'package:sportss_rise/screens/sai_add_coach.dart';
 import 'package:sportss_rise/screens/sai_coaches_search.dart';
 import 'package:sportss_rise/screens/sai_homepage.dart';
@@ -74,7 +74,7 @@ class SportsRise extends StatelessWidget {
         '/coach_login':(context) => const CoachLogin(),
         '/coach_athlete_search':(context) => const CoachAthleteSearch(),
         '/coach_athlete_connect':(context) => const CoachAthleteConnect(),
-        '/profile_picture_view':(context) => const ProfilePictureView(),
+        '/picture_view':(context) => const PictureView(),
         '/add_news':(context) => const CoachAddNews(),
         '/news_search':(context) => const NewsSearch(),
         '/coach_manage_news':(context) => const CoachManageNews(),

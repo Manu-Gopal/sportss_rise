@@ -118,7 +118,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, '/profile_picture_view',
+                                          context, '/picture_view',
                                           arguments: {
                                             'imageUrl': athlete['image_url']
                                           });

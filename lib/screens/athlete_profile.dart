@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:video_player/video_player.dart';
 
 class AthleteProfile extends StatefulWidget {
   const AthleteProfile({super.key});
@@ -9,10 +10,16 @@ class AthleteProfile extends StatefulWidget {
 }
 
 class _AthleteProfileState extends State<AthleteProfile> {
+  late VideoPlayerController controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
   final supabase = Supabase.instance.client;
-  // ignore: non_constant_identifier_names
-  dynamic athlete_profile;
-  bool isLoading = false;
+  dynamic athleteProfile;
+  dynamic videoUrl;
+  bool isLoading = true;
+  int followerCount = 0;
+  int followingCount = 0;
+  dynamic userEmail = Supabase.instance.client.auth.currentUser!.email!;
   dynamic uId = Supabase.instance.client.auth.currentUser!.id;
 
   final TextEditingController nameController = TextEditingController();
@@ -28,19 +35,34 @@ class _AthleteProfileState extends State<AthleteProfile> {
   }
 
   Future getProfile() async {
+    athleteProfile =
+        await supabase.from('profile').select().match({'user_id': uId});
+    videoUrl = athleteProfile[0]['video_url'];
+    if (videoUrl != null) {
+      controller = VideoPlayerController.networkUrl(
+        Uri.parse(videoUrl),
+      );
+
+      _initializeVideoPlayerFuture = controller.initialize();
+      controller.pause();
+    }
+    final followerResponse =
+        await supabase.from('follow').select('*').eq('follower', uId);
+    followerCount = followerResponse.length;
+    final followingResponse =
+        await supabase.from('follow').select('*').eq('followed_by', uId);
+    followingCount = followingResponse.length;
     setState(() {
       isLoading = true;
     });
 
-    athlete_profile =
-        await supabase.from('profile').select().match({'user_id': uId});
-    final id = athlete_profile[0]['id'];
+    final id = athleteProfile[0]['id'];
 
-    nameController.text = athlete_profile[0]['name'];
-    phoneController.text = athlete_profile[0]['phone'];
+    nameController.text = athleteProfile[0]['name'];
+    phoneController.text = athleteProfile[0]['phone'];
     emailController.text = supabase.auth.currentUser!.email!;
 
-    if (athlete_profile[0]['image'] == true) {
+    if (athleteProfile[0]['image'] == true) {
       final String publicUrl = Supabase.instance.client.storage
           .from('images')
           .getPublicUrl('item_images/$id');
@@ -55,109 +77,95 @@ class _AthleteProfileState extends State<AthleteProfile> {
     });
   }
 
-  Widget textFields(TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 10.0, // Adjust the left padding as needed
-      ),
-      child: TextField(
-        controller: controller,
-        enabled: false,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(height: 80),
-      const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Account Details",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
       ),
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context, '/profile_picture_view',
-                  arguments: {
-                    'imageUrl': imageUrl
-                  }
-                );
-              },
-              child: imageUrl != null
-                  ? CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(imageUrl),
-                    )
-                  : const CircleAvatar(
-                      radius: 50.0,
-                      child: Icon(Icons.person, size: 40.0, color: Colors.grey),
-                    ),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 15),
-      const Text('   Name'),
-      textFields(nameController),
-      const SizedBox(height: 15),
-      const Text("   Phone Number"),
-      textFields(phoneController),
-      const SizedBox(height: 15),
-      const Text("   Email"),
-      textFields(emailController),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Center(
+        child: Column(
           children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Account Details",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                elevation: MaterialStateProperty.all(3),
-                backgroundColor: MaterialStateProperty.all(Colors.grey),
-              ),
-              onPressed: () async {
-                Navigator.pushNamed(context, '/athlete_edit_profile');
-              },
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 40),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/picture_view',
+                          arguments: {'imageUrl': imageUrl});
+                    },
+                    child: imageUrl != null
+                        ? CircleAvatar(
+                            radius: 50.0,
+                            backgroundImage: NetworkImage(imageUrl),
+                          )
+                        : const CircleAvatar(
+                            radius: 50.0,
+                            child: Icon(Icons.person,
+                                size: 40.0, color: Colors.grey),
+                          ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Column(
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.edit, color: Colors.black),
-                        SizedBox(
-                            width: 8.0), // Adjust spacing between icon and text
                         Text(
-                          'Edit Details',
+                          '$followerCount',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        const Text(
+                          'followers',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Text(
+                          '$followingCount',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        const Text(
+                          'following',
+                          style: TextStyle(
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -165,46 +173,127 @@ class _AthleteProfileState extends State<AthleteProfile> {
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                )),
-                elevation: MaterialStateProperty.all(3),
-                backgroundColor: MaterialStateProperty.all(
-                    Colors.grey), // Set the background color here
-              ),
-              onPressed: () async {
-                await Supabase.instance.client.auth.signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.pushNamed(context, '/');
-              },
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Log Out',
-                      style: TextStyle(
-                        color: Colors.black,
-                        // fontFamily: 'RobotoSlab',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+            const SizedBox(height: 12),
+            isLoading
+                ? const Text("Loading...")
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 60),
+                      Text(
+                        athleteProfile[0]['name'],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.logout, color: Colors.black),
-                  ],
+                    ],
+                  ),
+            const SizedBox(height: 10),
+            isLoading
+                ? const Text("Loading...")
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 60),
+                      Text(
+                        userEmail,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(width: 40),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/athlete_edit_profile');
+                  },
+                  icon: const Icon(Icons.edit, color: Colors.black,),
+                  label: const Text('Edit Profile'),
                 ),
-              ),
+                const SizedBox(width: 10),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    await Supabase.instance.client.auth.signOut();
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, '/');
+                  },
+                  label: const Text('Log Out'),
+                  icon: const Icon(Icons.logout, color: Colors.black,),
+                  
+                ),
+              ],
             ),
+            const SizedBox(height: 20),
+            isLoading
+                ? const Text("Loading...")
+                : videoUrl == null
+                    ? const Text('No Video Available')
+                    : ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.4,
+                          maxWidth: MediaQuery.of(context).size.width * 0.9,
+                        ),
+                        child: FutureBuilder(
+                          future: _initializeVideoPlayerFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (videoUrl == null) {
+                                return const Center(
+                                  child: Text('No Video Available'),
+                                );
+                              } else {
+                                return AspectRatio(
+                                  aspectRatio: controller.value.aspectRatio,
+                                  child: Stack(
+                                    children: [
+                                      VideoPlayer(controller),
+                                      Positioned(
+                                        bottom: 20.0,
+                                        right: 20.0,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (controller.value.isPlaying) {
+                                                controller.pause();
+                                              } else {
+                                                controller.play();
+                                              }
+                                            });
+                                          },
+                                          child: Icon(
+                                            controller.value.isPlaying
+                                                ? Icons.pause
+                                                : Icons.play_arrow,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                      )
           ],
         ),
-      )
-    ]);
+      ),
+    );
   }
 }
 

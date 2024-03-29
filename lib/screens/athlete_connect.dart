@@ -22,7 +22,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
   dynamic athleteDetails;
   dynamic videoUrl;
   dynamic follower;
-  // dynamic followedBy;
   bool isLoading = true;
   bool isFollowing = false;
 
@@ -41,7 +40,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future.delayed(Duration.zero, () async {  
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
       follower = athlete['uid'];
 
@@ -87,7 +86,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
 
     final res =
         await supabase1.auth.admin.getUserById(athleteDetails[0]['user_id']);
-    // print(athleteDetails[0]['user_id']); // user_id of the viewed account
 
     accountEmail = res.user!.email;
     if (athleteDetails[0]['image'] == true) {
@@ -137,7 +135,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                   padding: const EdgeInsets.only(right: 16.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/profile_picture_view',
+                      Navigator.pushNamed(context, '/picture_view',
                           arguments: {'imageUrl': imageUrl});
                     },
                     child: imageUrl != null

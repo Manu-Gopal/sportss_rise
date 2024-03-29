@@ -109,7 +109,7 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                                         // Handle profile picture view navigation
                                         Navigator.pushNamed(
                                           context,
-                                          '/profile_picture_view',
+                                          '/picture_view',
                                           arguments: {
                                             'imageUrl': news['image_url']
                                           },

@@ -103,7 +103,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, '/profile_picture_view',
+                                          context, '/picture_view',
                                           arguments: {
                                             'imageUrl': athlete['image_url']
                                           });
@@ -143,12 +143,22 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                                   left: 60),
                                               child: IconButton(
                                                   onPressed: () {
-                                                    Navigator.pushNamed(context,
-                                                        '/athlete_connect',
-                                                        arguments: {
-                                                          'uid': athlete['user_id'],
-                                                          'videoUrl': athlete['video_url']
-                                                        });
+                                                    if (athlete['user_id'] ==
+                                                        userId) {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/athlete_profile');
+                                                    } else {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/athlete_connect',
+                                                          arguments: {
+                                                            'uid': athlete[
+                                                                'user_id'],
+                                                            'videoUrl': athlete[
+                                                                'video_url']
+                                                          });
+                                                    }
                                                   },
                                                   icon: const Icon(
                                                     Icons

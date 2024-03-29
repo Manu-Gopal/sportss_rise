@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';  
 
-class ProfilePictureView extends StatefulWidget {
-  const ProfilePictureView({super.key});
+class PictureView extends StatefulWidget {
+  const PictureView({super.key});
 
   @override
-  State<ProfilePictureView> createState() => _ProfilePictureViewState();
+  State<PictureView> createState() => _ProfilePictureViewState();
 }
 
-class _ProfilePictureViewState extends State<ProfilePictureView> {
+class _ProfilePictureViewState extends State<PictureView> {
 
   dynamic url;
   dynamic imageUrl;
@@ -39,14 +39,13 @@ class _ProfilePictureViewState extends State<ProfilePictureView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Picture'),
+        title: const Text('Picture View'),
       ),
       body: Center(
         child: isLoading ? const Text("Loading...")
         : imageUrl != null
           ? PhotoView(imageProvider: NetworkImage(imageUrl))
           : const Text('No Picture Available')
-            // const Icon(Icons.person, size: 100, color: Colors.grey),
       ),
     );
   }

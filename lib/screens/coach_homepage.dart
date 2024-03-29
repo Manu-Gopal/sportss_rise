@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:sportss_rise/screens/coach_athlete_profile_view.dart';
 import 'package:sportss_rise/screens/coach_manage_news.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,26 +33,22 @@ class _CoachHomePageState extends State<CoachHomePage> {
           CoachManageNews(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.blue,
+        index: _selectedIndex,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.group),
             label: 'Athletes',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper_outlined),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.newspaper_outlined),
             label: 'News',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person),
-          //   label: 'Profile',
-          // ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        iconSize: 25,
-        showUnselectedLabels: true,
+        onTap: (index) {
+          _onItemTapped(index);
+        },
       )
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:video_player/video_player.dart';
-// import 'video_player_screen.dart';
 
 class CoachAthleteConnect extends StatefulWidget {
   const CoachAthleteConnect({super.key});
@@ -21,6 +20,8 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   dynamic athleteDetails;
   bool isLoading = true;
   bool isFollowing = false;
+  int followerCount = 0;
+  int followingCount = 0;
 
   final email = Supabase.instance.client.auth.currentUser!.email!;
   dynamic uId = Supabase.instance.client.auth.currentUser!.id;
@@ -48,6 +49,13 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
       _initializeVideoPlayerFuture = controller.initialize();
       controller.pause();
 
+      final followerResponse =
+        await supabase.from('follow').select('*').eq('follower', athlete['uid']);
+    followerCount = followerResponse.length;
+    final followingResponse =
+        await supabase.from('follow').select('*').eq('followed_by', athlete['uid']);
+    followingCount = followingResponse.length;
+
       await getProfile();
     });
   }
@@ -64,8 +72,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
         .select()
         .match({'user_id': athlete['uid']});
     final id = athleteDetails[0]['id'];
-    followers = athleteDetails[0]['followers'] as int;
-    following = athleteDetails[0]['following'] as int;
     final supabase1 =
         SupabaseClient(dotenv.env['URL']!, dotenv.env['SECRET_KEY']!);
 
@@ -88,28 +94,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
     });
   }
 
-  // Future updateFollowStatus() async {
-  //   final updateResponse1 = await supabase.from('profile').update({
-  //     'followers': isFollowing ? followers + 1 : followers - 1,
-  //   }).match({'user_id': athlete['uid']});
-
-  //   final updateResponse2 = await supabase.from('profile').update({
-  //     'following': isFollowing ? following + 1 : following - 1,
-  //   }).match({'user_id': uId});
-
-  //   if (updateResponse1.error != null || updateResponse2.error != null) {
-  //     // Handle errors (optional)
-  //     // print('Error updating follower counts: ${updateResponse1.error}');
-  //     // print('Error updating following: ${updateResponse2.error}');
-  //   } else {
-  //     setState(() {
-  //       followers = isFollowing ? followers + 1 : followers - 1;
-  //       following = isFollowing ? following + 1 : following - 1;
-  //       isFollowing = !isFollowing;
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +103,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
       body: Center(
         child: Column(
           children: [
-            // const SizedBox(height: 80),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -138,25 +121,36 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(width: 40),
-                Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: imageUrl != null
-                        ? CircleAvatar(
-                            radius: 50.0,
-                            backgroundImage: NetworkImage(imageUrl),
-                          )
-                        : const CircleAvatar(
-                            radius: 50.0,
-                            child: Icon(Icons.person,
-                                size: 40.0, color: Colors.grey),
-                          )),
+                GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/picture_view',
+                                          arguments: {
+                                            'imageUrl': imageUrl
+                                          });
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 40.0,
+                                      backgroundColor: Colors.grey,
+                                      backgroundImage: imageUrl !=
+                                              null
+                                          ? NetworkImage(imageUrl)
+                                          : null,
+                                      child: imageUrl == null
+                                          ? const Icon(
+                                              Icons.person,
+                                              color: Colors.white,
+                                            )
+                                          : null,
+                                    ),
+                                  ),
                 const SizedBox(width: 20),
                 Column(
                   children: [
                     Row(
                       children: [
                         Text(
-                          '$followers',
+                          '$followerCount',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -176,7 +170,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                     Row(
                       children: [
                         Text(
-                          '$following',
+                          '$followingCount',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -229,38 +223,44 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                     ],
                   ),
             const SizedBox(height: 10),
-            // Row(
-            //   children: [
-            //     const SizedBox(width: 40),
-            //     ElevatedButton(
-            //       onPressed: () async {
-            //         setState(() {
-            //           isFollowing = !isFollowing;
-            //         });
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // const SizedBox(width: 40),
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     setState(() {
+                //       isFollowing = !isFollowing;
+                //     });
+                //     if (isFollowing){
+                //       await supabase.from('follow').insert({'follower' : follower, 'followed_by' : uId});
+                //     } else{
+                //       await supabase
+                //         .from('follow')
+                //         .delete()
+                //         .eq('follower', follower)
+                //         .eq('followed_by', uId);
+                //     }
+                //   },
+                //   style: ElevatedButton.styleFrom(
+                //     foregroundColor: isFollowing ? Colors.black : Colors.white,
+                //     backgroundColor: isFollowing ? Colors.white : Colors.blue,
+                //     minimumSize: const Size(110.0, 36.0),
+                //   ),
+                //   child: Text(isFollowing ? 'Following' : 'Follow'),
+                // ),
+                // const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () async {
+                    // await supabase.from('message').insert({'user_from' : userFrom, 'user_to' : userTo});
 
-            //         await supabase.from('profile').update({
-            //           'followers': isFollowing ? followers + 1 : followers - 1,
-            //         }).match({'user_id': athlete['uid']});
-
-            //         await supabase.from('profile').update({
-            //           'following': isFollowing ? following + 1 : following - 1,
-            //         }).match({'user_id': uId});
-            //       },
-            //       style: ElevatedButton.styleFrom(
-            //         foregroundColor: isFollowing ? Colors.black : Colors.white,
-            //         backgroundColor: isFollowing ? Colors.white : Colors.blue,
-            //         minimumSize: const Size(110.0, 36.0),
-            //       ),
-            //       child: Text(isFollowing ? 'Following' : 'Follow'),
-            //     ),
-            //     const SizedBox(width: 10),
-            //     ElevatedButton(
-            //       onPressed: () {},
-            //       child: const Text('Message'),
-            //     ),
-            //   ],
-            // ),
-            // const VideoPlayerScreen(),
+                    // // ignore: use_build_context_synchronously
+                    // Navigator.pushNamed(context, '/chat_page');
+                  },
+                  child: const Text('Message'),
+                ),
+              ],
+            ),
             isLoading
                 ? const Text("Loading...")
                 : videoUrl == null
@@ -270,7 +270,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           maxHeight: MediaQuery.of(context).size.height * 0.4,
                           maxWidth: MediaQuery.of(context).size.width * 0.9,
                         ),
-                        // Wrap the FutureBuilder with a Scaffold to add the FAB
                         child: FutureBuilder(
                           future: _initializeVideoPlayerFuture,
                           builder: (context, snapshot) {
@@ -281,7 +280,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                                 child: Stack(
                                   children: [
                                     VideoPlayer(controller),
-                                    // Position the FAB at the bottom right corner
                                     Positioned(
                                       bottom: 20.0,
                                       right: 20.0,
@@ -343,89 +341,3 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   }
 }
 
-class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({super.key});
-
-  @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
-}
-
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late VideoPlayerController controller;
-  late Future<void> _initializeVideoPlayerFuture;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller = VideoPlayerController.networkUrl(
-      Uri.parse(''
-          // 'https://wegdtcozojfvnnnlddbr.supabase.co/storage/v1/object/public/videos/cricket_videos/66c2db1c-19ef-409f-96da-a9f8a884184d20240314125115?t=2024-03-21T03%3A09%3A01.054Z',
-          ),
-      // Uri.parse('https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
-    );
-
-    _initializeVideoPlayerFuture = controller.initialize();
-    controller.pause();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.4,
-        maxWidth: MediaQuery.of(context).size.width * 0.9,
-      ),
-      // Wrap the FutureBuilder with a Scaffold to add the FAB
-      child: FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: Stack(
-                children: [
-                  VideoPlayer(controller),
-                  // Position the FAB at the bottom right corner
-                  Positioned(
-                    bottom: 20.0,
-                    right: 20.0,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        // Add functionality for the FAB button here
-                        // For example, you could pause/play the video
-
-                        setState(() {
-                          if (controller.value.isPlaying) {
-                            controller.pause();
-                          } else {
-                            controller.play();
-                          }
-                        });
-                      },
-                      child: Icon(
-                        controller.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
-  }
-}
