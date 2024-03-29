@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sportss_rise/screens/sai_coaches.dart';
 import 'package:sportss_rise/screens/sai_news.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 
 class SaiHomePage extends StatefulWidget {
   const SaiHomePage({super.key});
@@ -31,22 +33,22 @@ class _SaiHomePageState extends State<SaiHomePage> {
           SaiCoaches()
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.blue,
+        index: _selectedIndex,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.newspaper),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.newspaper_outlined),
             label: 'News',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.group),
             label: 'Coaches',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        iconSize: 25,
-        showUnselectedLabels: true,
+        onTap: (index) {
+          _onItemTapped(index);
+        },
       )
     );
   }

@@ -149,7 +149,7 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                                               Expanded(
                                                 // Wrap Text with Expanded
                                                 child: Text(
-                                                  news['description'],
+                                                  news['headline'],
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,

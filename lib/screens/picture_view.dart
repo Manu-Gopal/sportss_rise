@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';  
+// import 'package:supabase_flutter/supabase_flutter.dart';  
 
 class PictureView extends StatefulWidget {
   const PictureView({super.key});
@@ -13,10 +13,10 @@ class _ProfilePictureViewState extends State<PictureView> {
 
   dynamic url;
   dynamic imageUrl;
-  dynamic athleteProfile;
+  // dynamic athleteProfile;
   bool isLoading = true;
-  final supabase = Supabase.instance.client;
-  dynamic uId = Supabase.instance.client.auth.currentUser!.id;
+  // final supabase = Supabase.instance.client;
+  // dynamic uId = Supabase.instance.client.auth.currentUser!.id;
 
   @override
   void initState() {

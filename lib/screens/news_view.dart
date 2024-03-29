@@ -70,7 +70,7 @@ class _NewsViewState extends State<NewsView> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Center the entire Row
+                  MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -81,8 +81,8 @@ class _NewsViewState extends State<NewsView> {
                     );
                   },
                   child: Container(
-                    width: 250.0, // Increase the width for a larger image
-                    height: 250.0, // Increase the height for a larger image
+                    width: 250.0,
+                    height: 250.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(5.0),
@@ -108,35 +108,33 @@ class _NewsViewState extends State<NewsView> {
                     children: [
                       Text(
                         newsDetails[0]['headline'] ??
-                            "", // Handle potential null value
+                            "",
                         style: const TextStyle(fontSize: 25.0),
                         overflow: TextOverflow.ellipsis,
-                        softWrap: true, // Adjust font size as needed
+                        softWrap: true,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+            const SizedBox(height: 20),
             isLoading
                 ? const Text("Loading...")
                 : Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    const SizedBox(width: 10), // Small space at the left
-    Expanded(
-      // Ensures the text fills available space
-      child: Text(
-        newsDetails[0]['description'] ?? "",
-        style: const TextStyle(
-          fontSize: 18.0,
-          overflow: TextOverflow
-              .ellipsis, // Truncate if text overflows
-        ),
-        maxLines: 3, // Limit the number of lines displayed
-      ),
-    ),
-  ],
-),
-
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          newsDetails[0]['description'] ?? "",
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            overflow: TextOverflow
+                                .ellipsis,
+                          ),
+                          maxLines: 3,
+                        ),
+                      ),
+                    ],
+                  ),
           ],
         ),
       ),
