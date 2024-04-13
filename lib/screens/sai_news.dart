@@ -37,7 +37,32 @@ class _SaiNewsState extends State<SaiNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        title: const Text('SportsRise', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              Navigator.pushNamed(context, '/sai_news_search_page');
+            },
+          ),
+          // PopupMenuButton<String>(
+          //   icon: const Icon(Icons.filter_alt_outlined, color: Colors.black),
+          //   itemBuilder: (BuildContext context) {
+          //     return sports.map((String sport) {
+          //       return PopupMenuItem<String>(
+          //         value: sport,
+          //         child: Text(sport),
+          //       );
+          //     }).toList();
+          //   },
+          //   onSelected: (String selectedSport) {
+          //     // Perform filtering based on the selected sport
+          //     print('Filter by $selectedSport');
+          //     // Add your filtering logic here
+          //   },
+          // ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -149,7 +174,7 @@ class _SaiNewsState extends State<SaiNews> {
                                               Expanded(
                                                 // Wrap Text with Expanded
                                                 child: Text(
-                                                  news['description'],
+                                                  news['headline'],
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,

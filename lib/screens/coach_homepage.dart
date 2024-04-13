@@ -3,6 +3,7 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:sportss_rise/screens/coach_athlete_profile_view.dart';
 import 'package:sportss_rise/screens/coach_manage_news.dart';
+import 'package:sportss_rise/screens/coach_profile_page.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CoachHomePage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _CoachHomePageState extends State<CoachHomePage> {
         children: const [
           CoachAthleteProfileView(),
           CoachManageNews(),
+          CoachProfilePage()
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
@@ -44,6 +46,10 @@ class _CoachHomePageState extends State<CoachHomePage> {
           CurvedNavigationBarItem(
             child: Icon(Icons.newspaper_outlined),
             label: 'News',
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         onTap: (index) {

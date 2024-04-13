@@ -8,10 +8,18 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-        Color.fromARGB(255, 3, 144, 163),
-        Color.fromARGB(255, 3, 201, 227),
-        Color.fromARGB(255, 2, 155, 175)
+      //   color: Colors.white
+      // ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black,
+              Colors.black38,
+              Colors.black
+        // Color.fromARGB(255, 3, 144, 163),
+        // Color.fromARGB(255, 3, 201, 227),
+        // Color.fromARGB(255, 2, 155, 175)
       ])),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +68,8 @@ class HomePage extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                          MaterialStateProperty.all<Color>(const Color.fromARGB(255, 100, 99, 99)),
+                          // MaterialStateProperty.all<Color>(const Color.fromARGB(255, 11, 72, 103)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
@@ -71,7 +80,7 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20,
                           //fontFamily: 'NovaSquare',
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold),
                     )),
               ),
@@ -92,7 +101,7 @@ class HomePage extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                          MaterialStateProperty.all<Color>(const Color.fromARGB(255, 100, 99, 99)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
@@ -103,7 +112,7 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20,
                           //fontFamily: 'NovaSquare',
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold),
                     )),
               ),
@@ -124,7 +133,7 @@ class HomePage extends StatelessWidget {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                          MaterialStateProperty.all<Color>(const Color.fromARGB(255, 100, 99, 99)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
@@ -135,7 +144,7 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20,
                           //fontFamily: 'NovaSquare',
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold),
                     )),
               ),

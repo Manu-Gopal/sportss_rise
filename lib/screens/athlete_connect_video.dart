@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:video_player/video_player.dart';
-// import 'video_player_screen.dart';
 
-class AthleteConnect extends StatefulWidget {
-  const AthleteConnect({super.key});
+class AthleteConnectVideo extends StatefulWidget {
+  const AthleteConnectVideo({super.key});
 
   @override
-  State<AthleteConnect> createState() => _AthleteConnectState();
+  State<AthleteConnectVideo> createState() => _AthleteConnectVideoState();
 }
 
-class _AthleteConnectState extends State<AthleteConnect> {
-  late VideoPlayerController controller;
-  late Future<void> _initializeVideoPlayerFuture;
+class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
 
   final supabase = Supabase.instance.client;
   dynamic userFrom;
   dynamic userTo;
   dynamic athlete;
   dynamic athleteDetails;
-  dynamic videoUrl;
   dynamic follower;
+  dynamic imageUrl;
   bool isLoading = true;
   bool isFollowing = false;
 
@@ -35,8 +31,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  dynamic imageUrl;
-
   @override
   void initState() {
     super.initState();
@@ -44,15 +38,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
       follower = athlete['uid'];
 
-      videoUrl = athlete['videoUrl'];
-      if (videoUrl != null) {
-        controller = VideoPlayerController.networkUrl(
-          Uri.parse(videoUrl),
-        );
-
-        _initializeVideoPlayerFuture = controller.initialize();
-        controller.pause();
-      }
       final res = await supabase
           .from('follow')
           .select('*')
@@ -72,18 +57,11 @@ class _AthleteConnectState extends State<AthleteConnect> {
     });
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   Future getProfile() async {
     athleteDetails = await supabase
         .from('profile')
         .select()
         .match({'user_id': athlete['uid']});
-    // videoUrl = athlete['videoUrl'];
     final id = athleteDetails[0]['id'];
     userFrom = supabase.auth.currentUser!.id;
     userTo = athleteDetails[0]['user_id'];
@@ -283,7 +261,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {
-                    // await supabase.from('message').insert({'user_from' : userFrom, 'user_to' : userTo});
 
                     // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, '/chat_page',
@@ -293,63 +270,19 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 ),
               ],
             ),
-
-            isLoading
-                ? const Text("Loading...")
-                : videoUrl == null
-                    ? const Text('No Video Available')
-                    : ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.4,
-                          maxWidth: MediaQuery.of(context).size.width * 0.9,
-                        ),
-                        child: FutureBuilder(
-                          future: _initializeVideoPlayerFuture,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (videoUrl == null) {
-                                return const Center(
-                                  child: Text('No Video Available'),
-                                );
-                              } else {
-                                return AspectRatio(
-                                  aspectRatio: controller.value.aspectRatio,
-                                  child: Stack(
-                                    children: [
-                                      VideoPlayer(controller),
-                                      Positioned(
-                                        bottom: 20.0,
-                                        right: 20.0,
-                                        child: FloatingActionButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (controller.value.isPlaying) {
-                                                controller.pause();
-                                              } else {
-                                                controller.play();
-                                              }
-                                            });
-                                          },
-                                          child: Icon(
-                                            controller.value.isPlaying
-                                                ? Icons.pause
-                                                : Icons.play_arrow,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ),
-                      )
+            const SizedBox(height: 30),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Video Available',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),

@@ -241,9 +241,9 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 final AuthResponse res = await supabase.auth
                                     .signUp(email: email, password: password);
 
-                                await supabase
-                                  .from('contact')
-                                  .insert({'id': res.user!.id, 'username': 'User'});
+                                // await supabase
+                                //   .from('contact')
+                                //   .insert({'id': res.user!.id, 'username': 'User'});
 
                                 if (imageFile != null) {
                                 image = true;
@@ -255,16 +255,16 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 'phone': phone,
                                 'dob': dob,
                                 'image': image,
-                                'followers': 0,
-                                'following': 0,
                               };
 
                               final response = await supabase
                                   .from('profile')
                                   .insert(userDetails)
                                   .select();
+                              
+                              // print("RESPONSE ${response}");
 
-                              final int profileId = response[0]['id'];
+                              final String profileId = response[0]['id'];
 
                               if (imageFile != null) {
                                 await Supabase.instance.client.storage
@@ -294,11 +294,22 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 //   ));
                                 //   return;
                                 // }
+                                // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Account Created Successfully.'),
+                                duration: Duration(seconds: 3),
+                                
+
+                              ));
+                              // ignore: use_build_context_synchronously
+                          Navigator.pushNamed(context, '/athlete_login');
                                 } on PostgrestException catch (error) {
                                 // Handle potential errors during email check (optional)
                                 // print('Error checking email: $error');
                                 // You can choose to display a generic error message here
                                 // or retry the check with exponential backoff if desired.
+                                print(error.toString());
                                 if (error
                                     .toString()
                                     .contains('already registered')) {
@@ -316,21 +327,17 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                   // You can choose to display a generic error message here
                                 }
                               } catch (error) {
+
+                                print(error.toString());
                                 // Handle other potential errors (optional)
                                 // print('Unexpected error: $error');
                                 // You can choose to display a generic error message here
                               }
 
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Account Created Successfully.'),
-                                duration: Duration(seconds: 3),
-                              ));
+                              
                             }
                           }
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(context, '/athlete_login');
+                          
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:

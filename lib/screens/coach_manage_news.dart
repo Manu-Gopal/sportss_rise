@@ -36,7 +36,9 @@ class _CoachManageNewsState extends State<CoachManageNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        title: const Text('News', style: TextStyle(color: Colors.black)),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
       ),
       drawer: const CustomDrawer(),
       body: Center(

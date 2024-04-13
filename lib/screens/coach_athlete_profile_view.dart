@@ -22,9 +22,6 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
   @override
   void initState() {
     super.initState();
-    // coachSport = supabase.from('coach_profile')
-    //   .select('sport')
-    //   .eq('coach_user_id', coachId);
     getAthletes();
   }
 
@@ -54,7 +51,8 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Athletes'),
+        title: const Text('SportsRise', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.blueGrey,
       ),
       drawer: const CustomDrawer(),
       body: Center(

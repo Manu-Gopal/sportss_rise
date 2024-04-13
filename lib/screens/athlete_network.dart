@@ -145,10 +145,23 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                                   onPressed: () {
                                                     if (athlete['user_id'] ==
                                                         userId) {
-                                                      Navigator.pushNamed(
+                                                          if(athlete['video_url'] != null){
+                                                            Navigator.pushNamed(
                                                           context,
                                                           '/athlete_profile');
+                                                          } else {
+                                                            Navigator.pushNamed(
+                                                          context,
+                                                          '/athlete_profile_video');
+                                                          }
+                                                      
                                                     } else {
+                                                      if (athlete['video_url'] == null){
+                                                        Navigator.pushNamed(context, '/athlete_connect_video', arguments: {
+                                                            'uid': athlete[
+                                                                'user_id'],
+                                                          });
+                                                      } else {
                                                       Navigator.pushNamed(
                                                           context,
                                                           '/athlete_connect',
@@ -159,6 +172,8 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                                                 'video_url']
                                                           });
                                                     }
+                                                    }
+                                                    
                                                   },
                                                   icon: const Icon(
                                                     Icons

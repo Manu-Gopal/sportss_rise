@@ -13,6 +13,14 @@ class _SaiCoachesState extends State<SaiCoaches> {
   final supabase = Supabase.instance.client;
   bool isLoading = false;
   dynamic coachList;
+  List<String> sports = [
+    'Cricket',
+    'Football',
+    'Volleyball',
+    'Basketball',
+    'Badminton',
+    'Swimming'
+  ];
 
   @override
   void initState() {
@@ -36,7 +44,32 @@ class _SaiCoachesState extends State<SaiCoaches> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Coaches'),
+        title: const Text('SportsRise', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              Navigator.pushNamed(context, '/sai_coach_search_page');
+            },
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
+            itemBuilder: (BuildContext context) {
+              return sports.map((String sport) {
+                return PopupMenuItem<String>(
+                  value: sport,
+                  child: Text(sport),
+                );
+              }).toList();
+            },
+            onSelected: (String selectedSport) {
+              // Perform filtering based on the selected sport
+              print('Filter by $selectedSport');
+              // Add your filtering logic here
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -44,19 +77,19 @@ class _SaiCoachesState extends State<SaiCoaches> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                  onTap: () {
-                    if (searchController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, '/sai_coaches_search',
-                          arguments: {'searchText': searchController.text});
-                    }
-                  },
-                  child: const Icon(Icons.search),
-                )),
-              ),
+              // TextField(
+              //   controller: searchController,
+              //   decoration: InputDecoration(
+              //       suffixIcon: GestureDetector(
+              //     onTap: () {
+              //       if (searchController.text.isNotEmpty) {
+              //         Navigator.pushNamed(context, '/sai_coaches_search',
+              //             arguments: {'searchText': searchController.text});
+              //       }
+              //     },
+              //     child: const Icon(Icons.search),
+              //   )),
+              // ),
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,18 +129,27 @@ class _SaiCoachesState extends State<SaiCoaches> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 40.0,
-                                    backgroundColor: Colors.grey,
-                                    backgroundImage: coach['image_url'] != null
-                                        ? NetworkImage(coach['image_url'])
-                                        : null,
-                                    child: coach['image_url'] == null
-                                        ? const Icon(
-                                            Icons.person,
-                                            color: Colors.white,
-                                          )
-                                        : null,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/picture_view', arguments: {
+                                        'imageUrl': coach['image_url']
+                                      });
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 40.0,
+                                      backgroundColor: Colors.grey,
+                                      backgroundImage:
+                                          coach['image_url'] != null
+                                              ? NetworkImage(coach['image_url'])
+                                              : null,
+                                      child: coach['image_url'] == null
+                                          ? const Icon(
+                                              Icons.person,
+                                              color: Colors.white,
+                                            )
+                                          : null,
+                                    ),
                                   ),
                                   const SizedBox(width: 16.0),
                                   Expanded(
@@ -129,9 +171,14 @@ class _SaiCoachesState extends State<SaiCoaches> {
                                                   right: 10),
                                               child: IconButton(
                                                   onPressed: () {
-                                                    // Navigator.pushNamed(
-                                                    //   context, '/athlete_connect'
-                                                    // );
+                                                    Navigator.pushNamed(context,
+                                                        '/sai_coach_profile',
+                                                        arguments: {
+                                                          'user_id': coach[
+                                                              'coach_user_id'],
+                                                          'sport':
+                                                              coach['sport']
+                                                        });
                                                   },
                                                   icon: const Icon(
                                                     Icons

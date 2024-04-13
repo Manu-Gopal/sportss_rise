@@ -8,22 +8,23 @@ class AthleteLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.cyan,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Color.fromARGB(255, 3, 144, 163),
-                Color.fromARGB(255, 3, 201, 227),
-                Color.fromARGB(255, 2, 155, 175)
-              ]
-            )
-          ),
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                Colors.white54,
+                Colors.white
+                // Color.fromARGB(255, 3, 144, 163),
+                // Color.fromARGB(255, 3, 201, 227),
+                // Color.fromARGB(255, 2, 155, 175)
+              ])),
           child: Column(
-            children: <Widget> [
+            children: <Widget>[
               const SizedBox(
                 height: 260,
                 child: Header(),
@@ -31,13 +32,10 @@ class AthleteLogin extends StatelessWidget {
               SizedBox(
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40)
-                    )
-                  ),
-
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40))),
                   child: const AthleteInputWrapper(),
                 ),
               )

@@ -115,7 +115,7 @@ class _CoachInputWrapperState extends State<CoachInputWrapper> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 99, 172, 172),
+              backgroundColor: const Color.fromARGB(255, 11, 72, 103),
               padding:
                   const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               shape: RoundedRectangleBorder(

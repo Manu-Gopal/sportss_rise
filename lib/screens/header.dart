@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
           const Center(
             child: Text('Login',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               // fontFamily: 'NovaSquare',
               fontSize: 40
@@ -34,7 +34,7 @@ class Header extends StatelessWidget {
           const Center(
             child: Text("Welcome...!",
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               // fontFamily: 'NovaSquare',
               fontWeight: FontWeight.bold,
               fontSize: 18

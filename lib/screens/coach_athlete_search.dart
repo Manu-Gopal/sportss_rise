@@ -46,6 +46,13 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
         backgroundColor: Colors.blueAccent,
         title: const Text("Search"),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/coach_athlete_search_page')
+                .then((value) => setState(() => {}));
+          },
+        ),
       ),
       body: Center(
         child: Padding(

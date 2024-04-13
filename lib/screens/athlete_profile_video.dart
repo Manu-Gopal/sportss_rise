@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:video_player/video_player.dart';
 
-class AthleteProfile extends StatefulWidget {
-  const AthleteProfile({super.key});
+class AthleteProfileVideo extends StatefulWidget {
+  const AthleteProfileVideo({super.key});
 
   @override
-  State<AthleteProfile> createState() => _AthleteProfileState();
+  State<AthleteProfileVideo> createState() => _AthleteProfileVideoState();
 }
 
-class _AthleteProfileState extends State<AthleteProfile> {
-  late VideoPlayerController controller;
-  late Future<void> _initializeVideoPlayerFuture;
+class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
 
   final supabase = Supabase.instance.client;
   dynamic athleteProfile;
-  dynamic videoUrl;
   bool isLoading = true;
   int followerCount = 0;
   int followingCount = 0;
@@ -37,15 +33,6 @@ class _AthleteProfileState extends State<AthleteProfile> {
   Future getProfile() async {
     athleteProfile =
         await supabase.from('profile').select().match({'user_id': uId});
-    videoUrl = athleteProfile[0]['video_url'];
-    if (videoUrl != null) {
-      controller = VideoPlayerController.networkUrl(
-        Uri.parse(videoUrl),
-      );
-
-      _initializeVideoPlayerFuture = controller.initialize();
-      controller.pause();
-    }
     final followerResponse =
         await supabase.from('follow').select('*').eq('follower', uId);
     followerCount = followerResponse.length;
@@ -75,12 +62,6 @@ class _AthleteProfileState extends State<AthleteProfile> {
     setState(() {
       isLoading = false;
     });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -233,63 +214,20 @@ class _AthleteProfileState extends State<AthleteProfile> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            isLoading
-                ? const Text("Loading...")
-                : videoUrl == null
-                    ? const Text('No Video Available')
-                    : ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.of(context).size.height * 0.4,
-                          maxWidth: MediaQuery.of(context).size.width * 0.9,
-                        ),
-                        child: FutureBuilder(
-                          future: _initializeVideoPlayerFuture,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              if (videoUrl == null) {
-                                return const Center(
-                                  child: Text('No Video Available', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                                );
-                              } else {
-                                return AspectRatio(
-                                  aspectRatio: controller.value.aspectRatio,
-                                  child: Stack(
-                                    children: [
-                                      VideoPlayer(controller),
-                                      Positioned(
-                                        bottom: 20.0,
-                                        right: 20.0,
-                                        child: FloatingActionButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (controller.value.isPlaying) {
-                                                controller.pause();
-                                              } else {
-                                                controller.play();
-                                              }
-                                            });
-                                          },
-                                          child: Icon(
-                                            controller.value.isPlaying
-                                                ? Icons.pause
-                                                : Icons.play_arrow,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ),
-                      )
+            const SizedBox(height: 30),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Video Available',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20
+                  ),
+                )
+              ],
+            )
+            
           ],
         ),
       ),
