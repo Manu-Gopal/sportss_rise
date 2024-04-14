@@ -126,6 +126,7 @@ class _AthleteInputWrapperState extends State<AthleteInputWrapper> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
+                fontFamily: 'RobotoSlab'
               ),
             ),
           ),
@@ -141,6 +142,7 @@ class _AthleteInputWrapperState extends State<AthleteInputWrapper> {
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  fontFamily: 'RobotoSlab'
                 ),
               ),
               GestureDetector(
@@ -154,6 +156,7 @@ class _AthleteInputWrapperState extends State<AthleteInputWrapper> {
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                     decoration: TextDecoration.underline,
+                    fontFamily: 'RobotoSlab'
                   ),
                 ),
               ),

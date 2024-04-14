@@ -50,7 +50,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search"),
+        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -71,6 +71,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -103,7 +104,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                           : null,
                     ),
                     child: imageUrl == null
-                        ? const Text('No Image Available')
+                        ? const Text('No Image Available', style: TextStyle(fontFamily: 'RobotoSlab'),)
                         : null,
                   ),
                 ),
@@ -118,7 +119,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                       Text(
                         newsDetails[0]['headline'] ??
                             "",
-                        style: const TextStyle(fontSize: 25.0),
+                        style: const TextStyle(fontFamily: 'RobotoSlab', fontSize: 25.0),
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
                       ),
@@ -136,6 +137,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                           newsDetails[0]['description'] ?? "",
                           style: const TextStyle(
                             fontSize: 18.0,
+                            fontFamily: 'RobotoSlab',
                             overflow: TextOverflow
                                 .ellipsis,
                           ),

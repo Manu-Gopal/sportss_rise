@@ -65,6 +65,7 @@ class _AthleteAccountState extends State<AthleteAccount> {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
                     color: Colors.black,
                   ),
                 ),
@@ -352,6 +353,7 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           'Create Account',
                           style: TextStyle(
                             color: Colors.white,
+                            fontFamily: 'Robotoslab',
                             fontSize: 23.0,
                           ),
                         ),

@@ -22,7 +22,7 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Basketball'),
+        title: const Text('Basketball', style: TextStyle(fontFamily: 'Poppins',),),
       ),
       body: Center(
         child: Column(
@@ -51,6 +51,7 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
                       'Upload Video',
                       style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'RobotoSlab',
                           //fontFamily: 'NovaSquare',
                           color: Colors.black,
                           fontWeight: FontWeight.bold),

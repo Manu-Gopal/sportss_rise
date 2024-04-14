@@ -49,7 +49,7 @@ class _NewsViewState extends State<NewsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        title: const Text('News', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Column(
@@ -62,6 +62,7 @@ class _NewsViewState extends State<NewsView> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -94,7 +95,7 @@ class _NewsViewState extends State<NewsView> {
                           : null,
                     ),
                     child: imageUrl == null
-                        ? const Text('No Image Available')
+                        ? const Text('No Image Available', style: TextStyle(fontFamily: 'RobotoSlab'),)
                         : null,
                   ),
                 ),
@@ -109,7 +110,7 @@ class _NewsViewState extends State<NewsView> {
                       Text(
                         newsDetails[0]['headline'] ??
                             "",
-                        style: const TextStyle(fontSize: 25.0),
+                        style: const TextStyle(fontFamily: 'RobotoSlab', fontSize: 25.0),
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
                       ),
@@ -126,6 +127,7 @@ class _NewsViewState extends State<NewsView> {
                         child: Text(
                           newsDetails[0]['description'] ?? "",
                           style: const TextStyle(
+                            fontFamily: 'RobotoSlab',
                             fontSize: 18.0,
                             overflow: TextOverflow
                                 .ellipsis,

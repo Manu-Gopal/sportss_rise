@@ -44,7 +44,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search"),
+        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -64,7 +64,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
                   child: isLoading
                       ? const Text('')
                       : athletes.isEmpty
-                          ? const Text('No Athletes')
+                          ? const Text('No Athletes', style: TextStyle(fontFamily: 'RobotoSlab'),)
                           : ListView.builder(
                               itemCount: athletes.length,
                               itemBuilder: (context, index) {
@@ -113,6 +113,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 20,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                   ),
                                                   Padding(
@@ -138,6 +139,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                   )
                                                 ],
@@ -151,6 +153,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                   ),
                                                 ],

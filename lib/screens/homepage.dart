@@ -11,8 +11,8 @@ class HomePage extends StatelessWidget {
       //   color: Colors.white
       // ),
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               Colors.black,
               Colors.black38,
@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
+            // 'images/sai_logo_White.png',
             'images/sai_logo.png',
             height: 150,
             width: 150,
@@ -35,6 +36,7 @@ class HomePage extends StatelessWidget {
               Text(
                 'SPORTS',
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 40.0, // Set font size
                   fontWeight: FontWeight.bold, // Make bold
                   color: Colors.black, // Set color
@@ -48,6 +50,7 @@ class HomePage extends StatelessWidget {
               Text(
                 'RISE',
                 style: TextStyle(
+                  fontFamily: 'Poppins',
                   fontSize: 40.0, // Set font size
                   fontWeight: FontWeight.bold, // Make bold
                   color: Colors.black, // Set color
@@ -79,6 +82,7 @@ class HomePage extends StatelessWidget {
                       'Login as SAI',
                       style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'RobotoSlab',
                           //fontFamily: 'NovaSquare',
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
@@ -111,6 +115,7 @@ class HomePage extends StatelessWidget {
                       'Coaches',
                       style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'RobotoSlab',
                           //fontFamily: 'NovaSquare',
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
@@ -143,6 +148,7 @@ class HomePage extends StatelessWidget {
                       'Athlete',
                       style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'RobotoSlab',
                           //fontFamily: 'NovaSquare',
                           color: Colors.white,
                           fontWeight: FontWeight.bold),

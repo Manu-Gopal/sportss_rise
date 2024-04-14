@@ -26,7 +26,7 @@ class AthleteLogin extends StatelessWidget {
           child: Column(
             children: <Widget>[
               const SizedBox(
-                height: 260,
+                height: 270,
                 child: Header(),
               ),
               SizedBox(

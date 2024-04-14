@@ -39,9 +39,10 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Network'),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins'),),
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -73,6 +74,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'Poppins'
                       ),
                     ),
                   ),
@@ -136,6 +138,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             ),
                                             Padding(
@@ -191,6 +194,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             )
                                           ],
@@ -202,6 +206,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             ),
                                           ],

@@ -28,7 +28,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Football'),
+        title: const Text('Football', style: TextStyle(fontFamily: 'Poppins',),),
       ),
       body: Center(
         child: Column(
@@ -36,11 +36,11 @@ class _AthleteFootballState extends State<AthleteFootball> {
             const SizedBox(height: 50),
             const Text(
               'Choose Your Position',
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 20.0),
             ),
             const SizedBox(height: 10.0),
             ListTile(
-              title: const Text('Forward'),
+              title: const Text('Forward', style: TextStyle(fontFamily: 'RobotoSlab',),),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Forward,
                 groupValue: _selectedPosition,
@@ -52,7 +52,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Midfield'),
+              title: const Text('Midfield', style: TextStyle(fontFamily: 'RobotoSlab',),),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Midfielder,
                 groupValue: _selectedPosition,
@@ -64,7 +64,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Defender'),
+              title: const Text('Defender', style: TextStyle(fontFamily: 'RobotoSlab',),),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Defender,
                 groupValue: _selectedPosition,
@@ -76,7 +76,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Goalkeeper'),
+              title: const Text('Goalkeeper', style: TextStyle(fontFamily: 'RobotoSlab',),),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Goalkeeper,
                 groupValue: _selectedPosition,
@@ -108,6 +108,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
                       'Upload Video',
                       style: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'RobotoSlab',
                           //fontFamily: 'NovaSquare',
                           color: Colors.black,
                           fontWeight: FontWeight.bold),

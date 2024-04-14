@@ -98,7 +98,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Column(
@@ -111,6 +111,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -154,6 +155,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -162,6 +164,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -174,6 +177,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -182,6 +186,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -202,6 +207,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -218,6 +224,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -226,38 +233,13 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const SizedBox(width: 40),
-                // ElevatedButton(
-                //   onPressed: () async {
-                //     setState(() {
-                //       isFollowing = !isFollowing;
-                //     });
-                //     if (isFollowing){
-                //       await supabase.from('follow').insert({'follower' : follower, 'followed_by' : uId});
-                //     } else{
-                //       await supabase
-                //         .from('follow')
-                //         .delete()
-                //         .eq('follower', follower)
-                //         .eq('followed_by', uId);
-                //     }
-                //   },
-                //   style: ElevatedButton.styleFrom(
-                //     foregroundColor: isFollowing ? Colors.black : Colors.white,
-                //     backgroundColor: isFollowing ? Colors.white : Colors.blue,
-                //     minimumSize: const Size(110.0, 36.0),
-                //   ),
-                //   child: Text(isFollowing ? 'Following' : 'Follow'),
-                // ),
-                // const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {
-                    // await supabase.from('message').insert({'user_from' : userFrom, 'user_to' : userTo});
 
                     // // ignore: use_build_context_synchronously
                     // Navigator.pushNamed(context, '/chat_page');
                   },
-                  child: const Text('Message'),
+                  child: const Text('Message', style: TextStyle(fontFamily: 'RobotoSlab'),),
                 ),
               ],
             ),

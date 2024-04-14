@@ -45,7 +45,7 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search"),
+        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -65,7 +65,7 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
                   child: isLoading
                       ? const Text('')
                       : coaches.isEmpty
-                          ? const Text('No Coaches')
+                          ? const Text('No Coaches', style: TextStyle(fontFamily: 'RobotoSlab'),)
                           : ListView.builder(
                               itemCount: coaches.length,
                               itemBuilder: (context, index) {
@@ -123,6 +123,7 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 20,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                   ),
                                                   Padding(
@@ -152,18 +153,6 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
                                                   )
                                                 ],
                                               ),
-                                              // Row(
-                                              //   children: [
-                                              //     Text(
-                                              //       coaches[index]['dob'],
-                                              //       style: const TextStyle(
-                                              //         fontWeight:
-                                              //             FontWeight.bold,
-                                              //         fontSize: 15,
-                                              //       ),
-                                              //     )
-                                              //   ],
-                                              // ),
                                               Row(
                                                 children: [
                                                   Text(
@@ -173,6 +162,7 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 15,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                   ),
                                                 ],

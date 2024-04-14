@@ -25,6 +25,7 @@ class _SaiHomePageState extends State<SaiHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.black,
       drawer: const CustomDrawer(),
       body: IndexedStack(
         index: _selectedIndex,
@@ -110,7 +111,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             title: const Text(
               "Latest News",
               style: TextStyle(
-                // fontFamily: 'RobotoSlab',
+                fontFamily: 'RobotoSlab',
                 fontSize: 20,
                 fontWeight: FontWeight.bold
               ),

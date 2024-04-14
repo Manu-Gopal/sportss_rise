@@ -87,7 +87,8 @@ class _AthleteProfileState extends State<AthleteProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Column(
@@ -100,6 +101,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -139,6 +141,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -147,6 +150,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -159,6 +163,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -167,6 +172,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -187,6 +193,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -203,6 +210,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -218,7 +226,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                     Navigator.pushNamed(context, '/athlete_edit_profile');
                   },
                   icon: const Icon(Icons.edit, color: Colors.black,),
-                  label: const Text('Edit Profile'),
+                  label: const Text('Edit Profile', style: TextStyle(fontFamily: 'RobotoSlab'),),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton.icon(
@@ -227,7 +235,7 @@ class _AthleteProfileState extends State<AthleteProfile> {
                     // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, '/');
                   },
-                  label: const Text('Log Out'),
+                  label: const Text('Log Out', style: TextStyle(fontFamily: 'RobotoSlab'),),
                   icon: const Icon(Icons.logout, color: Colors.black,),
                   
                 ),

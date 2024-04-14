@@ -39,13 +39,13 @@ class _ProfilePictureViewState extends State<PictureView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Picture View'),
+        title: const Text('Picture View', style: TextStyle(fontFamily: 'poppins'),),
       ),
       body: Center(
         child: isLoading ? const Text("Loading...")
         : imageUrl != null
           ? PhotoView(imageProvider: NetworkImage(imageUrl))
-          : const Text('No Picture Available')
+          : const Text('No Picture Available', style: TextStyle(fontFamily: 'RobotoSlab'),)
       ),
     );
   }

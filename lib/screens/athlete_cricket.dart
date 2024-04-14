@@ -28,7 +28,7 @@ class _AthleteCricketState extends State<AthleteCricket> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cricket'),
+        title: const Text('Cricket', style: TextStyle(fontFamily: 'Poppins',),),
       ),
       body: Center(
         child: Column(
@@ -36,7 +36,7 @@ class _AthleteCricketState extends State<AthleteCricket> {
             const SizedBox(height: 50),
             const Text(
               'Choose Your Position',
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 20.0),
             ),
             const SizedBox(height: 10.0),
             ListTile(

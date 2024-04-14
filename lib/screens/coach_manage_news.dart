@@ -36,9 +36,9 @@ class _CoachManageNewsState extends State<CoachManageNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News', style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+        // centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       drawer: const CustomDrawer(),
       body: Center(
@@ -72,6 +72,7 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'Poppins'
                       ),
                     ),
                   ),
@@ -140,7 +141,6 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                                             : null,
                                       ),
                                     ),
-                                    // const SizedBox(width: 16.0),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -149,22 +149,21 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                                           Row(
                                             children: [
                                               Expanded(
-                                                // Wrap Text with Expanded
                                                 child: Text(
                                                   news['headline'],
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
+                                                    fontFamily: 'RobotoSlab'
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   softWrap:
-                                                      true, // Enable soft wrap
+                                                      true,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          // Optionally add additional text widgets below headline
                                         ],
                                       ),
                                     ),
@@ -201,6 +200,7 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                     color: Colors.white, // Set the text color
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'RobotoSlab'
                   ),
                 ),
               ),

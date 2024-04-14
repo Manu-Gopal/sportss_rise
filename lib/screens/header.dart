@@ -26,6 +26,7 @@ class Header extends StatelessWidget {
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
+              fontFamily: 'RobotoSlab',
               // fontFamily: 'NovaSquare',
               fontSize: 40
             ),),
@@ -35,6 +36,7 @@ class Header extends StatelessWidget {
             child: Text("Welcome...!",
             style: TextStyle(
               color: Colors.black,
+              fontFamily: 'RobotoSlab',
               // fontFamily: 'NovaSquare',
               fontWeight: FontWeight.bold,
               fontSize: 18

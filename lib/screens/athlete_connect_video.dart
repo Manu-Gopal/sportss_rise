@@ -105,6 +105,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -151,6 +152,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'RobotoSlab'
                             ),
                           ),
                           const SizedBox(width: 7),
@@ -159,6 +161,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'RobotoSlab'
                             ),
                           ),
                         ],
@@ -179,6 +182,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'RobotoSlab'
                             ),
                           ),
                           const SizedBox(width: 7),
@@ -187,6 +191,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'RobotoSlab'
                             ),
                           ),
                         ],
@@ -208,6 +213,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -224,6 +230,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -256,7 +263,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                     backgroundColor: isFollowing ? Colors.white : Colors.blue,
                     minimumSize: const Size(110.0, 36.0),
                   ),
-                  child: Text(isFollowing ? 'Following' : 'Follow'),
+                  child: Text(isFollowing ? 'Following' : 'Follow', style: const TextStyle(fontFamily: 'RobotoSlab'),),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
@@ -266,7 +273,7 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                     Navigator.pushNamed(context, '/chat_page',
                         arguments: {'user_to': follower});
                   },
-                  child: const Text('Message'),
+                  child: const Text('Message', style: TextStyle(fontFamily: 'RobotoSlab'),),
                 ),
               ],
             ),
@@ -278,7 +285,8 @@ class _AthleteConnectVideoState extends State<AthleteConnectVideo> {
                   'No Video Available',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20
+                    fontSize: 20,
+                    fontFamily: 'RobotoSlab'
                   ),
                 )
               ],

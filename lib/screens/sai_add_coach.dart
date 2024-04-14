@@ -40,9 +40,9 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Coach'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Add Coach', style: TextStyle(fontFamily: 'Poppins'),),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
@@ -63,6 +63,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                   'Add Coach', // Heading text
                   style: TextStyle(
                       fontSize: 30,
+                      fontFamily: 'RobotoSlab',
                       // fontFamily: 'NovaSquare',
                       fontWeight: FontWeight.bold,
                       color: Colors.white
@@ -165,7 +166,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                       children: [
                         const Text(
                           'Choose Sport:',
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(fontSize: 20.0, fontFamily: 'RobotoSlab'),
                         ),
                         const SizedBox(width: 15),
                         DropdownButton(
@@ -204,11 +205,10 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                           onPressed: () {
                             uploadImage();
                           },
-                          child: const Text("Upload Profile Image")),
+                          child: const Text("Upload Profile Image", style: TextStyle(fontFamily: 'RobotoSlab'),)),
                       const SizedBox(height: 40.0),
                       ElevatedButton(
                         onPressed: () async {
-                          // ... (rest of your code remains unchanged)
                           final supabase = Supabase.instance.client;
                           String name = nameController.text;
                           String email = emailController.text;
@@ -325,6 +325,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                             // color: Colors.black,
                             color: Colors.white,
                             fontSize: 23.0,
+                            fontFamily: 'RobotoSlab'
                             // fontFamily: 'NovaSquare',
                             // fontFamily: 'RobotoSlab',
                           ),

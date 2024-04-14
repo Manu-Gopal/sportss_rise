@@ -126,6 +126,7 @@ class _CoachInputWrapperState extends State<CoachInputWrapper> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
+                fontFamily: 'RobotoSlab'
               ),
             ),
           ),

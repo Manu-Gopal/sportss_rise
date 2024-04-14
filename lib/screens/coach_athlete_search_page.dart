@@ -108,7 +108,7 @@ class _CoachAthleteSearchPageState extends State<CoachAthleteSearchPage> {
                   SizedBox(width: 20),
                   Text(
                     'Recent Searches',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: 17, fontFamily: 'RobotoSlab'),
                   ),
                 ],
               ),
@@ -136,7 +136,7 @@ class _CoachAthleteSearchPageState extends State<CoachAthleteSearchPage> {
                                   ),
                                   child: Text(
                                     search['content'],
-                                    style: const TextStyle(fontSize: 16.0),
+                                    style: const TextStyle(fontSize: 16.0, fontFamily: 'RobotoSlab'),
                                   ),
                                 ),
                               ),
@@ -168,10 +168,10 @@ class _CoachAthleteSearchPageState extends State<CoachAthleteSearchPage> {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            // You can add an image or any other widget here
                           ],
                         ),
                       );
@@ -187,10 +187,10 @@ class _CoachAthleteSearchPageState extends State<CoachAthleteSearchPage> {
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            // You can add an image or any other widget here
                           ],
                         ),
                       );

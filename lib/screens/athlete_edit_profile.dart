@@ -90,6 +90,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
+                    fontFamily: 'Poppins'
                   ),
                 ),
                 const SizedBox(height: 60),
@@ -179,7 +180,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                             uploadImage();
                           },
                           
-                          child: const Text("Upload Profile Image")),
+                          child: const Text("Upload Profile Image", style: TextStyle(fontFamily: 'RobotoSlab'),)),
 
                       const SizedBox(height: 35.0),
                       ElevatedButton(
@@ -253,6 +254,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 23.0,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       )

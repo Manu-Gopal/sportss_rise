@@ -68,7 +68,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Profile', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Column(
@@ -81,6 +81,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
                   ),
                 ),
               ],
@@ -120,6 +121,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -128,6 +130,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -140,6 +143,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                         const SizedBox(width: 7),
@@ -148,6 +152,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'
                           ),
                         ),
                       ],
@@ -168,6 +173,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -184,6 +190,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoSlab'
                         ),
                       ),
                     ],
@@ -208,7 +215,7 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                     // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, '/');
                   },
-                  label: const Text('Log Out'),
+                  label: const Text('Log Out', style: TextStyle(fontFamily: 'RobotoSlab'),),
                   icon: const Icon(Icons.logout, color: Colors.black,),
                   
                 ),
@@ -222,7 +229,8 @@ class _AthleteProfileVideoState extends State<AthleteProfileVideo> {
                   'No Video Available',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20
+                    fontSize: 20,
+                    fontFamily: 'RobotoSlab'
                   ),
                 )
               ],

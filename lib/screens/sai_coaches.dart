@@ -44,7 +44,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(color: Colors.white)),
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         actions: <Widget>[
           IconButton(
@@ -77,19 +77,6 @@ class _SaiCoachesState extends State<SaiCoaches> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // TextField(
-              //   controller: searchController,
-              //   decoration: InputDecoration(
-              //       suffixIcon: GestureDetector(
-              //     onTap: () {
-              //       if (searchController.text.isNotEmpty) {
-              //         Navigator.pushNamed(context, '/sai_coaches_search',
-              //             arguments: {'searchText': searchController.text});
-              //       }
-              //     },
-              //     child: const Icon(Icons.search),
-              //   )),
-              // ),
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,6 +89,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'RobotoSlab'
                       ),
                     ),
                   ),
@@ -164,6 +152,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             ),
                                             Padding(
@@ -196,6 +185,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             ),
                                           ],
@@ -234,6 +224,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                     color: Colors.white, // Set the text color
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'RobotoSlab'
                   ),
                 ),
               ),

@@ -37,7 +37,7 @@ class _SaiNewsState extends State<SaiNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(color: Colors.white)),
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         actions: <Widget>[
           IconButton(
@@ -46,43 +46,15 @@ class _SaiNewsState extends State<SaiNews> {
               Navigator.pushNamed(context, '/sai_news_search_page');
             },
           ),
-          // PopupMenuButton<String>(
-          //   icon: const Icon(Icons.filter_alt_outlined, color: Colors.black),
-          //   itemBuilder: (BuildContext context) {
-          //     return sports.map((String sport) {
-          //       return PopupMenuItem<String>(
-          //         value: sport,
-          //         child: Text(sport),
-          //       );
-          //     }).toList();
-          //   },
-          //   onSelected: (String selectedSport) {
-          //     // Perform filtering based on the selected sport
-          //     print('Filter by $selectedSport');
-          //     // Add your filtering logic here
-          //   },
-          // ),
         ],
       ),
+      // backgroundColor: Colors.black,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                  onTap: () {
-                    if (searchController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, '/news_search',
-                          arguments: {'searchText': searchController.text});
-                    }
-                  },
-                  child: const Icon(Icons.search),
-                )),
-              ),
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,6 +67,7 @@ class _SaiNewsState extends State<SaiNews> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),
@@ -131,7 +104,6 @@ class _SaiNewsState extends State<SaiNews> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        // Handle profile picture view navigation
                                         Navigator.pushNamed(
                                           context,
                                           '/picture_view',
@@ -178,16 +150,16 @@ class _SaiNewsState extends State<SaiNews> {
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
+                                                    fontFamily: 'RobotoSlab',
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   softWrap:
-                                                      true, // Enable soft wrap
+                                                      true,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          // Optionally add additional text widgets below headline
                                         ],
                                       ),
                                     ),

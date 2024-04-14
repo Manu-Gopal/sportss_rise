@@ -108,7 +108,7 @@ class _AthleteAthleteSearchPageState extends State<AthleteAthleteSearchPage> {
                   SizedBox(width: 20),
                   Text(
                     'Recent Searches',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: 17, fontFamily: 'RobotoSlab',),
                   ),
                 ],
               ),
@@ -167,6 +167,7 @@ class _AthleteAthleteSearchPageState extends State<AthleteAthleteSearchPage> {
                               'No Recent Searches',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                fontFamily: 'RobotoSlab',
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -186,6 +187,7 @@ class _AthleteAthleteSearchPageState extends State<AthleteAthleteSearchPage> {
                               'No Recent Searches',
                               style: TextStyle(
                                 fontSize: 20.0,
+                                fontFamily: 'RobotoSlab',
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,

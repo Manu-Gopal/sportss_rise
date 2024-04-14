@@ -47,7 +47,7 @@ class _NewsSearchState extends State<NewsSearch> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search"),
+        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         centerTitle: true,
       ),
       body: Center(
@@ -138,6 +138,7 @@ class _NewsSearchState extends State<NewsSearch> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 20,
+                                                      fontFamily: 'RobotoSlab'
                                                     ),
                                                     overflow:
                                                         TextOverflow.ellipsis,

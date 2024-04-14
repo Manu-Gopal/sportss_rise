@@ -44,7 +44,7 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search"),
+        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -104,6 +104,7 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20,
+                                              fontFamily: 'RobotoSlab'
                                             ),
                                           ),
                                           Padding(
@@ -126,6 +127,7 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15,
+                                              fontFamily: 'RobotoSlab'
                                             ),
                                           )
                                         ],
@@ -137,12 +139,11 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15,
+                                              fontFamily: 'RobotoSlab'
                                             ),
                                           ),
                                         ],
                                       ),
-                                      // Add other athlete information here
-                                      // (e.g., sport, bio, etc.) if available in the data
                                     ],
                                   ),
                                   

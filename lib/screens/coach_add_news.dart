@@ -24,7 +24,7 @@ class _CoachAddNewsState extends State<CoachAddNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add News'),
+        title: const Text('Add News', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -39,6 +39,7 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  fontFamily: 'Poppins'
                 ),
               ),
               const SizedBox(height: 40), // Adjust spacing as needed
@@ -70,7 +71,7 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                 onPressed: () {
                   uploadImage();
                 },
-                child: const Text('Upload Picture'),
+                child: const Text('Upload Picture', style: TextStyle(fontFamily: 'RobotoSlab'),),
               ),
               const SizedBox(height: 30),
               ElevatedButton(
@@ -149,7 +150,7 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                   // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, '/coach_homepage');
                 },
-                child: const Text('Add'),
+                child: const Text('Add', style: TextStyle(fontFamily: 'RobotoSlab'),),
               ),
             ],
           ),

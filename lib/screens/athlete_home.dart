@@ -8,9 +8,10 @@ class AthleteHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Athlete'),
+          backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+          title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins'),),
         ),
-        drawer: const CustomDrawer(),
+        // drawer: const CustomDrawer(),
         body: CustomScrollView(
           primary: false,
           slivers: <Widget>[
@@ -19,7 +20,7 @@ class AthleteHome extends StatelessWidget {
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   'Choose Your Sport',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'RobotoSlab'),
                 ),
               ),
             ),
@@ -54,6 +55,7 @@ class AthleteHome extends StatelessWidget {
                                 color: Colors
                                     .black,
                                 fontSize: 18.0,
+                                fontFamily: 'RobotoSlab',
                                 fontWeight: FontWeight
                                     .bold,
                               ),
@@ -104,6 +106,7 @@ class AthleteHome extends StatelessWidget {
                                 fontSize: 18.0,
                                 fontWeight: FontWeight
                                     .bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign:
                                   TextAlign.center,
@@ -152,6 +155,7 @@ class AthleteHome extends StatelessWidget {
                                 fontSize: 18.0,
                                 fontWeight: FontWeight
                                     .bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign:
                                   TextAlign.center,
@@ -200,6 +204,7 @@ class AthleteHome extends StatelessWidget {
                                 fontSize: 18.0,
                                 fontWeight: FontWeight
                                     .bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign:
                                   TextAlign.center,
@@ -248,6 +253,7 @@ class AthleteHome extends StatelessWidget {
                                 fontSize: 18.0,
                                 fontWeight: FontWeight
                                     .bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign:
                                   TextAlign.center,
@@ -296,6 +302,7 @@ class AthleteHome extends StatelessWidget {
                                 fontSize: 18.0,
                                 fontWeight: FontWeight
                                     .bold,
+                                fontFamily: 'RobotoSlab'
                               ),
                               textAlign:
                                   TextAlign.center,

@@ -37,7 +37,8 @@ class _AthleteNewsState extends State<AthleteNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Padding(
@@ -70,6 +71,7 @@ class _AthleteNewsState extends State<AthleteNews> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'RobotoSlab'
                       ),
                     ),
                   ),
@@ -153,6 +155,7 @@ class _AthleteNewsState extends State<AthleteNews> {
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
+                                                    fontFamily: 'RobotoSlab'
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,

@@ -118,6 +118,7 @@ class _SaiCoachProfileState extends State<SaiCoachProfile> {
                                       '$coachName',
                                       style: const TextStyle(
                                           fontSize: 20,
+                                          fontFamily: 'RobotoSlab',
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -129,6 +130,7 @@ class _SaiCoachProfileState extends State<SaiCoachProfile> {
                                     Text(
                                       '$coachSport Coach',
                                       style: const TextStyle(
+                                        fontFamily: 'RobotoSlab',
                                           fontSize: 18, color: Colors.grey),
                                     ),
                                   ],

@@ -22,7 +22,7 @@ class _AthleteVolleyballState extends State<AthleteVolleyball> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Volleyball'),
+        title: const Text('Volleyball', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Column(
@@ -53,6 +53,7 @@ class _AthleteVolleyballState extends State<AthleteVolleyball> {
                           fontSize: 20,
                           //fontFamily: 'NovaSquare',
                           color: Colors.black,
+                          fontFamily: 'RobotoSlab',
                           fontWeight: FontWeight.bold),
                     )),
           ],

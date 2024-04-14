@@ -51,8 +51,8 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.blueGrey,
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       drawer: const CustomDrawer(),
       body: Center(
@@ -85,6 +85,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
                         color: Colors.black,
                       ),
                     ),
@@ -148,6 +149,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                               athlete['name'],
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
+                                                fontFamily: 'RobotoSlab',
                                                 fontSize: 20,
                                               ),
                                             ),
@@ -179,6 +181,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             )
                                           ],
@@ -190,6 +193,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
                                               ),
                                             ),
                                           ],

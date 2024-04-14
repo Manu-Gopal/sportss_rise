@@ -27,7 +27,6 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
     Future.delayed(Duration.zero, () async {
       athlete = ModalRoute.of(context)?.settings.arguments as Map?;
       followerId = athlete['uid'];
-      print(followerId);
       await getProfile();
     });
   }
@@ -56,7 +55,7 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Followers'),
+        title: const Text('Followers', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(
         child: Padding(
@@ -76,6 +75,7 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
+                        fontFamily: 'Poppins'
                       ),
                     ),
                   ),
@@ -110,7 +110,7 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
                                   5.0), 
                             ),
                             child: Text(userDetails[
-                                'name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)), 
+                                'name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'RobotoSlab')), 
                           );
                         }
                       },
@@ -118,32 +118,6 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
                   },
                 ),
               ),
-
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   itemCount: followedByList1.length,
-              //   itemBuilder: (context, index) {
-              //     final String followedBy = followedByList1[index];
-              //     return Text(followedBy);
-              //   },
-              // ),
-              // isLoading
-              //     ? const CircularProgressIndicator() // Display a progress indicator while loading
-              //     : ListView.builder(
-              //         shrinkWrap: true,
-              //         itemCount: followedByList.length,
-              //         itemBuilder: (context, index) {
-              //           final String followedBy = followedByList[index];
-              //           final Map<String, dynamic> followedByUser =
-              //               followedByUsernames.firstWhere((user) => user['user_id'] == followedBy, orElse: () => null);
-
-              //           if (followedByUser == null) {
-              //             return const Text('User details not found'); // Handle missing user data gracefully
-              //           }
-
-              //           return Text(followedByUser['name']); // Display username
-              //         },
-              //       ),
             ],
           ),
         ),

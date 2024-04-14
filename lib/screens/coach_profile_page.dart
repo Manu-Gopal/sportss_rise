@@ -60,9 +60,9 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile', style: TextStyle(color: Colors.black),),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
+        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white),),
+        // centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       drawer: const CustomDrawer(),
       body: ListView(
@@ -109,7 +109,7 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
                                   ),
                                 const SizedBox(
                                     height:
-                                        14), // Add some space between CircleAvatar and Row
+                                        14),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -117,6 +117,7 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
                                       '$coachName',
                                       style: const TextStyle(
                                           fontSize: 20,
+                                          fontFamily: 'RobotoSlab',
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -128,6 +129,7 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
                                     Text(
                                       '$coachSport Coach',
                                       style: const TextStyle(
+                                        fontFamily: 'RobotoSlab',
                                           fontSize: 18, color: Colors.grey),
                                     ),
                                   ],
