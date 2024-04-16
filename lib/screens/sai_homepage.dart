@@ -99,24 +99,24 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
             ),
           ),
-          ListTile(
-            onTap: () {
-              // Navigator.pushNamed(context, '/visitor_bookings');
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
-            },
-            leading: const Icon(
-              Icons.newspaper_outlined,
-              color: Colors.black,
-            ),
-            title: const Text(
-              "Latest News",
-              style: TextStyle(
-                fontFamily: 'RobotoSlab',
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     // Navigator.pushNamed(context, '/visitor_bookings');
+          //     // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+          //   },
+          //   leading: const Icon(
+          //     Icons.newspaper_outlined,
+          //     color: Colors.black,
+          //   ),
+          //   title: const Text(
+          //     "Latest News",
+          //     style: TextStyle(
+          //       fontFamily: 'RobotoSlab',
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

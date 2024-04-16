@@ -46,9 +46,9 @@ class _NewsSearchState extends State<NewsSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
         title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
-        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        // centerTitle: true,
       ),
       body: Center(
         child: Padding(

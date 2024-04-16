@@ -50,6 +50,7 @@ class _NewsViewState extends State<NewsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('News', style: TextStyle(fontFamily: 'Poppins'),),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       body: Center(
         child: Column(

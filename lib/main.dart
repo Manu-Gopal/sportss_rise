@@ -37,6 +37,7 @@ import 'package:sportss_rise/screens/sai_coach_search_page.dart';
 import 'package:sportss_rise/screens/sai_coaches_search.dart';
 import 'package:sportss_rise/screens/sai_homepage.dart';
 import 'package:sportss_rise/screens/sai_news_search_page.dart';
+import 'package:sportss_rise/screens/sai_news_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future main() async {
@@ -96,6 +97,7 @@ class SportsRise extends StatelessWidget {
         '/news_view':(context) => const NewsView(),
         '/chat_page':(context) => const ChatPage(),
         '/sai_coach_search_page':(context) => const SaiCoachSearchPage(),
+        '/sai_news_search':(context) => const SaiNewsView(),
         '/sai_news_search_page':(context) => const SaiNewsSearchPage(),
       },
     );

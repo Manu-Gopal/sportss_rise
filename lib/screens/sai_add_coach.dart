@@ -47,9 +47,12 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
         child: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Color.fromARGB(255, 3, 144, 163),
-            Color.fromARGB(255, 3, 201, 227),
-            Color.fromARGB(255, 2, 155, 175)
+                Colors.white,
+              Colors.white54,
+              Colors.white
+            // Color.fromARGB(255, 3, 144, 163),
+            // Color.fromARGB(255, 3, 201, 227),
+            // Color.fromARGB(255, 2, 155, 175)
           ])),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -66,7 +69,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                       fontFamily: 'RobotoSlab',
                       // fontFamily: 'NovaSquare',
                       fontWeight: FontWeight.bold,
-                      color: Colors.white
+                      color: Colors.black
                       // color: Color.fromARGB(255, 78, 66, 66),
                       ),
                 ),

@@ -77,7 +77,7 @@ class _SaiNewsSearchState extends State<SaiNewsSearchPage> {
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushNamed(
                                   context,
-                                  '/sai_news_search',
+                                  '/news_search',
                                   arguments: {
                                     'searchText': searchController.text
                                   },

@@ -51,7 +51,8 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+        title: const Text('SportsRise',
+            style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       drawer: const CustomDrawer(),
@@ -117,10 +118,9 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                   GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, '/picture_view',
-                                          arguments: {
-                                            'imageUrl': athlete['image_url']
-                                          });
+                                          context, '/picture_view', arguments: {
+                                        'imageUrl': athlete['image_url']
+                                      });
                                     },
                                     child: CircleAvatar(
                                       radius: 40.0,
@@ -161,8 +161,10 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                                     Navigator.pushNamed(context,
                                                         '/coach_athlete_connect',
                                                         arguments: {
-                                                          'uid': athlete['user_id'],
-                                                          'videoUrl': athlete['video_url']
+                                                          'uid': athlete[
+                                                              'user_id'],
+                                                          'videoUrl': athlete[
+                                                              'video_url']
                                                         });
                                                   },
                                                   icon: const Icon(
@@ -179,21 +181,55 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                             Text(
                                               athlete['dob'],
                                               style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                fontFamily: 'RobotoSlab'
-                                              ),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  fontFamily: 'RobotoSlab'),
                                             )
                                           ],
                                         ),
+                                        // Row(
+                                        //   children: [
+                                        //     Text(
+                                        //       athlete['sport'] ?? '',
+                                        //       style: const TextStyle(
+                                        //           fontWeight: FontWeight.bold,
+                                        //           fontSize: 15,
+                                        //           fontFamily: 'RobotoSlab'),
+                                        //     ),
+                                        //     // if (athlete['accepted'] == true){
+
+                                        //     // },
+                                        //     const Padding(
+                                        //       padding:
+                                        //           EdgeInsets.only(left: 60),
+                                        //       child: Icon(
+                                        //         Icons.check,
+                                        //         size: 30,
+                                        //         color: Colors.green,
+                                        //       ),
+                                        //     )
+                                        //   ],
+                                        // ),
                                         Row(
                                           children: [
                                             Text(
                                               athlete['sport'] ?? '',
                                               style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                fontFamily: 'RobotoSlab'
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  fontFamily: 'RobotoSlab'),
+                                            ),
+                                            Visibility(
+                                              visible: athlete['accepted'] ??
+                                                  false,
+                                              child: const Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 60),
+                                                child: Icon(
+                                                  Icons.check,
+                                                  size: 25,
+                                                  color: Colors.green,
+                                                ),
                                               ),
                                             ),
                                           ],

@@ -53,22 +53,22 @@ class _SaiCoachesState extends State<SaiCoaches> {
               Navigator.pushNamed(context, '/sai_coach_search_page');
             },
           ),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
-            itemBuilder: (BuildContext context) {
-              return sports.map((String sport) {
-                return PopupMenuItem<String>(
-                  value: sport,
-                  child: Text(sport),
-                );
-              }).toList();
-            },
-            onSelected: (String selectedSport) {
-              // Perform filtering based on the selected sport
-              print('Filter by $selectedSport');
-              // Add your filtering logic here
-            },
-          ),
+          // PopupMenuButton<String>(
+          //   icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
+          //   itemBuilder: (BuildContext context) {
+          //     return sports.map((String sport) {
+          //       return PopupMenuItem<String>(
+          //         value: sport,
+          //         child: Text(sport),
+          //       );
+          //     }).toList();
+          //   },
+          //   onSelected: (String selectedSport) {
+          //     // Perform filtering based on the selected sport
+          //     print('Filter by $selectedSport');
+          //     // Add your filtering logic here
+          //   },
+          // ),
         ],
       ),
       body: Center(

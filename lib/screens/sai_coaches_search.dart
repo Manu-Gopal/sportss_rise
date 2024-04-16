@@ -44,9 +44,10 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        // backgroundColor: Colors.blueAccent,
         title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
-        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        // centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -76,7 +77,7 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
                                   ),
                                   color: Colors.white,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(12.0),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

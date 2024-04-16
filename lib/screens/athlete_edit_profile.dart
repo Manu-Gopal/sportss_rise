@@ -49,6 +49,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
   nameController.text = userData[0]['name'];
   phoneController.text = userData[0]['phone'];
   dateOfBirthController.text = userData[0]['dob'];
+  image = userData[0]['image'];
 
   setState(() {});
   }
@@ -209,7 +210,12 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                               // final AuthResponse res = await supabase.auth.signUp(email: email, password: password);
                               if (imageFile != null) {
                               image = true;
+                            } else {
+                              image = image;
                             }
+                            // if (imageFile == null){
+                            //   image = image;
+                            // }
 
                               final Map<String, dynamic> userDetails = {
                                 'user_id': userId,
@@ -220,8 +226,13 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                               };
 
                               final response = await supabase.from('profile').update(userDetails).eq('user_id', userId);
+                              // print(response);
+                              // print('aaaaaaa');
+                              // final String profileId = response[0]['id'];
 
                               if (imageFile != null) {
+                                print(response);
+                              print('aaaaaaa');
                               await Supabase.instance.client.storage
                                   .from('images')
                                   .upload(

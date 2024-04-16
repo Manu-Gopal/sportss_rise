@@ -39,7 +39,8 @@ class _ProfilePictureViewState extends State<PictureView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Picture View', style: TextStyle(fontFamily: 'poppins'),),
+        title: const Text('Picture', style: TextStyle(fontFamily: 'poppins'),),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       body: Center(
         child: isLoading ? const Text("Loading...")

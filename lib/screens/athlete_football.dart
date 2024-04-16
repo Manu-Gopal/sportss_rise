@@ -28,6 +28,7 @@ class _AthleteFootballState extends State<AthleteFootball> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Football', style: TextStyle(fontFamily: 'Poppins',),),
       ),
       body: Center(
