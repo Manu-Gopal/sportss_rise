@@ -143,7 +143,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 60),
+                                                  left: 10),
                                               child: IconButton(
                                                   onPressed: () {
                                                     if (athlete['user_id'] ==

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class CoachAthleteProfileView extends StatefulWidget {
   const CoachAthleteProfileView({super.key});
@@ -104,8 +105,14 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                         itemCount: athleteList.length,
                         itemBuilder: (context, index) {
                           final athlete = athleteList[index];
-                          return Card(
-                            elevation: 9,
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: ScaleAnimation(
+                              child: Card(
+                                elevation: 9,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -155,7 +162,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 60),
+                                                  left: 10),
                                               child: IconButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
@@ -187,29 +194,6 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                             )
                                           ],
                                         ),
-                                        // Row(
-                                        //   children: [
-                                        //     Text(
-                                        //       athlete['sport'] ?? '',
-                                        //       style: const TextStyle(
-                                        //           fontWeight: FontWeight.bold,
-                                        //           fontSize: 15,
-                                        //           fontFamily: 'RobotoSlab'),
-                                        //     ),
-                                        //     // if (athlete['accepted'] == true){
-
-                                        //     // },
-                                        //     const Padding(
-                                        //       padding:
-                                        //           EdgeInsets.only(left: 60),
-                                        //       child: Icon(
-                                        //         Icons.check,
-                                        //         size: 30,
-                                        //         color: Colors.green,
-                                        //       ),
-                                        //     )
-                                        //   ],
-                                        // ),
                                         Row(
                                           children: [
                                             Text(
@@ -240,7 +224,147 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                 ],
                               ),
                             ),
+                              ),
+                            ),
+                            )
                           );
+                          // return Card(
+                          //   elevation: 9,
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(8),
+                          //   ),
+                          //   color: Colors.white,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(16.0),
+                          //     child: Row(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             Navigator.pushNamed(
+                          //                 context, '/picture_view', arguments: {
+                          //               'imageUrl': athlete['image_url']
+                          //             });
+                          //           },
+                          //           child: CircleAvatar(
+                          //             radius: 40.0,
+                          //             backgroundColor: Colors.grey,
+                          //             backgroundImage: athlete['image_url'] !=
+                          //                     null
+                          //                 ? NetworkImage(athlete['image_url'])
+                          //                 : null,
+                          //             child: athlete['image_url'] == null
+                          //                 ? const Icon(
+                          //                     Icons.person,
+                          //                     color: Colors.white,
+                          //                   )
+                          //                 : null,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(width: 16.0),
+                          //         Expanded(
+                          //           child: Column(
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.start,
+                          //             children: [
+                          //               Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     athlete['name'],
+                          //                     style: const TextStyle(
+                          //                       fontWeight: FontWeight.bold,
+                          //                       fontFamily: 'RobotoSlab',
+                          //                       fontSize: 20,
+                          //                     ),
+                          //                   ),
+                          //                   Padding(
+                          //                     padding: const EdgeInsets.only(
+                          //                         left: 60),
+                          //                     child: IconButton(
+                          //                         onPressed: () {
+                          //                           Navigator.pushNamed(context,
+                          //                               '/coach_athlete_connect',
+                          //                               arguments: {
+                          //                                 'uid': athlete[
+                          //                                     'user_id'],
+                          //                                 'videoUrl': athlete[
+                          //                                     'video_url']
+                          //                               });
+                          //                         },
+                          //                         icon: const Icon(
+                          //                           Icons
+                          //                               .keyboard_arrow_right_outlined,
+                          //                           size: 35,
+                          //                           color: Colors.black,
+                          //                         )),
+                          //                   )
+                          //                 ],
+                          //               ),
+                          //               Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     athlete['dob'],
+                          //                     style: const TextStyle(
+                          //                         fontWeight: FontWeight.bold,
+                          //                         fontSize: 15,
+                          //                         fontFamily: 'RobotoSlab'),
+                          //                   )
+                          //                 ],
+                          //               ),
+                          //               // Row(
+                          //               //   children: [
+                          //               //     Text(
+                          //               //       athlete['sport'] ?? '',
+                          //               //       style: const TextStyle(
+                          //               //           fontWeight: FontWeight.bold,
+                          //               //           fontSize: 15,
+                          //               //           fontFamily: 'RobotoSlab'),
+                          //               //     ),
+                          //               //     // if (athlete['accepted'] == true){
+
+                          //               //     // },
+                          //               //     const Padding(
+                          //               //       padding:
+                          //               //           EdgeInsets.only(left: 60),
+                          //               //       child: Icon(
+                          //               //         Icons.check,
+                          //               //         size: 30,
+                          //               //         color: Colors.green,
+                          //               //       ),
+                          //               //     )
+                          //               //   ],
+                          //               // ),
+                          //               Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     athlete['sport'] ?? '',
+                          //                     style: const TextStyle(
+                          //                         fontWeight: FontWeight.bold,
+                          //                         fontSize: 15,
+                          //                         fontFamily: 'RobotoSlab'),
+                          //                   ),
+                          //                   Visibility(
+                          //                     visible: athlete['accepted'] ??
+                          //                         false,
+                          //                     child: const Padding(
+                          //                       padding:
+                          //                           EdgeInsets.only(left: 60),
+                          //                       child: Icon(
+                          //                         Icons.check,
+                          //                         size: 25,
+                          //                         color: Colors.green,
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // );
                         },
                       );
                     }

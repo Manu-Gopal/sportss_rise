@@ -84,6 +84,11 @@ class _AthleteVolleyballState extends State<AthleteVolleyball> {
       await supabase
           .from('videos')
           .insert({'user_id': supabase.auth.currentUser!.id, 'path': path});
+      final String publicUrl = Supabase
+                                  .instance.client.storage
+                                  .from('videos')
+                                  .getPublicUrl('swimming_videos/$path');
+      await supabase.from('profile').update({'video_url':publicUrl}).match({'user_id':uId});
     }
     setState(() {
       isUploading = false;

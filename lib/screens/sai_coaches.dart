@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SaiCoaches extends StatefulWidget {
   const SaiCoaches({super.key});
@@ -106,7 +107,14 @@ class _SaiCoachesState extends State<SaiCoaches> {
                         itemCount: coachList.length,
                         itemBuilder: (context, index) {
                           final coach = coachList[index];
-                          return Card(
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: ScaleAnimation(
+                                child: 
+                                Card(
                             elevation: 9,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -196,7 +204,101 @@ class _SaiCoachesState extends State<SaiCoaches> {
                                 ],
                               ),
                             ),
+                          )
+                              )
+                            ),
                           );
+                          // return Card(
+                          //   elevation: 9,
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(8),
+                          //   ),
+                          //   color: Colors.white,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(16.0),
+                          //     child: Row(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             Navigator.pushNamed(
+                          //                 context, '/picture_view', arguments: {
+                          //               'imageUrl': coach['image_url']
+                          //             });
+                          //           },
+                          //           child: CircleAvatar(
+                          //             radius: 40.0,
+                          //             backgroundColor: Colors.grey,
+                          //             backgroundImage:
+                          //                 coach['image_url'] != null
+                          //                     ? NetworkImage(coach['image_url'])
+                          //                     : null,
+                          //             child: coach['image_url'] == null
+                          //                 ? const Icon(
+                          //                     Icons.person,
+                          //                     color: Colors.white,
+                          //                   )
+                          //                 : null,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(width: 16.0),
+                          //         Expanded(
+                          //           child: Column(
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.start,
+                          //             children: [
+                          //               Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     coach['name'],
+                          //                     style: const TextStyle(
+                          //                       fontWeight: FontWeight.bold,
+                          //                       fontSize: 20,
+                          //                       fontFamily: 'RobotoSlab'
+                          //                     ),
+                          //                   ),
+                          //                   Padding(
+                          //                     padding: const EdgeInsets.only(
+                          //                         right: 10),
+                          //                     child: IconButton(
+                          //                         onPressed: () {
+                          //                           Navigator.pushNamed(context,
+                          //                               '/sai_coach_profile',
+                          //                               arguments: {
+                          //                                 'user_id': coach[
+                          //                                     'coach_user_id'],
+                          //                                 'sport':
+                          //                                     coach['sport']
+                          //                               });
+                          //                         },
+                          //                         icon: const Icon(
+                          //                           Icons
+                          //                               .keyboard_arrow_right_outlined,
+                          //                           size: 35,
+                          //                           color: Colors.black,
+                          //                         )),
+                          //                   )
+                          //                 ],
+                          //               ),
+                          //               Row(
+                          //                 children: [
+                          //                   Text(
+                          //                     coach['sport'],
+                          //                     style: const TextStyle(
+                          //                       fontWeight: FontWeight.bold,
+                          //                       fontSize: 15,
+                          //                       fontFamily: 'RobotoSlab'
+                          //                     ),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // );
                         },
                       );
                     }

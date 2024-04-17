@@ -50,7 +50,10 @@ class _SaiNewsViewState extends State<SaiNewsView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
+        title: const Text(
+          "Search",
+          style: TextStyle(fontFamily: 'Poppins'),
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -69,18 +72,16 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                 Text(
                   "News Details",
                   style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins'
-                  ),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins'),
                 ),
               ],
             ),
             const SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment:
-                  MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -104,7 +105,10 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                           : null,
                     ),
                     child: imageUrl == null
-                        ? const Text('No Image Available', style: TextStyle(fontFamily: 'RobotoSlab'),)
+                        ? const Text(
+                            'No Image Available',
+                            style: TextStyle(fontFamily: 'RobotoSlab'),
+                          )
                         : null,
                   ),
                 ),
@@ -116,12 +120,16 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        newsDetails[0]['headline'] ??
-                            "",
-                        style: const TextStyle(fontFamily: 'RobotoSlab', fontSize: 25.0),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          newsDetails[0]['headline'] ?? "",
+                          style: const TextStyle(
+                              fontFamily: 'RobotoSlab',
+                              fontSize: 25.0,
+                              overflow: TextOverflow.ellipsis),
+                          maxLines: 3,
+                        ),
                       ),
                     ],
                   ),
@@ -138,8 +146,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                           style: const TextStyle(
                             fontSize: 18.0,
                             fontFamily: 'RobotoSlab',
-                            overflow: TextOverflow
-                                .ellipsis,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           maxLines: 3,
                         ),

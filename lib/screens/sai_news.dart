@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SaiNews extends StatefulWidget {
   const SaiNews({super.key});
@@ -9,7 +10,6 @@ class SaiNews extends StatefulWidget {
 }
 
 class _SaiNewsState extends State<SaiNews> {
-
   final TextEditingController searchController = TextEditingController();
   final supabase = Supabase.instance.client;
   dynamic newsList;
@@ -37,7 +37,8 @@ class _SaiNewsState extends State<SaiNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
+        title: const Text('SportsRise',
+            style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         actions: <Widget>[
           IconButton(
@@ -84,90 +85,189 @@ class _SaiNewsState extends State<SaiNews> {
                         itemCount: newsList.length,
                         itemBuilder: (context, index) {
                           final news = newsList[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context, '/news_view',
-                                arguments: {'news_id':news['id']}
-                              );
-                            },
-                            child: Card(
-                              elevation: 9,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              color: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          '/picture_view',
-                                          arguments: {
-                                            'imageUrl': news['image_url']
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 80.0,
-                                        height: 80.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          image: news['image_url'] != null
-                                              ? DecorationImage(
-                                                  image: NetworkImage(
-                                                      news['image_url']),
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : null,
-                                        ),
-                                        child: news['image_url'] == null
-                                            ? const Icon(
-                                                Icons.person,
-                                                color: Colors.white,
-                                              )
-                                            : null,
-                                      ),
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: ScaleAnimation(
+                                  child: Card(
+                                    elevation: 9,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    const SizedBox(width: 8.0),
-                                    Expanded(
-                                      child: Column(
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                // Wrap Text with Expanded
-                                                child: Text(
-                                                  news['headline'],
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'RobotoSlab',
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  softWrap:
-                                                      true,
-                                                ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/picture_view',
+                                                arguments: {
+                                                  'imageUrl': news['image_url']
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                              width: 80.0,
+                                              height: 80.0,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                image: news['image_url'] != null
+                                                    ? DecorationImage(
+                                                        image: NetworkImage(
+                                                            news['image_url']),
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : null,
                                               ),
-                                            ],
+                                              child: news['image_url'] == null
+                                                  ? const Icon(
+                                                      Icons.person,
+                                                      color: Colors.white,
+                                                    )
+                                                  : null,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8.0),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.pushNamed(
+                                                            context,
+                                                            '/news_view',
+                                                            arguments: {
+                                                              'news_id':
+                                                                  news['id']
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          news['headline'],
+                                                          style:
+                                                              const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20,
+                                                            fontFamily:
+                                                                'RobotoSlab',
+                                                          ),
+                                                          maxLines:
+                                                              2, // Set the maximum number of lines to display
+                                                          overflow: TextOverflow
+                                                              .ellipsis, // Add ellipsis (...) if text overflows
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                  ),
+                                )),
                           );
+                          // return GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.pushNamed(
+                          //       context, '/news_view',
+                          //       arguments: {'news_id':news['id']}
+                          //     );
+                          //   },
+                          //   child: Card(
+                          //     elevation: 9,
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(8),
+                          //     ),
+                          //     color: Colors.white,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.all(16.0),
+                          //       child: Row(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           GestureDetector(
+                          //             onTap: () {
+                          //               Navigator.pushNamed(
+                          //                 context,
+                          //                 '/picture_view',
+                          //                 arguments: {
+                          //                   'imageUrl': news['image_url']
+                          //                 },
+                          //               );
+                          //             },
+                          //             child: Container(
+                          //               width: 80.0,
+                          //               height: 80.0,
+                          //               decoration: BoxDecoration(
+                          //                 shape: BoxShape.rectangle,
+                          //                 borderRadius:
+                          //                     BorderRadius.circular(8.0),
+                          //                 image: news['image_url'] != null
+                          //                     ? DecorationImage(
+                          //                         image: NetworkImage(
+                          //                             news['image_url']),
+                          //                         fit: BoxFit.cover,
+                          //                       )
+                          //                     : null,
+                          //               ),
+                          //               child: news['image_url'] == null
+                          //                   ? const Icon(
+                          //                       Icons.person,
+                          //                       color: Colors.white,
+                          //                     )
+                          //                   : null,
+                          //             ),
+                          //           ),
+                          //           const SizedBox(width: 8.0),
+                          //           Expanded(
+                          //             child: Column(
+                          //               crossAxisAlignment:
+                          //                   CrossAxisAlignment.start,
+                          //               children: [
+                          //                 Row(
+                          //                   children: [
+                          //                     Expanded(
+                          //                       // Wrap Text with Expanded
+                          //                       child: Text(
+                          //                         news['headline'],
+                          //                         style: const TextStyle(
+                          //                           fontWeight: FontWeight.bold,
+                          //                           fontSize: 20,
+                          //                           fontFamily: 'RobotoSlab',
+                          //                         ),
+                          //                         overflow:
+                          //                             TextOverflow.ellipsis,
+                          //                         softWrap:
+                          //                             true,
+                          //                       ),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // );
                         },
                       );
                     }

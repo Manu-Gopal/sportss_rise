@@ -108,13 +108,13 @@ class _NewsViewState extends State<NewsView> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      Flexible(child: Text(
                         newsDetails[0]['headline'] ??
                             "",
                         style: const TextStyle(fontFamily: 'RobotoSlab', fontSize: 25.0),
-                        overflow: TextOverflow.ellipsis,
+                        // overflow: TextOverflow.ellipsis,
                         softWrap: true,
-                      ),
+                      )),
                     ],
                   ),
             const SizedBox(height: 20),

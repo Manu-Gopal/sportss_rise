@@ -181,7 +181,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                             uploadImage();
                           },
                           
-                          child: const Text("Upload Profile Image", style: TextStyle(fontFamily: 'RobotoSlab'),)),
+                          child: const Text("Update Profile Image", style: TextStyle(fontFamily: 'RobotoSlab'),)),
 
                       const SizedBox(height: 35.0),
                       ElevatedButton(
@@ -225,9 +225,9 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                                 'image': image
                               };
 
-                              final response = await supabase.from('profile').update(userDetails).eq('user_id', userId);
+                              final response = await supabase.from('profile').update(userDetails).eq('user_id', userId).select();
                               // print(response);
-                              // print('aaaaaaa');
+                              // print('aaaaaaa');45
                               // final String profileId = response[0]['id'];
 
                               if (imageFile != null) {
@@ -239,7 +239,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                                     'item_images/${response[0]['id']}',
                                     imageFile,
                                     fileOptions: const FileOptions(
-                                        cacheControl: '3600', upsert: false),
+                                        cacheControl: '3600', upsert: true),
                                   );
                             }
 
@@ -251,7 +251,7 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                             }
                           }
                           // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(context, '/athlete_profile');
+                          Navigator.pushNamed(context, '/athlete_profile').then((value) => setState(() => {}));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 99, 172, 172),

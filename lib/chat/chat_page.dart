@@ -119,6 +119,19 @@ class _MessageBar extends StatefulWidget {
 
 class _MessageBarState extends State<_MessageBar> {
   late final TextEditingController _textController;
+  dynamic userTo;
+  dynamic id;
+
+  
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.delayed(Duration.zero, () async {
+  //     id = ModalRoute.of(context)?.settings.arguments as Map?;
+  //     userTo = id['user_to'];
+  //     print(userTo);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +171,10 @@ class _MessageBarState extends State<_MessageBar> {
   void initState() {
     _textController = TextEditingController();
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      id = ModalRoute.of(context)?.settings.arguments as Map?;
+      userTo = id['user_to'];
+    });
   }
 
   @override
@@ -177,6 +194,7 @@ class _MessageBarState extends State<_MessageBar> {
       await supabase.from('messages').insert({
         'profile_id': myUserId,
         'content': text,
+        'user_to': userTo
       });
     } on PostgrestException catch (error) {
       // ignore: use_build_context_synchronously

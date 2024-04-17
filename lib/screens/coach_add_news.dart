@@ -15,9 +15,10 @@ class _CoachAddNewsState extends State<CoachAddNews> {
   dynamic imageUrl;
   bool image = false;
   final ImagePicker imagePicker = ImagePicker();
+  dynamic createdBy = Supabase.instance.client.auth.currentUser!.id;
 
   final supabase = Supabase.instance.client;
-  final newsHeadlineController = TextEditingController(); // Text field controller
+  final newsHeadlineController = TextEditingController();
   final newsDescriptionController = TextEditingController();
 
   @override
@@ -95,7 +96,8 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                       final Map<String, dynamic> newsDetails = {
                         'headline': newsHeadline,
                         'description': description,
-                        'image': image
+                        'image': image,
+                        'created_by': createdBy
                       };
 
                       final response = await supabase

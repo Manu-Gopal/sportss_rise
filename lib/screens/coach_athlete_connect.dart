@@ -22,7 +22,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   bool isFollowing = false;
   int followerCount = 0;
   int followingCount = 0;
-  dynamic accepted;
+  dynamic accepted = false;
 
   final email = Supabase.instance.client.auth.currentUser!.email!;
   dynamic uId = Supabase.instance.client.auth.currentUser!.id;
@@ -77,7 +77,6 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
         .select()
         .match({'user_id': athlete['uid']});
     final id = athleteDetails[0]['id'];
-    dynamic accepted = athleteDetails[0]['accepted'];
     print(accepted);
     print('mmmmmmmm');
     final supabase1 =
@@ -98,6 +97,8 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
     }
 
     setState(() {
+    accepted = athleteDetails[0]['accepted'];
+
       isLoading = false;
     });
   }
@@ -294,11 +295,12 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           },
                         ),
                       ),
+                      const SizedBox(height: 15),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               accepted == true
-                  ? const Text('Profile Accepted')
-                  : accepted==false ? const Text('Profile Rejected')
-                  : Row(
+                  ? const Text('Profile Accepted', style: TextStyle(fontSize: 16, color: Colors.green),)
+                  : accepted==false && isLoading==false ? const Text('Profile Rejected', style: TextStyle(fontSize: 16, color: Colors.red),)
+                  : isLoading==false? Row(
                       children: [
                         ElevatedButton(
                           onPressed: () async {
@@ -397,7 +399,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           child: const Text('Reject'),
                         ),
                       ],
-                    )
+                    ):const Text('')
                   // : accepted == true
                   //     ? const Text('Profile Accepted')
                   //     : const Text('Profile Rejected'),
