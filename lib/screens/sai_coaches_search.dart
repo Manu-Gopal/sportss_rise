@@ -33,7 +33,8 @@ class _SaiCoachesSearchState extends State<SaiCoachesSearch> {
     coaches = await supabase
         .from('coach_profile')
         .select()
-        .ilike('name', '%${coachDetails["searchText"]}%');
+        .or('name.ilike.%${coachDetails["searchText"]}%, sport.ilike.%${coachDetails["searchText"]}%');
+        // .ilike('name', '%${coachDetails["searchText"]}%');
 
     setState(() {
       isLoading = false;

@@ -39,9 +39,12 @@ class _AthleteAccountState extends State<AthleteAccount> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               colors: [
-                Color.fromARGB(255, 3, 144, 163),
-                Color.fromARGB(255, 3, 201, 227),
-                Color.fromARGB(255, 2, 155, 175),
+                Colors.white,
+                Colors.white70,
+                Colors.white
+                // Color.fromARGB(255, 3, 144, 163),
+                // Color.fromARGB(255, 3, 201, 227),
+                // Color.fromARGB(255, 2, 155, 175),
               ],
             ),
           ),

@@ -11,6 +11,7 @@ import 'package:sportss_rise/screens/athlete_edit_profile.dart';
 import 'package:sportss_rise/screens/athlete_follow_list.dart';
 import 'package:sportss_rise/screens/athlete_following_list.dart';
 import 'package:sportss_rise/screens/athlete_football.dart';
+import 'package:sportss_rise/screens/athlete_like_list.dart';
 import 'package:sportss_rise/screens/athlete_main.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
 import 'package:sportss_rise/screens/athlete_profile.dart';
@@ -84,6 +85,7 @@ class SportsRise extends StatelessWidget {
         '/athlete_following_list':(context) => const AthleteFollowingList(),
         '/athlete_coach_profile' :(context) => const AthleteCoachProfile(),
         '/athlete_coach_search' :(context) => const AthleteCoachSearch(),
+        '/athlete_like_list' :(context) => const AthleteLikeList(),
         '/sai_homepage':(context) => const SaiHomePage(),
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),

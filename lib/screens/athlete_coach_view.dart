@@ -57,6 +57,7 @@ class _AthleteCoachViewState extends State<AthleteCoachView> {
               TextField(
                 controller: searchController,
                 decoration: InputDecoration(
+                  hintText: 'Search by name or sport',
                     suffixIcon: GestureDetector(
                   onTap: () {
                     if (searchController.text.isNotEmpty) {

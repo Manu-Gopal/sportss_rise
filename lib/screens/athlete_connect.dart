@@ -24,12 +24,14 @@ class _AthleteConnectState extends State<AthleteConnect> {
   dynamic follower;
   bool isLoading = true;
   bool isFollowing = false;
+  bool isLiked = false;
 
   final email = Supabase.instance.client.auth.currentUser!.email!;
   dynamic uId = Supabase.instance.client.auth.currentUser!.id;
   dynamic accountEmail;
   int followerCount = 0;
   int followingCount = 0;
+  int likeCount = 0;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -61,12 +63,23 @@ class _AthleteConnectState extends State<AthleteConnect> {
       if (res.length > 0) {
         isFollowing = !isFollowing;
       }
+      final resp = await supabase
+          .from('like')
+          .select('*')
+          .eq('like', follower)
+          .eq('liked_by', uId);
+      if (resp.length > 0) {
+        isLiked = !isLiked;
+      }
       final followerResponse =
           await supabase.from('follow').select('*').eq('follower', follower);
       followerCount = followerResponse.length;
       final followingResponse =
           await supabase.from('follow').select('*').eq('followed_by', follower);
       followingCount = followingResponse.length;
+      final likeResponse = 
+          await supabase.from('like').select('*').eq('like', follower);
+      likeCount = likeResponse.length;
 
       await getProfile();
     });
@@ -126,10 +139,9 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 Text(
                   "Account Details",
                   style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins'
-                  ),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins'),
                 ),
               ],
             ),
@@ -164,28 +176,24 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/athlete_follow_list',
-                            arguments: {
-                              'uid': athlete['uid']
-                            });
+                            arguments: {'uid': athlete['uid']});
                       },
                       child: Row(
                         children: [
                           Text(
                             '$followerCount',
                             style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'
-                            ),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
                           ),
                           const SizedBox(width: 7),
                           const Text(
                             'followers',
                             style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'
-                            ),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
                           ),
                         ],
                       ),
@@ -194,28 +202,24 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/athlete_following_list',
-                            arguments: {
-                              'uid': athlete['uid']
-                            });
+                            arguments: {'uid': athlete['uid']});
                       },
                       child: Row(
                         children: [
                           Text(
                             '$followingCount',
                             style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'
-                            ),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
                           ),
                           const SizedBox(width: 7),
                           const Text(
                             'following',
                             style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'
-                            ),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
                           ),
                         ],
                       ),
@@ -234,10 +238,9 @@ class _AthleteConnectState extends State<AthleteConnect> {
                       Text(
                         athleteDetails[0]['name'],
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'RobotoSlab'
-                        ),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'),
                       ),
                     ],
                   ),
@@ -251,10 +254,9 @@ class _AthleteConnectState extends State<AthleteConnect> {
                       Text(
                         accountEmail,
                         style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'RobotoSlab'
-                        ),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RobotoSlab'),
                       ),
                     ],
                   ),
@@ -266,8 +268,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
                   onPressed: () async {
                     setState(() {
                       isFollowing = !isFollowing;
-                      isFollowing?followerCount += 1 : followerCount -=1;
-
+                      isFollowing ? followerCount += 1 : followerCount -= 1;
                     });
                     if (isFollowing) {
                       await supabase
@@ -286,7 +287,10 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     backgroundColor: isFollowing ? Colors.white : Colors.blue,
                     minimumSize: const Size(110.0, 36.0),
                   ),
-                  child: Text(isFollowing ? 'Following' : 'Follow', style: const TextStyle(fontFamily: 'RobotoSlab'),),
+                  child: Text(
+                    isFollowing ? 'Following' : 'Follow',
+                    style: const TextStyle(fontFamily: 'RobotoSlab'),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
@@ -295,7 +299,10 @@ class _AthleteConnectState extends State<AthleteConnect> {
                     Navigator.pushNamed(context, '/chat_page',
                         arguments: {'user_to': follower});
                   },
-                  child: const Text('Message', style: TextStyle(fontFamily: 'RobotoSlab'),),
+                  child: const Text(
+                    'Message',
+                    style: TextStyle(fontFamily: 'RobotoSlab'),
+                  ),
                 ),
               ],
             ),
@@ -355,7 +362,67 @@ class _AthleteConnectState extends State<AthleteConnect> {
                             }
                           },
                         ),
-                      )
+                      ),
+            const SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: IconButton(
+                    onPressed: () async {
+                      setState(() {
+                        isLiked = !isLiked;
+                        isLiked ? likeCount += 1 : likeCount -= 1;
+                      });
+                      if (isLiked) {
+                        await supabase
+                            .from('like')
+                            .insert({'like': follower, 'liked_by': uId});
+                      } else {
+                        await supabase
+                            .from('like')
+                            .delete()
+                            .eq('like', follower)
+                            .eq('liked_by', uId);
+                      }
+                    },
+                    iconSize: 30,
+                    icon: Icon(
+                      // isFollowing ? 'Following' : 'Follow',
+                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked ? Colors.red : Colors.grey,
+                    ),
+                    // onPressed: () async {
+                    //   setState(() {
+                    //     isLiked = !isLiked;
+                    //     isLiked ? likeCount += 1 : likeCount -= 1;
+                    //   });
+                    //   if (isLiked) {
+                    //     await supabase
+                    //         .from('like')
+                    //         .insert({'like': follower, 'liked_by': uId});
+                    //   } else {
+                    //     await supabase
+                    //         .from('like')
+                    //         .delete()
+                    //         .eq('like', follower)
+                    //         .eq('liked_by', uId);
+                    //   }
+                    // },
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/athlete_like_list',
+                            arguments: {'uid': athlete['uid']});
+                  },
+                  child: Text(
+                    likeCount > 1 ? '$likeCount likes' : '$likeCount like',
+                    style: const TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

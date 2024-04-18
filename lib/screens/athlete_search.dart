@@ -32,7 +32,8 @@ class _AthleteSearchState extends State<AthleteSearch> {
     athletes = await supabase
         .from('profile')
         .select()
-        .ilike('name', '%${athleteDetails["searchText"]}%');
+        // .ilike('name', '%${athleteDetails["searchText"]}%');
+        .or('name.ilike.%${athleteDetails["searchText"]}%, sport.ilike.%${athleteDetails["searchText"]}%');
 
     setState(() {
       isLoading = false;
@@ -43,16 +44,16 @@ class _AthleteSearchState extends State<AthleteSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/athlete_athlete_search_page')
-                .then((value) => setState(() => {}));
-          },
-        ),
+        // centerTitle: true,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pushNamed(context, '/athlete_athlete_search_page')
+        //         .then((value) => setState(() => {}));
+        //   },
+        // ),
       ),
       body: Center(
         child: Padding(
@@ -119,7 +120,7 @@ class _AthleteSearchState extends State<AthleteSearch> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 60),
+                                                            left: 10),
                                                     child: IconButton(
                                                         onPressed: () {},
                                                         icon: const Icon(

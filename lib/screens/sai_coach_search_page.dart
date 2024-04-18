@@ -63,7 +63,7 @@ class _SaiCoachSearchPageState extends State<SaiCoachSearchPage> {
                     child: TextField(
                       controller: searchController,
                       decoration: InputDecoration(
-                        hintText: 'Search',
+                        hintText: 'Search by name or sport',
                         filled: true,
                         fillColor: Colors.white70,
                         prefixIcon: GestureDetector(

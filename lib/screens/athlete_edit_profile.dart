@@ -64,9 +64,12 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               colors: [
-                Color.fromARGB(255, 3, 144, 163),
-                Color.fromARGB(255, 3, 201, 227),
-                Color.fromARGB(255, 2, 155, 175),
+                Colors.white,
+                Colors.white70,
+                Colors.white
+                // Color.fromARGB(255, 3, 144, 163),
+                // Color.fromARGB(255, 3, 201, 227),
+                // Color.fromARGB(255, 2, 155, 175),
               ],
             ),
           ),
@@ -226,13 +229,8 @@ class _AthleteEditProfileState extends State<AthleteEditProfile> {
                               };
 
                               final response = await supabase.from('profile').update(userDetails).eq('user_id', userId).select();
-                              // print(response);
-                              // print('aaaaaaa');45
-                              // final String profileId = response[0]['id'];
 
                               if (imageFile != null) {
-                                print(response);
-                              print('aaaaaaa');
                               await Supabase.instance.client.storage
                                   .from('images')
                                   .upload(

@@ -52,6 +52,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
               TextField(
                 controller: searchController,
                 decoration: InputDecoration(
+                  hintText: 'Search by name or sport',
                     suffixIcon: GestureDetector(
                   onTap: () {
                     if (searchController.text.isNotEmpty) {

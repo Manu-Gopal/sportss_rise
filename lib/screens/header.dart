@@ -16,8 +16,8 @@ class Header extends StatelessWidget {
             alignment: Alignment.center, // Positions the image to the right
             child: Image.asset(
               'images/sai_logo.png',
-              height: 100,
-              width: 100,
+              height: 120,
+              width: 120,
             ),
           ),
           const SizedBox(height: 5),
@@ -33,7 +33,7 @@ class Header extends StatelessWidget {
           ),
           const SizedBox(height: 10,),
           const Center(
-            child: Text("Welcome...!",
+            child: Text("Welcome Back..!",
             style: TextStyle(
               color: Colors.black,
               fontFamily: 'RobotoSlab',

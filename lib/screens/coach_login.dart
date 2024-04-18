@@ -26,7 +26,7 @@ class CoachLogin extends StatelessWidget {
           child: Column(
             children: <Widget>[
               const SizedBox(
-                height: 270,
+                height: 285,
                 child: Header(),
               ),
               SizedBox(

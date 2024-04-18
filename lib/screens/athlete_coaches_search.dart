@@ -33,7 +33,7 @@ class _AthleteCoachSearchState extends State<AthleteCoachSearch> {
     coaches = await supabase
         .from('coach_profile')
         .select()
-        .ilike('name', '%${coachDetails["searchText"]}%');
+        .or('name.ilike.%${coachDetails["searchText"]}%, sport.ilike.%${coachDetails["searchText"]}%');
 
     setState(() {
       isLoading = false;
@@ -44,17 +44,8 @@ class _AthleteCoachSearchState extends State<AthleteCoachSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.blueAccent,
         title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        // centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/sai_coach_search')
-                .then((value) => setState(() => {}));
-          },
-        ),
       ),
       body: Center(
         child: Padding(
