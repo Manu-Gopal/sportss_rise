@@ -113,6 +113,7 @@ class _AthleteConnectState extends State<AthleteConnect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Profile'),
       ),
       body: Center(
@@ -290,8 +291,6 @@ class _AthleteConnectState extends State<AthleteConnect> {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {
-                    // await supabase.from('message').insert({'user_from' : userFrom, 'user_to' : userTo});
-
                     // ignore: use_build_context_synchronously
                     Navigator.pushNamed(context, '/chat_page',
                         arguments: {'user_to': follower});

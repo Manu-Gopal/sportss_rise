@@ -1,6 +1,7 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
+import 'package:sportss_rise/screens/athlete_coach_view.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
 import 'package:sportss_rise/screens/athlete_network.dart';
 import 'package:sportss_rise/screens/athlete_news.dart';
@@ -31,9 +32,10 @@ class _AthleteMainState extends State<AthleteMain> {
         index: _selectedIndex,
         children: const [
           AthleteHome(),
+          AthleteCoachView(),
           AthleteNews(),
           AthleteNetwork(),
-          AthleteProfile()
+          AthleteProfile(),
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
@@ -45,12 +47,16 @@ class _AthleteMainState extends State<AthleteMain> {
             label: 'Home',
           ),
           CurvedNavigationBarItem(
+            child: Icon(Icons.group),
+            label: 'Coaches',
+          ),
+          CurvedNavigationBarItem(
             child: Icon(Icons.newspaper_outlined),
             label: 'News',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.group),
-            label: 'Connect',
+            label: 'Athletes',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.person),

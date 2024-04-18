@@ -235,8 +235,8 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    // // ignore: use_build_context_synchronously
-                    // Navigator.pushNamed(context, '/chat_page');
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, '/chat_page', arguments: {'user_to': athleteDetails[0]['user_id']});
                   },
                   child: const Text(
                     'Message',

@@ -29,7 +29,12 @@ class _AthleteFootballState extends State<AthleteFootball> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        title: const Text('Football', style: TextStyle(fontFamily: 'Poppins',),),
+        title: const Text(
+          'Football',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+          ),
+        ),
       ),
       body: Center(
         child: Column(
@@ -37,11 +42,16 @@ class _AthleteFootballState extends State<AthleteFootball> {
             const SizedBox(height: 50),
             const Text(
               'Choose Your Position',
-              style: TextStyle(fontFamily: 'RobotoSlab',fontSize: 20.0),
+              style: TextStyle(fontFamily: 'RobotoSlab', fontSize: 20.0),
             ),
             const SizedBox(height: 10.0),
             ListTile(
-              title: const Text('Forward', style: TextStyle(fontFamily: 'RobotoSlab',),),
+              title: const Text(
+                'Forward',
+                style: TextStyle(
+                  fontFamily: 'RobotoSlab',
+                ),
+              ),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Forward,
                 groupValue: _selectedPosition,
@@ -53,7 +63,12 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Midfield', style: TextStyle(fontFamily: 'RobotoSlab',),),
+              title: const Text(
+                'Midfield',
+                style: TextStyle(
+                  fontFamily: 'RobotoSlab',
+                ),
+              ),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Midfielder,
                 groupValue: _selectedPosition,
@@ -65,7 +80,12 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Defender', style: TextStyle(fontFamily: 'RobotoSlab',),),
+              title: const Text(
+                'Defender',
+                style: TextStyle(
+                  fontFamily: 'RobotoSlab',
+                ),
+              ),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Defender,
                 groupValue: _selectedPosition,
@@ -77,7 +97,12 @@ class _AthleteFootballState extends State<AthleteFootball> {
               ),
             ),
             ListTile(
-              title: const Text('Goalkeeper', style: TextStyle(fontFamily: 'RobotoSlab',),),
+              title: const Text(
+                'Goalkeeper',
+                style: TextStyle(
+                  fontFamily: 'RobotoSlab',
+                ),
+              ),
               leading: Radio<FootballPosition>(
                 value: FootballPosition.Goalkeeper,
                 groupValue: _selectedPosition,
@@ -91,20 +116,22 @@ class _AthleteFootballState extends State<AthleteFootball> {
             isUploading
                 ? const Text("Loading")
                 : ElevatedButton(
-                    onPressed: _selectedPosition != null ? () async {
-                      pos = _selectedPosition!;
-                      uploadVideo();
-                      Navigator.pushNamed(context,
-                            '/athlete_main');
-                            await supabase
-                                  .from('profile')
-                                  .update({'sport': 'Football', 'position' : pos.name}).match(
-                                      {'user_id': uId});
-                          
-                    } : null,
+                    onPressed: _selectedPosition != null
+                        ? () async {
+                            pos = _selectedPosition!;
+                            uploadVideo();
+                            Navigator.pushNamed(context, '/athlete_main');
+                            await supabase.from('profile').update({
+                              'sport': 'Football',
+                              'position': pos.name
+                            }).match({'user_id': uId});
+                          }
+                        : null,
                     style: ElevatedButton.styleFrom(
-                backgroundColor: _selectedPosition != null ? Colors.green : Colors.grey, // Set button color
-              ),
+                      backgroundColor: _selectedPosition != null
+                          ? Colors.green
+                          : Colors.grey, // Set button color
+                    ),
                     child: const Text(
                       'Upload Video',
                       style: TextStyle(
@@ -136,22 +163,20 @@ class _AthleteFootballState extends State<AthleteFootball> {
       final videoName = supabase.auth.currentUser!.id + formattedDateTime;
       final String path = await supabase.storage
           .from('videos/football_videos')
-          .upload(
-              videoName, imageFile,
+          .upload(videoName, imageFile,
               fileOptions:
                   const FileOptions(cacheControl: '3600', upsert: false));
-      
+
       await supabase
           .from('videos')
           .insert({'user_id': supabase.auth.currentUser!.id, 'path': path});
-      print("Foozy videoname: $videoName");
-      final String publicUrl = Supabase
-                                  .instance.client.storage
-                                  .from('videos')
-                                  .getPublicUrl('football_videos/$videoName');
-      print(publicUrl);
-      print('aaaaaa');
-      await supabase.from('profile').update({'video_url':publicUrl}).match({'user_id':uId});
+
+      final String publicUrl = Supabase.instance.client.storage
+          .from('videos')
+          .getPublicUrl('football_videos/$videoName');
+      await supabase
+          .from('profile')
+          .update({'video_url': publicUrl}).match({'user_id': uId});
     }
     setState(() {
       isUploading = false;

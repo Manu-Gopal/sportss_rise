@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class SaiCoaches extends StatefulWidget {
-  const SaiCoaches({super.key});
+class AthleteCoachView extends StatefulWidget {
+  const AthleteCoachView({super.key});
 
   @override
-  State<SaiCoaches> createState() => _SaiCoachesState();
+  State<AthleteCoachView> createState() => _AthleteCoachViewState();
 }
 
-class _SaiCoachesState extends State<SaiCoaches> {
+class _AthleteCoachViewState extends State<AthleteCoachView> {
   final TextEditingController searchController = TextEditingController();
   final supabase = Supabase.instance.client;
   bool isLoading = false;
@@ -47,30 +47,6 @@ class _SaiCoachesState extends State<SaiCoaches> {
       appBar: AppBar(
         title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              Navigator.pushNamed(context, '/sai_coach_search_page');
-            },
-          ),
-          // PopupMenuButton<String>(
-          //   icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
-          //   itemBuilder: (BuildContext context) {
-          //     return sports.map((String sport) {
-          //       return PopupMenuItem<String>(
-          //         value: sport,
-          //         child: Text(sport),
-          //       );
-          //     }).toList();
-          //   },
-          //   onSelected: (String selectedSport) {
-          //     // Perform filtering based on the selected sport
-          //     print('Filter by $selectedSport');
-          //     // Add your filtering logic here
-          //   },
-          // ),
-        ],
       ),
       body: Center(
         child: Padding(
@@ -78,6 +54,19 @@ class _SaiCoachesState extends State<SaiCoaches> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                  onTap: () {
+                    if (searchController.text.isNotEmpty) {
+                      Navigator.pushNamed(context, '/athlete_coach_search',
+                          arguments: {'searchText': searchController.text});
+                    }
+                  },
+                  child: const Icon(Icons.search),
+                )),
+              ),
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,7 +158,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                                               child: IconButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
-                                                        '/sai_coach_profile',
+                                                        '/athlete_coach_profile',
                                                         arguments: {
                                                           'user_id': coach[
                                                               'coach_user_id'],

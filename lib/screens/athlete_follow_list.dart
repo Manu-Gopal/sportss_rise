@@ -35,13 +35,10 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
     athleteDetails =
         await supabase.from('follow').select('*').eq('follower', followerId);
 
-    print(athleteDetails);
-
     for (var i = 0; i < athleteDetails.length; i++) {
       String followedBy = athleteDetails[i]['followed_by'];
       followedByList1.add(followedBy);
     }
-    print(followedByList1);
 
     currentUser = supabase.auth.currentUser!.id;
 
@@ -55,6 +52,7 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Followers', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: Center(

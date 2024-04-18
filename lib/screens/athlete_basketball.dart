@@ -75,10 +75,11 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
       setState(() {
         imageFile = File(imagePath);
       });
+      final videoName = supabase.auth.currentUser!.id + formattedDateTime;
       final String path = await supabase.storage
           .from('videos/basketball_videos')
           .upload(
-              supabase.auth.currentUser!.id + formattedDateTime, imageFile,
+              videoName, imageFile,
               fileOptions:
                   const FileOptions(cacheControl: '3600', upsert: false));
       await supabase
@@ -87,7 +88,7 @@ class _AthleteBasketballState extends State<AthleteBasketball> {
       final String publicUrl = Supabase
                                   .instance.client.storage
                                   .from('videos')
-                                  .getPublicUrl('basketball_videos/$path');
+                                  .getPublicUrl('basketball_videos/$videoName');
       await supabase.from('profile').update({'video_url':publicUrl}).match({'user_id':uId});
     }
     setState(() {

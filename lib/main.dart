@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sportss_rise/chat/chat_page.dart';
 import 'package:sportss_rise/screens/athlete_badminton.dart';
 import 'package:sportss_rise/screens/athlete_basketball.dart';
+import 'package:sportss_rise/screens/athlete_coach_profile.dart';
+import 'package:sportss_rise/screens/athlete_coaches_search.dart';
 import 'package:sportss_rise/screens/athlete_connect.dart';
 import 'package:sportss_rise/screens/athlete_connect_video.dart';
 import 'package:sportss_rise/screens/athlete_cricket.dart';
@@ -80,6 +82,8 @@ class SportsRise extends StatelessWidget {
         '/athlete_connect_video':(context) => const AthleteConnectVideo(),
         '/athlete_follow_list':(context) => const AthleteFollowList(),
         '/athlete_following_list':(context) => const AthleteFollowingList(),
+        '/athlete_coach_profile' :(context) => const AthleteCoachProfile(),
+        '/athlete_coach_search' :(context) => const AthleteCoachSearch(),
         '/sai_homepage':(context) => const SaiHomePage(),
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),

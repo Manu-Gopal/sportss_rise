@@ -151,12 +151,13 @@ class _AthleteNewsState extends State<AthleteNews> {
                                               Expanded(
                                                 // Wrap Text with Expanded
                                                 child: Text(
-                                                  news['description'],
+                                                  news['headline'],
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
                                                     fontFamily: 'RobotoSlab'
                                                   ),
+                                                  maxLines: 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   softWrap:
