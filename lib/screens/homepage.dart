@@ -8,19 +8,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
-      //   color: Colors.white
+        color: Color.fromARGB(255, 174, 173, 173)
       // ),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Colors.white54,
-              Colors.white
-        // Color.fromARGB(255, 3, 144, 163),
-        // Color.fromARGB(255, 3, 201, 227),
-        // Color.fromARGB(255, 2, 155, 175)
-      ])),
+      //     gradient: LinearGradient(
+      //       begin: Alignment.topCenter,
+      //       end: Alignment.bottomCenter,
+      //       colors: [
+      //         Colors.white,
+      //         Colors.white54,
+      //         Colors.white
+      // ])
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -222,6 +222,14 @@ class _AthleteProfileState extends State<AthleteProfile> {
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'RobotoSlab'),
                           ),
+                          if (athleteProfile[0]['verified'])
+                                                IconButton(
+                                                  icon: Icon(Icons.verified),
+                                                  color: Colors.blue,
+                                                  onPressed: () {
+                                                    // Handle onPressed action
+                                                  },
+                                                ),
                         ],
                       ),
                 const SizedBox(height: 10),

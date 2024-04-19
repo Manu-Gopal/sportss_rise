@@ -18,6 +18,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   dynamic athlete;
   dynamic videoUrl;
   dynamic athleteDetails;
+  bool verified = false;
   bool isLoading = true;
   bool isFollowing = false;
   int followerCount = 0;
@@ -76,9 +77,8 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
         .from('profile')
         .select()
         .match({'user_id': athlete['uid']});
+    verified = athleteDetails[0]['verified'];
     final id = athleteDetails[0]['id'];
-    print(accepted);
-    print('mmmmmmmm');
     final supabase1 =
         SupabaseClient(dotenv.env['URL']!, dotenv.env['SECRET_KEY']!);
 
@@ -97,7 +97,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
     }
 
     setState(() {
-    accepted = athleteDetails[0]['accepted'];
+      accepted = athleteDetails[0]['accepted'];
 
       isLoading = false;
     });
@@ -107,6 +107,7 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text(
           'Profile',
           style: TextStyle(fontFamily: 'Poppins'),
@@ -115,18 +116,18 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
       body: Center(
         child: Column(
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Account Details",
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins'),
-                ),
-              ],
-            ),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       "Account Details",
+            //       style: TextStyle(
+            //           fontSize: 28,
+            //           fontWeight: FontWeight.bold,
+            //           fontFamily: 'Poppins'),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,6 +212,14 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'RobotoSlab'),
                       ),
+                      if (athleteDetails[0]['verified'])
+                                                IconButton(
+                                                  icon: Icon(Icons.verified),
+                                                  color: Colors.blue,
+                                                  onPressed: () {
+                                                    // Handle onPressed action
+                                                  },
+                                                ),
                     ],
                   ),
             const SizedBox(height: 10),
@@ -236,13 +245,60 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                 ElevatedButton(
                   onPressed: () async {
                     // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, '/chat_page', arguments: {'user_to': athleteDetails[0]['user_id']});
+                    Navigator.pushNamed(context, '/chat_page',
+                        arguments: {'user_to': athleteDetails[0]['user_id']});
                   },
                   child: const Text(
                     'Message',
                     style: TextStyle(fontFamily: 'RobotoSlab'),
                   ),
                 ),
+                const SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+  onPressed: verified ? null : () {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Verify"),
+          content: const Text("Are you sure you want to verify?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (!verified) {
+                  verified = true;
+                  await supabase
+                      .from('profile')
+                      .update({'verified': verified})
+                      .match({'user_id': athleteDetails[0]['user_id']});
+                }
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text("Verify"),
+            ),
+          ],
+        );
+      },
+    );
+  },
+  // Set the style of the button based on the value of 'verified'
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      verified ? Colors.grey : Colors.blue,
+    ),
+  ),
+  // Set the text of the button based on the value of 'verified'
+  child: Text(verified ? 'Verified' : 'Verify'),
+)
+
               ],
             ),
             isLoading
@@ -295,114 +351,132 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                           },
                         ),
                       ),
-                      const SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               accepted == true
-                  ? const Text('Profile Accepted', style: TextStyle(fontSize: 16, color: Colors.green),)
-                  : accepted==false && isLoading==false ? const Text('Profile Rejected', style: TextStyle(fontSize: 16, color: Colors.red),)
-                  : isLoading==false? Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            // ignore: use_build_context_synchronously
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Confirm Accept"),
-                                  content: const Text(
-                                      "Are you sure you want to accept?"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        await supabase
-                                            .from('profile')
-                                            .update({'accepted': true}).eq(
-                                                'user_id',
-                                                athleteDetails[0]['user_id']);
+                  ? const Text(
+                      'Profile Accepted',
+                      style: TextStyle(fontSize: 16, color: Colors.green),
+                    )
+                  : accepted == false && isLoading == false
+                      ? const Text(
+                          'Profile Rejected',
+                          style: TextStyle(fontSize: 16, color: Colors.red),
+                        )
+                      : isLoading == false
+                          ? Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // ignore: use_build_context_synchronously
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Confirm Accept"),
+                                          content: const Text(
+                                              "Are you sure you want to accept?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                await supabase
+                                                    .from('profile')
+                                                    .update({
+                                                  'accepted': true
+                                                }).eq(
+                                                        'user_id',
+                                                        athleteDetails[0]
+                                                            ['user_id']);
 
-                                        // ignore: use_build_context_synchronously
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Profile Accepted Successfully'),
-                                            duration: Duration(seconds: 3),
-                                          ),
+                                                // ignore: use_build_context_synchronously
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Profile Accepted Successfully'),
+                                                    duration:
+                                                        Duration(seconds: 3),
+                                                  ),
+                                                );
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text("Yes"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text("No"),
+                                            ),
+                                          ],
                                         );
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.of(context).pop();
                                       },
-                                      child: const Text("Yes"),
-                                    ),
-                                    TextButton(
-                                      onPressed: () async {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green),
-                          child: const Text('Accept'),
-                        ),
-                        const SizedBox(width: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // ignore: use_build_context_synchronously
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text("Confirm Reject"),
-                                  content: const Text(
-                                      "Are you sure you want to reject?"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        await supabase
-                                            .from('profile')
-                                            .update({'accepted': false}).eq(
-                                                'user_id',
-                                                athleteDetails[0]['user_id']);
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green),
+                                  child: const Text('Accept'),
+                                ),
+                                const SizedBox(width: 10),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // ignore: use_build_context_synchronously
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Confirm Reject"),
+                                          content: const Text(
+                                              "Are you sure you want to reject?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () async {
+                                                await supabase
+                                                    .from('profile')
+                                                    .update({
+                                                  'accepted': false
+                                                }).eq(
+                                                        'user_id',
+                                                        athleteDetails[0]
+                                                            ['user_id']);
 
-                                        // ignore: use_build_context_synchronously
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Profile Rejected'),
-                                            duration: Duration(seconds: 3),
-                                          ),
+                                                // ignore: use_build_context_synchronously
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Profile Rejected'),
+                                                    duration:
+                                                        Duration(seconds: 3),
+                                                  ),
+                                                );
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text("Yes"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text("No"),
+                                            ),
+                                          ],
                                         );
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.of(context).pop();
                                       },
-                                      child: const Text("Yes"),
-                                    ),
-                                    TextButton(
-                                      onPressed: () async {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("No"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red),
-                          child: const Text('Reject'),
-                        ),
-                      ],
-                    ):const Text('')
-                  // : accepted == true
-                  //     ? const Text('Profile Accepted')
-                  //     : const Text('Profile Rejected'),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red),
+                                  child: const Text('Reject'),
+                                ),
+                              ],
+                            )
+                          : const Text('')
+              // : accepted == true
+              //     ? const Text('Profile Accepted')
+              //     : const Text('Profile Rejected'),
             ]
                 // const SizedBox(width: 10),
                 // ElevatedButton(

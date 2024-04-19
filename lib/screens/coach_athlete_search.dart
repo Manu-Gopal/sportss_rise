@@ -14,6 +14,8 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
   dynamic athleteDetails;
   bool isLoading = false;
   List athletes = [];
+  dynamic coachSport;
+  dynamic coachId = Supabase.instance.client.auth.currentUser!.id;
 
   @override
   void didChangeDependencies() {
@@ -28,11 +30,17 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
     setState(() {
       isLoading = true;
     });
+    coachSport = await supabase
+        .from('coach_profile')
+        .select('sport')
+        .eq('coach_user_id', coachId);
 
     athletes = await supabase
         .from('profile')
         .select()
-        .ilike('name', '%${athleteDetails["searchText"]}%');
+        .eq('sport', coachSport[0]['sport'])
+        .ilike('name', '%${athleteDetails["searchText"]}%')
+        .order('follower_count', ascending: false);
 
     setState(() {
       isLoading = false;
@@ -43,16 +51,8 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text("Search", style: TextStyle(fontFamily: 'Poppins'),),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/coach_athlete_search_page')
-                .then((value) => setState(() => {}));
-          },
-        ),
       ),
       body: Center(
         child: Padding(
@@ -107,17 +107,25 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
                                               fontFamily: 'RobotoSlab'
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 60),
-                                            child: IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(
-                                                Icons.keyboard_arrow_right_outlined,
-                                                size: 35,
-                                                color: Colors.black,
-                                              )
-                                            ),
-                                          )
+                                          if (athletes[index]['verified'])
+                                                IconButton(
+                                                  icon: Icon(Icons.verified),
+                                                  color: Colors.blue,
+                                                  onPressed: () {
+                                                    // Handle onPressed action
+                                                  },
+                                                ),
+                                          // Padding(
+                                          //   padding: const EdgeInsets.only(left: 60),
+                                          //   child: IconButton(
+                                          //     onPressed: () {},
+                                          //     icon: const Icon(
+                                          //       Icons.keyboard_arrow_right_outlined,
+                                          //       size: 35,
+                                          //       color: Colors.black,
+                                          //     )
+                                          //   ),
+                                          // )
                                         ],
                                       ),
                                       Row(
@@ -129,7 +137,28 @@ class _CoachAthleteSearchState extends State<CoachAthleteSearch> {
                                               fontSize: 15,
                                               fontFamily: 'RobotoSlab'
                                             ),
-                                          )
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 40),
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    Navigator.pushNamed(context,
+                                                        '/coach_athlete_connect',
+                                                        arguments: {
+                                                          'uid': athletes[index][
+                                                              'user_id'],
+                                                          'videoUrl': athletes[index][
+                                                              'video_url']
+                                                        });
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons
+                                                        .keyboard_arrow_right_outlined,
+                                                    size: 35,
+                                                    color: Colors.black,
+                                                  )),
+                                            )
                                         ],
                                       ),
                                       Row(

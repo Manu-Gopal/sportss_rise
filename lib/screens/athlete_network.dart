@@ -27,8 +27,10 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
     setState(() {
       isLoading = true;
     });
-    final athleteStream =
-        supabase.from('profile').stream(primaryKey: ['id']).order('id');
+    final athleteStream = supabase
+        .from('profile')
+        .stream(primaryKey: ['id']).order('follower_count', ascending: false);
+
     setState(() {
       athleteList = athleteStream;
       isLoading = false;
@@ -40,193 +42,225 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins'),),
+        title: const Text(
+          'SportsRise',
+          style: TextStyle(fontFamily: 'Poppins'),
+        ),
       ),
       // drawer: const CustomDrawer(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search by name or sport',
-                    suffixIcon: GestureDetector(
-                  onTap: () {
-                    if (searchController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, '/athlete_search',
-                          arguments: {'searchText': searchController.text});
-                    }
-                  },
-                  child: const Icon(Icons.search),
-                )),
-              ),
-              const SizedBox(height: 30),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 55),
-                  Expanded(
-                    child: Text(
-                      'Athlete Connect',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontFamily: 'Poppins'
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            getAthletes();
+          });
+        },
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                      hintText: 'Search by name or sport',
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          if (searchController.text.isNotEmpty) {
+                            Navigator.pushNamed(context, '/athlete_search',
+                                arguments: {
+                                  'searchText': searchController.text
+                                });
+                          }
+                        },
+                        child: const Icon(Icons.search),
+                      )),
+                ),
+                const SizedBox(height: 30),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(width: 55),
+                    Expanded(
+                      child: Text(
+                        'Athlete Connect',
+                        style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontFamily: 'Poppins'),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: StreamBuilder(
-                  stream: athleteList,
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      final athleteList = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: athleteList.length,
-                        itemBuilder: (context, index) {
-                          final athlete = athleteList[index];
-                          return Card(
-                            elevation: 9,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, '/picture_view',
-                                          arguments: {
-                                            'imageUrl': athlete['image_url']
-                                          });
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundColor: Colors.grey,
-                                      backgroundImage: athlete['image_url'] !=
-                                              null
-                                          ? NetworkImage(athlete['image_url'])
-                                          : null,
-                                      child: athlete['image_url'] == null
-                                          ? const Icon(
-                                              Icons.person,
-                                              color: Colors.white,
-                                            )
-                                          : null,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              athlete['name'],
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                fontFamily: 'RobotoSlab'
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10),
-                                              child: IconButton(
-                                                  onPressed: () {
-                                                    if (athlete['user_id'] ==
-                                                        userId) {
-                                                          if(athlete['video_url'] != null){
-                                                            Navigator.pushNamed(
-                                                          context,
-                                                          '/athlete_profile');
-                                                          } else {
-                                                            Navigator.pushNamed(
-                                                          context,
-                                                          '/athlete_profile_video');
-                                                          }
-                                                      
-                                                    } else {
-                                                      if (athlete['video_url'] == null){
-                                                        Navigator.pushNamed(context, '/athlete_connect_video', arguments: {
-                                                            'uid': athlete[
-                                                                'user_id'],
-                                                          });
-                                                      } else {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          '/athlete_connect',
-                                                          arguments: {
-                                                            'uid': athlete[
-                                                                'user_id'],
-                                                            'videoUrl': athlete[
-                                                                'video_url']
-                                                          });
-                                                    }
-                                                    }
-                                                    
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons
-                                                        .keyboard_arrow_right_outlined,
-                                                    size: 35,
-                                                    color: Colors.black,
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              athlete['dob'],
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                fontFamily: 'RobotoSlab'
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              athlete['sport'] ?? '',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                fontFamily: 'RobotoSlab'
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                    return Container();
-                  },
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                Expanded(
+                  child: StreamBuilder(
+                    stream: athleteList,
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        final athleteList = snapshot.data!;
+                        return ListView.builder(
+                          itemCount: athleteList.length,
+                          itemBuilder: (context, index) {
+                            final athlete = athleteList[index];
+                            return Card(
+                              elevation: 9,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, '/picture_view',
+                                            arguments: {
+                                              'imageUrl': athlete['image_url']
+                                            });
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundColor: Colors.grey,
+                                        backgroundImage: athlete['image_url'] !=
+                                                null
+                                            ? NetworkImage(athlete['image_url'])
+                                            : null,
+                                        child: athlete['image_url'] == null
+                                            ? const Icon(
+                                                Icons.person,
+                                                color: Colors.white,
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                athlete['name'],
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    fontFamily: 'RobotoSlab'),
+                                              ),
+                                              if (athlete['verified'])
+                                                IconButton(
+                                                  icon: Icon(Icons.verified),
+                                                  color: Colors.blue,
+                                                  onPressed: () {
+                                                    // Handle onPressed action
+                                                  },
+                                                ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                athlete['dob'],
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  fontFamily: 'RobotoSlab',
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 42),
+                                                child: IconButton(
+                                                    onPressed: () {
+                                                      if (athlete['user_id'] ==
+                                                          userId) {
+                                                        if (athlete[
+                                                                'video_url'] !=
+                                                            null) {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              '/athlete_profile');
+                                                        } else {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              '/athlete_profile_video');
+                                                        }
+                                                      } else {
+                                                        if (athlete[
+                                                                'video_url'] ==
+                                                            null) {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              '/athlete_connect_video',
+                                                              arguments: {
+                                                                'uid': athlete[
+                                                                    'user_id'],
+                                                              });
+                                                        } else {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              '/athlete_connect',
+                                                              arguments: {
+                                                                'uid': athlete[
+                                                                    'user_id'],
+                                                                'videoUrl': athlete[
+                                                                    'video_url']
+                                                              });
+                                                        }
+                                                      }
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_right_outlined,
+                                                      size: 35,
+                                                      color: Colors.black,
+                                                    )),
+                                              )
+                                              // const SizedBox(width: 10),
+                                              // Add the verified icon button here
+                                              // if (athlete['verified'])
+                                              //   IconButton(
+                                              //     icon: Icon(Icons.verified),
+                                              //     color: Colors.blue,
+                                              //     onPressed: () {
+                                              //       // Handle onPressed action
+                                              //     },
+                                              //   ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                athlete['sport'] ?? '',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    fontFamily: 'RobotoSlab'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

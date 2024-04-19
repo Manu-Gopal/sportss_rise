@@ -118,15 +118,54 @@ class _AthleteCoachSearchState extends State<AthleteCoachSearch> {
                                                       fontFamily: 'RobotoSlab'
                                                     ),
                                                   ),
+                                                  // Padding(
+                                                  //   padding:
+                                                  //       const EdgeInsets.only(
+                                                  //           left: 55),
+                                                  //   child: IconButton(
+                                                  //       onPressed: () {
+                                                  //         Navigator.pushNamed(
+                                                  //             context,
+                                                  //             '/athlete_coach_profile',
+                                                  //             arguments: {
+                                                  //               'user_id': coaches[
+                                                  //                       index][
+                                                  //                   'coach_user_id'],
+                                                  //               'sport': coaches[
+                                                  //                       index]
+                                                  //                   ['sport']
+                                                  //             });
+                                                  //       },
+                                                  //       icon: const Icon(
+                                                  //         Icons
+                                                  //             .keyboard_arrow_right_outlined,
+                                                  //         size: 35,
+                                                  //         color: Colors.black,
+                                                  //       )),
+                                                  // )
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    coaches[index]['sport'] ??
+                                                        '',
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                      fontFamily: 'RobotoSlab'
+                                                    ),
+                                                  ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 55),
+                                                            left: 40),
                                                     child: IconButton(
                                                         onPressed: () {
                                                           Navigator.pushNamed(
                                                               context,
-                                                              '/sai_coach_profile',
+                                                              '/athlete_coach_profile',
                                                               arguments: {
                                                                 'user_id': coaches[
                                                                         index][
@@ -143,20 +182,6 @@ class _AthleteCoachSearchState extends State<AthleteCoachSearch> {
                                                           color: Colors.black,
                                                         )),
                                                   )
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    coaches[index]['sport'] ??
-                                                        '',
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                      fontFamily: 'RobotoSlab'
-                                                    ),
-                                                  ),
                                                 ],
                                               ),
                                             ],

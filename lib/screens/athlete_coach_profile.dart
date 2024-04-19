@@ -71,86 +71,121 @@ class _AthleteCoachProfileState extends State<AthleteCoachProfile> {
                 height: 100,
               ),
               const BuildCoverImage(),
-              // const SizedBox(height: 100,),
               Positioned(
                 top: 280,
                 child: isLoading
-                    ? const Text("Loading...")
+                    ? const CustomProgressIndicator()
                     : (imageUrl != null)
-                        ? GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/picture_view',
-                                  arguments: {
-                                    'imageUrl': coachProfile[0]['image_url']
-                                  });
-                            },
-                            child: Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/picture_view',
-                                        arguments: {'imageUrl': imageUrl});
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 70.0,
-                                    backgroundColor: Colors.grey,
-                                    backgroundImage: imageUrl != null
-                                        ? NetworkImage(imageUrl)
-                                        : null,
-                                    child: imageUrl == null
-                                        ? const Icon(
-                                            Icons.person,
-                                            color: Colors.white,
-                                          )
-                                        : null,
+                        ? Column(
+                            children: [
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     ElevatedButton(onPressed: (){
+                              //       print('aa');
+                              //     }, child: Text('Message'))
+                              //   ],
+                              // ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/picture_view',
+                                      arguments: {'imageUrl': imageUrl});
+                                },
+                                child: CircleAvatar(
+                                  radius: 70.0,
+                                  backgroundColor: Colors.grey,
+                                  backgroundImage: imageUrl != null
+                                      ? NetworkImage(imageUrl)
+                                      : null,
+                                  child: imageUrl == null
+                                      ? const Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                        )
+                                      : null,
+                                ),
+                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     ElevatedButton(onPressed: (){
+                              //       print('aa');
+                              //     }, child: Text('Message'))
+                              //   ],
+                              // ),
+                              const SizedBox(height: 14),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '$coachName',
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'RobotoSlab',
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                                const SizedBox(
-                                    height:
-                                        14), // Add some space between CircleAvatar and Row
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '$coachName',
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'RobotoSlab',
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '$coachSport Coach',
-                                      style: const TextStyle(
-                                          fontFamily: 'RobotoSlab',
-                                          fontSize: 18,
-                                          color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.pushNamed(context, '/chat_page',
-                                        arguments: {'user_to': uId});
-                                  },
-                                  child: const Text('Message', style: TextStyle(fontSize: 20, fontFamily: 'RobotoSlab'),),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '$coachSport Coach',
+                                    style: const TextStyle(
+                                        fontFamily: 'RobotoSlab',
+                                        fontSize: 18,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                              // const SizedBox(height: 10), // Adjust spacing here
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     print('aaaaaa');
+                              //   },
+                              //   child: const Text('Message'),
+                              // ),
+                            ],
                           )
                         : const SizedBox(),
-              )
+              ),
             ],
           ),
+          const SizedBox(
+            height: 140,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, '/chat_page',
+                          arguments: {'user_to': uId});
+                },
+                child: const Text('Message'),
+              ),
+            ],
+          )
         ],
+      ),
+    );
+  }
+}
+
+class CustomProgressIndicator extends StatelessWidget {
+  const CustomProgressIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: const Center(
+        child: CircularProgressIndicator(
+          valueColor:
+              AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 10, 63, 105)),
+        ),
       ),
     );
   }

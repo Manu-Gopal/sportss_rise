@@ -40,7 +40,7 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
         .from('profile')
         .stream(primaryKey: ['id'])
         .eq('sport', coachSport[0]['sport'])
-        .order('id');
+        .order('follower_count', ascending: false);
 
     setState(() {
       athleteList = athleteStream;
@@ -160,9 +160,49 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                                 fontSize: 20,
                                               ),
                                             ),
+                                            if (athlete['verified'])
+                                                IconButton(
+                                                  icon: Icon(Icons.verified),
+                                                  color: Colors.blue,
+                                                  onPressed: () {
+                                                    // Handle onPressed action
+                                                  },
+                                                ),
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(
+                                            //       left: 10),
+                                            //   child: IconButton(
+                                            //       onPressed: () {
+                                            //         Navigator.pushNamed(context,
+                                            //             '/coach_athlete_connect',
+                                            //             arguments: {
+                                            //               'uid': athlete[
+                                            //                   'user_id'],
+                                            //               'videoUrl': athlete[
+                                            //                   'video_url']
+                                            //             });
+                                            //       },
+                                            //       icon: const Icon(
+                                            //         Icons
+                                            //             .keyboard_arrow_right_outlined,
+                                            //         size: 35,
+                                            //         color: Colors.black,
+                                            //       )),
+                                            // )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              athlete['dob'],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                  fontFamily: 'RobotoSlab'),
+                                            ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 10),
+                                                  left: 40),
                                               child: IconButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
@@ -180,17 +220,6 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
                                                     size: 35,
                                                     color: Colors.black,
                                                   )),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              athlete['dob'],
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                  fontFamily: 'RobotoSlab'),
                                             )
                                           ],
                                         ),

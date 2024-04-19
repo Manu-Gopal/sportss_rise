@@ -153,9 +153,42 @@ class _AthleteCoachViewState extends State<AthleteCoachView> {
                                                 fontFamily: 'RobotoSlab'
                                               ),
                                             ),
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(
+                                            //       right: 10),
+                                            //   child: IconButton(
+                                            //       onPressed: () {
+                                            //         Navigator.pushNamed(context,
+                                            //             '/athlete_coach_profile',
+                                            //             arguments: {
+                                            //               'user_id': coach[
+                                            //                   'coach_user_id'],
+                                            //               'sport':
+                                            //                   coach['sport']
+                                            //             });
+                                            //       },
+                                            //       icon: const Icon(
+                                            //         Icons
+                                            //             .keyboard_arrow_right_outlined,
+                                            //         size: 35,
+                                            //         color: Colors.black,
+                                            //       )),
+                                            // )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              coach['sport'],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                                fontFamily: 'RobotoSlab'
+                                              ),
+                                            ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 10),
+                                                  left: 40),
                                               child: IconButton(
                                                   onPressed: () {
                                                     Navigator.pushNamed(context,
@@ -176,18 +209,6 @@ class _AthleteCoachViewState extends State<AthleteCoachView> {
                                             )
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              coach['sport'],
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                fontFamily: 'RobotoSlab'
-                                              ),
-                                            ),
-                                          ],
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -203,30 +224,6 @@ class _AthleteCoachViewState extends State<AthleteCoachView> {
                     }
                     return Container();
                   },
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/add_coach');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 231, 162, 87),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        20), // Adjust the value for circular edges
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 24), // Adjust the padding for size
-                ),
-                child: const Text(
-                  'Add Coach',
-                  style: TextStyle(
-                    color: Colors.white, // Set the text color
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'RobotoSlab'
-                  ),
                 ),
               ),
             ],

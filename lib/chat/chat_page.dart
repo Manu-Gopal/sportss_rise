@@ -27,19 +27,28 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late final Stream<List<Message>> _messagesStream;
   final Map<String, Profile> _profileCache = {};
+  dynamic id;
+  dynamic userTo;
+  dynamic myUserId;
 
   @override
   void initState() {
-    final myUserId = supabase.auth.currentUser!.id;
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      id = ModalRoute.of(context)?.settings.arguments as Map?;
+      userTo = id['user_to'];
+    });
+    myUserId = supabase.auth.currentUser!.id;
     print('this is my user id $myUserId');
     _messagesStream = supabase
         .from('messages')
         .stream(primaryKey: ['id'])
+        //  .inFilter('profile_id', [userTo, myUserId])
         .order('created_at')
         .map((maps) => maps
         .map((map) => Message.fromMap(map: map, myUserId: myUserId))
         .toList());
-    print(_messagesStream);
+    // print(_messagesStream);
     super.initState();
   }
 
@@ -87,7 +96,14 @@ class _ChatPageState extends State<ChatPage> {
                       /// to rendering the widget inside build method, but for
                       /// creating an app quick and dirty, it's fine 😂
                       _loadProfileCache(message.profileId);
-
+                      // if (message.userTo == userTo || message.userTo == myUserId) {
+                      //   return _ChatBubble(
+                      //   message: message,
+                      //   profile: _profileCache[message.profileId],
+                      // );
+                      // } else {
+                      //    return const SizedBox(height: 1);
+                      // }
                       return _ChatBubble(
                         message: message,
                         profile: _profileCache[message.profileId],
@@ -121,17 +137,6 @@ class _MessageBarState extends State<_MessageBar> {
   late final TextEditingController _textController;
   dynamic userTo;
   dynamic id;
-
-  
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(Duration.zero, () async {
-  //     id = ModalRoute.of(context)?.settings.arguments as Map?;
-  //     userTo = id['user_to'];
-  //     print(userTo);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

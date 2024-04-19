@@ -25,6 +25,7 @@ class _CoachAddNewsState extends State<CoachAddNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Add News', style: TextStyle(fontFamily: 'Poppins'),),
       ),
       body: SingleChildScrollView(
