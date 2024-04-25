@@ -6,7 +6,7 @@ import 'message.dart';
 import 'profile.dart';
 import 'constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
- import 'package:timeago/timeago.dart';
+import 'package:timeago/timeago.dart';
 
 /// Page to chat with someone.
 ///
@@ -25,7 +25,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  late final Stream<List<Message>> _messagesStream;
+  Stream<List<Message>>? _messagesStream;
   final Map<String, Profile> _profileCache = {};
   dynamic id;
   dynamic userTo;
@@ -35,39 +35,44 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      id = ModalRoute.of(context)?.settings.arguments as Map?;
+      setState(() {
+        id = ModalRoute.of(context)?.settings.arguments as Map?;
+      });
       userTo = id['user_to'];
-    });
     myUserId = supabase.auth.currentUser!.id;
-    print('this is my user id $myUserId');
     _messagesStream = supabase
         .from('messages')
         .stream(primaryKey: ['id'])
-        //  .inFilter('profile_id', [userTo, myUserId])
         .order('created_at')
-        .map((maps) => maps
-        .map((map) => Message.fromMap(map: map, myUserId: myUserId))
-        .toList());
-    // print(_messagesStream);
-    super.initState();
+        .map((maps) {
+          List<Map<String, dynamic>> filteredMaps = maps.where(
+            (i) => ((i['profile_id'] == myUserId && i['user_to'] == userTo) || (i['profile_id'] == userTo && i['user_to'] == myUserId))
+          ).toList();
+          return filteredMaps
+            .map((map) => Message.fromMap(map: map, myUserId: myUserId))
+            .toList();
+        });
+        setState(() {});
+    });
   }
 
   Future<void> _loadProfileCache(String profileId) async {
-    try{
+    try {
       if (_profileCache[profileId] != null) {
-      return;
-    }
-    final data =
-    await supabase.from('profile').select().eq('user_id', profileId).single();
-    final profile = Profile.fromMap(data);
-    setState(() {
-      _profileCache[profileId] = profile;
-    });
-    }
-    catch(_){
+        return;
+      }
+      final data = await supabase
+          .from('profile')
+          .select()
+          .eq('user_id', profileId)
+          .single();
+      final profile = Profile.fromMap(data);
+      setState(() {
+        _profileCache[profileId] = profile;
+      });
+    } catch (_) {
       print('exceptionnnnn');
     }
-    
   }
 
   @override
@@ -84,32 +89,24 @@ class _ChatPageState extends State<ChatPage> {
                 Expanded(
                   child: messages.isEmpty
                       ? const Center(
-                    child: Text('Start your conversation now :)'),
-                  )
+                          child: Text('Start your conversation now :)'),
+                        )
                       : ListView.builder(
-                    reverse: true,
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
+                          reverse: true,
+                          itemCount: messages.length,
+                          itemBuilder: (context, index) {
+                            final message = messages[index];
 
-                      /// I know it's not good to include code that is not related
-                      /// to rendering the widget inside build method, but for
-                      /// creating an app quick and dirty, it's fine 😂
-                      _loadProfileCache(message.profileId);
-                      // if (message.userTo == userTo || message.userTo == myUserId) {
-                      //   return _ChatBubble(
-                      //   message: message,
-                      //   profile: _profileCache[message.profileId],
-                      // );
-                      // } else {
-                      //    return const SizedBox(height: 1);
-                      // }
-                      return _ChatBubble(
-                        message: message,
-                        profile: _profileCache[message.profileId],
-                      );
-                    },
-                  ),
+                            /// I know it's not good to include code that is not related
+                            /// to rendering the widget inside build method, but for
+                            /// creating an app quick and dirty, it's fine 😂
+                            _loadProfileCache(message.profile_id);
+                            return _ChatBubble(
+                              message: message,
+                              profile: _profileCache[message.profile_id],
+                            );
+                          },
+                        ),
                 ),
                 const _MessageBar(),
               ],
@@ -196,11 +193,9 @@ class _MessageBarState extends State<_MessageBar> {
     }
     _textController.clear();
     try {
-      await supabase.from('messages').insert({
-        'profile_id': myUserId,
-        'content': text,
-        'user_to': userTo
-      });
+      await supabase
+          .from('messages')
+          .insert({'profile_id': myUserId, 'content': text, 'user_to': userTo});
     } on PostgrestException catch (error) {
       // ignore: use_build_context_synchronously
       context.showErrorSnackBar(message: error.message);
@@ -257,7 +252,7 @@ class _ChatBubble extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
       child: Row(
         mainAxisAlignment:
-        message.isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
+            message.isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: chatContents,
       ),
     );

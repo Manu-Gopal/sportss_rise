@@ -160,6 +160,7 @@ class _AthleteCoachProfileState extends State<AthleteCoachProfile> {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  print(uId);
                   // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, '/chat_page',
                           arguments: {'user_to': uId});

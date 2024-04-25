@@ -1,7 +1,7 @@
 class Message {
   Message({
     required this.id,
-    required this.profileId,
+    required this.profile_id,
     required this.content,
     required this.createdAt,
     required this.isMine,
@@ -12,7 +12,7 @@ class Message {
   final String id;
 
   /// ID of the user who posted the message
-  final String profileId;
+  final String profile_id;
 
   /// Text content of the message
   final String content;
@@ -28,7 +28,7 @@ class Message {
     required Map<String, dynamic> map,
     required String myUserId,
   })  : id = map['id'],
-        profileId = map['profile_id'],
+        profile_id = map['profile_id'],
         content = map['content'],
         createdAt = DateTime.parse(map['created_at']),
         isMine = myUserId == map['profile_id'];

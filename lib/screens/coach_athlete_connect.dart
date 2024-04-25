@@ -213,13 +213,13 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                             fontFamily: 'RobotoSlab'),
                       ),
                       if (athleteDetails[0]['verified'])
-                                                IconButton(
-                                                  icon: Icon(Icons.verified),
-                                                  color: Colors.blue,
-                                                  onPressed: () {
-                                                    // Handle onPressed action
-                                                  },
-                                                ),
+                        IconButton(
+                          icon: Icon(Icons.verified),
+                          color: Colors.blue,
+                          onPressed: () {
+                            // Handle onPressed action
+                          },
+                        ),
                     ],
                   ),
             const SizedBox(height: 10),
@@ -257,48 +257,55 @@ class _CoachAthleteConnectState extends State<CoachAthleteConnect> {
                   width: 5,
                 ),
                 ElevatedButton(
-  onPressed: verified ? null : () {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Confirm Verify"),
-          content: const Text("Are you sure you want to verify?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () async {
-                if (!verified) {
-                  verified = true;
-                  await supabase
-                      .from('profile')
-                      .update({'verified': verified})
-                      .match({'user_id': athleteDetails[0]['user_id']});
-                }
-                Navigator.pop(context); // Close the dialog
-              },
-              child: const Text("Verify"),
-            ),
-          ],
-        );
-      },
-    );
-  },
-  // Set the style of the button based on the value of 'verified'
-  style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-      verified ? Colors.grey : Colors.blue,
-    ),
-  ),
-  // Set the text of the button based on the value of 'verified'
-  child: Text(verified ? 'Verified' : 'Verify'),
-)
-
+                  onPressed: verified
+                      ? null
+                      : () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Confirm Verify"),
+                                content: const Text(
+                                    "Are you sure you want to verify?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Cancel"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      if (!verified) {
+                                        verified = true;
+                                        await supabase.from('profile').update(
+                                            {'verified': verified}).match({
+                                          'user_id': athleteDetails[0]
+                                              ['user_id']
+                                        });
+                                      }
+                                      setState(() {
+                                        getProfile();
+                                      });
+                                      Navigator.pop(
+                                          context); // Close the dialog
+                                    },
+                                    child: const Text("Verify"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                  // Set the style of the button based on the value of 'verified'
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      verified ? Colors.grey : Colors.blue,
+                    ),
+                  ),
+                  // Set the text of the button based on the value of 'verified'
+                  child: Text(verified ? 'Verified' : 'Verify'),
+                )
               ],
             ),
             isLoading

@@ -303,16 +303,10 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                   .showSnackBar(const SnackBar(
                                 content: Text('Account Created Successfully.'),
                                 duration: Duration(seconds: 3),
-                                
-
                               ));
                               // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, '/athlete_login');
                                 } on PostgrestException catch (error) {
-                                // Handle potential errors during email check (optional)
-                                // print('Error checking email: $error');
-                                // You can choose to display a generic error message here
-                                // or retry the check with exponential backoff if desired.
                                 print(error.toString());
                                 if (error
                                     .toString()
@@ -326,18 +320,12 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                   ));
                                   return;
                                 } else {
-                                  // Handle other potential Postgrest errors (optional)
-                                  // print('Signup error: ${error.toString()}');
-                                  // You can choose to display a generic error message here
+                                  print(error.toString());
                                 }
                               } catch (error) {
 
                                 print(error.toString());
-                                // Handle other potential errors (optional)
-                                // print('Unexpected error: $error');
-                                // You can choose to display a generic error message here
                               }
-
                               
                             }
                           }
