@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportss_rise/chat/chat_page.dart';
+import 'package:sportss_rise/screens/athlete_add_achievement.dart';
 import 'package:sportss_rise/screens/athlete_badminton.dart';
 import 'package:sportss_rise/screens/athlete_basketball.dart';
 import 'package:sportss_rise/screens/athlete_coach_profile.dart';
@@ -86,6 +87,7 @@ class SportsRise extends StatelessWidget {
         '/athlete_coach_profile' :(context) => const AthleteCoachProfile(),
         '/athlete_coach_search' :(context) => const AthleteCoachSearch(),
         '/athlete_like_list' :(context) => const AthleteLikeList(),
+        '/athlete_add_achievement':(context) => const AddAchievement(),
         '/sai_homepage':(context) => const SaiHomePage(),
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),

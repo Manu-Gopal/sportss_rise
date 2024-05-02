@@ -38,194 +38,154 @@ class _AthleteFootballState extends State<AthleteFootball> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            const Text(
-              'Choose Your Position',
-              style: TextStyle(fontFamily: 'RobotoSlab', fontSize: 20.0),
-            ),
-            const SizedBox(height: 10.0),
-            ListTile(
-              title: const Text(
-                'Forward',
-                style: TextStyle(
-                  fontFamily: 'RobotoSlab',
-                ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              const Text(
+                'Choose Your Position',
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
-              leading: Radio<FootballPosition>(
-                value: FootballPosition.Forward,
-                groupValue: _selectedPosition,
-                onChanged: (FootballPosition? value) {
-                  setState(() {
-                    _selectedPosition = value;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text(
-                'Midfield',
-                style: TextStyle(
-                  fontFamily: 'RobotoSlab',
-                ),
-              ),
-              leading: Radio<FootballPosition>(
-                value: FootballPosition.Midfielder,
-                groupValue: _selectedPosition,
-                onChanged: (FootballPosition? value) {
-                  setState(() {
-                    _selectedPosition = value;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text(
-                'Defender',
-                style: TextStyle(
-                  fontFamily: 'RobotoSlab',
-                ),
-              ),
-              leading: Radio<FootballPosition>(
-                value: FootballPosition.Defender,
-                groupValue: _selectedPosition,
-                onChanged: (FootballPosition? value) {
-                  setState(() {
-                    _selectedPosition = value;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text(
-                'Goalkeeper',
-                style: TextStyle(
-                  fontFamily: 'RobotoSlab',
-                ),
-              ),
-              leading: Radio<FootballPosition>(
-                value: FootballPosition.Goalkeeper,
-                groupValue: _selectedPosition,
-                onChanged: (FootballPosition? value) {
-                  setState(() {
-                    _selectedPosition = value;
-                  });
-                },
-              ),
-            ),
-            const Row(
-              children: [
-                Center(
-                  child: Text(
-                    'Add Achievements (if any)',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontFamily: 'Poppins'),
+              const SizedBox(height: 10.0),
+              ListTile(
+                title: const Text(
+                  'Forward',
+                  style: TextStyle(
+                    fontFamily: 'RobotoSlab',
                   ),
-                )
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            TextFormField(
-              controller: descriptionController,
-              decoration: const InputDecoration(
-                hintText: 'Type description here...',
-                labelText: 'Description',
-                // prefixIcon: Icon(
-                //   Icons.mail,
-                //   color: Color.fromARGB(255, 78, 66, 66),
-                // ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                ),
+                leading: Radio<FootballPosition>(
+                  value: FootballPosition.Forward,
+                  groupValue: _selectedPosition,
+                  onChanged: (FootballPosition? value) {
+                    setState(() {
+                      _selectedPosition = value;
+                    });
+                  },
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            if (imageFile != null)
-              Image.file(
-                File(imageFile!.path),
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
+              ListTile(
+                title: const Text(
+                  'Midfield',
+                  style: TextStyle(
+                    fontFamily: 'RobotoSlab',
+                  ),
+                ),
+                leading: Radio<FootballPosition>(
+                  value: FootballPosition.Midfielder,
+                  groupValue: _selectedPosition,
+                  onChanged: (FootballPosition? value) {
+                    setState(() {
+                      _selectedPosition = value;
+                    });
+                  },
+                ),
               ),
-            ElevatedButton(
-                onPressed: () {
-                  uploadImage();
-                },
-                child: const Text("Upload Image")),
-            isUploading
-                ? const Text("Loading")
-                : ElevatedButton(
-                    onPressed: _selectedPosition != null
-                        ? () async {
-                            String description = descriptionController.text;
-                            pos = _selectedPosition!;
-                            uploadVideo();
-                            // ignore: unnecessary_null_comparison
-                            if (description == '' && imageFile != null) {
-                              await supabase.from('profile').update({
-                                'sport': 'Football',
-                                'position': pos.name
-                              }).match({'user_id': uId});
-                            } else {
-                              await supabase.from('profile').update({
-                                'sport': 'Football',
-                                'position': pos.name,
-                                'achievement_image': true,
-                              }).match({'user_id': uId});
-                              
-                              final String profileId =  await supabase.from('profile').select('id').match({'user_id':uId});
-                              if (imageFile != null) {
-                                await Supabase.instance.client.storage
-                                    .from('achievement')
-                                    .upload(
-                                      'achievement_images/$profileId',
-                                      imageFile,
-                                      fileOptions: const FileOptions(
-                                          cacheControl: '3600', upsert: false),
-                                    );
-                                  final String publicUrl = Supabase
-                                  .instance.client.storage
-                                  .from('images')
-                                  .getPublicUrl('achievement_images/$profileId');
-
-                                  await supabase
-                                  .from('profile')
-                                  .update({'achievement_image_url': publicUrl}).match(
-                                      {'id': profileId});
-                                }
+              ListTile(
+                title: const Text(
+                  'Defender',
+                  style: TextStyle(
+                    fontFamily: 'RobotoSlab',
+                  ),
+                ),
+                leading: Radio<FootballPosition>(
+                  value: FootballPosition.Defender,
+                  groupValue: _selectedPosition,
+                  onChanged: (FootballPosition? value) {
+                    setState(() {
+                      _selectedPosition = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text(
+                  'Goalkeeper',
+                  style: TextStyle(
+                    fontFamily: 'RobotoSlab',
+                  ),
+                ),
+                leading: Radio<FootballPosition>(
+                  value: FootballPosition.Goalkeeper,
+                  groupValue: _selectedPosition,
+                  onChanged: (FootballPosition? value) {
+                    setState(() {
+                      _selectedPosition = value;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              isUploading
+                  ? const Text("Loading")
+                  : ElevatedButton(
+                      onPressed: _selectedPosition != null
+                          ? () async {
+                              String description = descriptionController.text;
+                              pos = _selectedPosition!;
+                              uploadVideo();
+                              // ignore: unnecessary_null_comparison
+                              if (description == '' && imageFile != null) {
+                                await supabase.from('profile').update({
+                                  'sport': 'Football',
+                                  'position': pos.name
+                                }).match({'user_id': uId});
+                              } else {
+                                await supabase.from('profile').update({
+                                  'sport': 'Football',
+                                  'position': pos.name,
+                                  'achievement_image': true,
+                                }).match({'user_id': uId});
+                                
+                                final String profileId =  await supabase.from('profile').select('id').match({'user_id':uId});
+                                if (imageFile != null) {
+                                  await Supabase.instance.client.storage
+                                      .from('achievement')
+                                      .upload(
+                                        'achievement_images/$profileId',
+                                        imageFile,
+                                        fileOptions: const FileOptions(
+                                            cacheControl: '3600', upsert: false),
+                                      );
+                                    final String publicUrl = Supabase
+                                    .instance.client.storage
+                                    .from('images')
+                                    .getPublicUrl('achievement_images/$profileId');
+      
+                                    await supabase
+                                    .from('profile')
+                                    .update({'achievement_image_url': publicUrl}).match(
+                                        {'id': profileId});
+                                  }
+                              }
+      
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Details Updated Successfully.'),
+                                duration: Duration(seconds: 3),
+                              ));
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushNamed(context, '/athlete_main');
                             }
-
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text('Details Updated Successfully.'),
-                              duration: Duration(seconds: 3),
-                            ));
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushNamed(context, '/athlete_main');
-                          }
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _selectedPosition != null
-                          ? Colors.green
-                          : Colors.grey, // Set button color
-                    ),
-                    child: const Text(
-                      'Upload Video',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'RobotoSlab',
-                          //fontFamily: 'NovaSquare',
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )),
-          ],
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _selectedPosition != null
+                            ? Colors.green
+                            : Colors.grey, // Set button color
+                      ),
+                      child: const Text(
+                        'Upload Video',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'RobotoSlab',
+                            //fontFamily: 'NovaSquare',
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
+            ],
+          ),
         ),
       ),
     );
@@ -265,16 +225,5 @@ class _AthleteFootballState extends State<AthleteFootball> {
     setState(() {
       isUploading = false;
     });
-  }
-
-  Future uploadImage() async {
-    final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      final imagePath = pickedImage.path;
-      setState(() {
-        imageFile = File(imagePath);
-      });
-    }
   }
 }

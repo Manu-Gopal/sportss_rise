@@ -55,17 +55,20 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Followers', style: TextStyle(fontFamily: 'Poppins'),),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            getProfile();
+          });
+        },
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 30),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 55),
+                  SizedBox(width: 30),
                   Expanded(
                     child: Text(
                       'Athletes',
@@ -80,42 +83,47 @@ class _AthleteFollowListState extends State<AthleteFollowList> {
                 ],
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: followedByList1.length,
-                  itemBuilder: (context, index) {
-                    final String followedBy = followedByList1[index];
-
-                    return FutureBuilder(
-                      future: fetchUserDetails(followedBy),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          final userDetails = snapshot.data!;
-                          return Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      Colors.grey),
-                              borderRadius: BorderRadius.circular(
-                                  5.0), 
+              followedByList1.isEmpty
+                  ? const Text('No followers', style: TextStyle(fontSize: 18, fontFamily: 'RobotoSlab'),)
+                  :
+                Center(
+                  child: Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: followedByList1.length,
+                    itemBuilder: (context, index) {
+                      final String followedBy = followedByList1[index];
+                
+                      return FutureBuilder(
+                        future: fetchUserDetails(followedBy),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            final userDetails = snapshot.data!;
+                            return Container(
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color:
+                                        Colors.grey),
+                                borderRadius: BorderRadius.circular(
+                                    5.0), 
+                              ),
+                              child: Text(userDetails[
+                                  'name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'RobotoSlab')), 
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
                             ),
-                            child: Text(userDetails[
-                                'name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'RobotoSlab')), 
-                          );
-                        }
-                      },
-                    );
-                  },
                 ),
-              ),
             ],
           ),
         ),
