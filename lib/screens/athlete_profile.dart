@@ -248,54 +248,59 @@ class _AthleteProfileState extends State<AthleteProfile> {
                     ),
               const SizedBox(height: 10),
               Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(width: 40),
-          ElevatedButton.icon(
-        onPressed: () {
-          Navigator.pushNamed(context, '/athlete_edit_profile');
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-        icon: const Icon(
-          Icons.edit,
-          color: Colors.black,
-        ),
-        label: const Text(
-          'Edit Profile',
-          style: TextStyle(fontFamily: 'RobotoSlab', color: Colors.black, fontSize: 18),
-        ),
-          ),
-          const SizedBox(width: 15),
-          ElevatedButton.icon(
-        onPressed: () async {
-          await Supabase.instance.client.auth.signOut();
-          // ignore: use_build_context_synchronously
-          Navigator.pushNamed(context, '/');
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-        label: const Text(
-          'Log Out',
-          style: TextStyle(fontFamily: 'RobotoSlab', color: Colors.black, fontSize: 18),
-        ),
-        icon: const Icon(
-          Icons.logout,
-          color: Colors.black,
-        ),
-          ),
-        ],
-      ),
-      
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 40),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/athlete_edit_profile');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.black,
+                    ),
+                    label: const Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                          fontFamily: 'RobotoSlab',
+                          color: Colors.black,
+                          fontSize: 18),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      await Supabase.instance.client.auth.signOut();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, '/');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    label: const Text(
+                      'Log Out',
+                      style: TextStyle(
+                          fontFamily: 'RobotoSlab',
+                          color: Colors.black,
+                          fontSize: 18),
+                    ),
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -305,7 +310,10 @@ class _AthleteProfileState extends State<AthleteProfile> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/athlete_add_achievement');
                     },
-                    icon: const Icon(Icons.add, color: Colors.black,), // Add icon using Icons.add
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
                     label: const Text(
                       'Add an Achievement',
                       style: TextStyle(
@@ -320,6 +328,16 @@ class _AthleteProfileState extends State<AthleteProfile> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/athlete_view_achievement', arguments: {'userId': uId});
+                    },
+                    icon: const Icon(
+                      Icons.view_list,
+                      color: Colors.black,
+                    ),
+                    tooltip: 'View Achievements',
                   ),
                 ],
               ),
@@ -359,7 +377,8 @@ class _AthleteProfileState extends State<AthleteProfile> {
                                           child: FloatingActionButton(
                                             onPressed: () {
                                               setState(() {
-                                                if (controller.value.isPlaying) {
+                                                if (controller
+                                                    .value.isPlaying) {
                                                   controller.pause();
                                                 } else {
                                                   controller.play();
@@ -402,11 +421,28 @@ class _AthleteProfileState extends State<AthleteProfile> {
                           : isLoading == false
                               ? const Text(
                                   'Your profile is not viewed by the coach',
-                                  style:
-                                      TextStyle(fontSize: 20, color: Colors.grey))
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.grey))
                               : const Text('')
                 ],
               ),
+              const SizedBox(height: 15),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/athlete_view_achievement');
+                },
+                child: const Row(
+                  children: [
+                    Text(
+                      'View Achievements',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'RobotoSlab',
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

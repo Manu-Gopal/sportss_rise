@@ -129,297 +129,330 @@ class _AthleteConnectState extends State<AthleteConnect> {
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
         title: const Text('Profile'),
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            getProfile();
-          });
-        },
-        child: Center(
-          child: Column(
-            children: [
-              // const SizedBox(height: 80),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Account Details",
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 40),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/picture_view',
-                            arguments: {'imageUrl': imageUrl});
-                      },
-                      child: imageUrl != null
-                          ? CircleAvatar(
-                              radius: 50.0,
-                              backgroundImage: NetworkImage(imageUrl),
-                            )
-                          : const CircleAvatar(
-                              radius: 50.0,
-                              child: Icon(Icons.person,
-                                  size: 40.0, color: Colors.grey),
-                            ),
+      body: SingleChildScrollView(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              getProfile();
+            });
+          },
+          child: Center(
+            child: Column(
+              children: [
+                // const SizedBox(height: 80),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Account Details",
+                      style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins'),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  Column(
-                    children: [
-                      GestureDetector(
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 40),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/athlete_follow_list',
-                              arguments: {'uid': athlete['uid']});
+                          Navigator.pushNamed(context, '/picture_view',
+                              arguments: {'imageUrl': imageUrl});
                         },
-                        child: Row(
-                          children: [
-                            Text(
-                              '$followerCount',
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'RobotoSlab'),
-                            ),
-                            const SizedBox(width: 7),
-                            const Text(
-                              'followers',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'RobotoSlab'),
-                            ),
-                          ],
-                        ),
+                        child: imageUrl != null
+                            ? CircleAvatar(
+                                radius: 50.0,
+                                backgroundImage: NetworkImage(imageUrl),
+                              )
+                            : const CircleAvatar(
+                                radius: 50.0,
+                                child: Icon(Icons.person,
+                                    size: 40.0, color: Colors.grey),
+                              ),
                       ),
-                      const SizedBox(height: 15),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/athlete_following_list',
-                              arguments: {'uid': athlete['uid']});
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              '$followingCount',
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'RobotoSlab'),
-                            ),
-                            const SizedBox(width: 7),
-                            const Text(
-                              'following',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'RobotoSlab'),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              isLoading
-                  ? const Text("Loading...")
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
                       children: [
-                        const SizedBox(width: 60),
-                        Text(
-                          athleteDetails[0]['name'],
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'),
-                        ),
-                      ],
-                    ),
-              const SizedBox(height: 10),
-              isLoading
-                  ? const Text("Loading...")
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(width: 60),
-                        Text(
-                          accountEmail,
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RobotoSlab'),
-                        ),
-                      ],
-                    ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  const SizedBox(width: 40),
-                  ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        isFollowing = !isFollowing;
-                        isFollowing ? followerCount += 1 : followerCount -= 1;
-                      });
-                      if (isFollowing) {
-                        await supabase
-                            .from('follow')
-                            .insert({'follower': follower, 'followed_by': uId});
-                        await supabase
-                            .from('profile')
-                            .update({'follower_count': followerCount}).eq(
-                                'user_id', athleteDetails[0]['user_id']);
-                      } else {
-                        await supabase
-                            .from('follow')
-                            .delete()
-                            .eq('follower', follower)
-                            .eq('followed_by', uId);
-                        await supabase
-                            .from('profile')
-                            .update({'follower_count': followerCount}).eq(
-                                'user_id', athleteDetails[0]['user_id']);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: isFollowing ? Colors.black : Colors.white,
-                      backgroundColor: isFollowing ? Colors.white : Colors.blue,
-                      minimumSize: const Size(110.0, 36.0),
-                    ),
-                    child: Text(
-                      isFollowing ? 'Following' : 'Follow',
-                      style: const TextStyle(fontFamily: 'RobotoSlab'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, '/chat_page',
-                          arguments: {'user_to': follower});
-                    },
-                    child: const Text(
-                      'Message',
-                      style: TextStyle(fontFamily: 'RobotoSlab'),
-                    ),
-                  ),
-                ],
-              ),
-      
-              isLoading
-                  ? const Text("Loading...")
-                  : videoUrl == null
-                      ? const Text('No Video Available')
-                      : ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height * 0.4,
-                            maxWidth: MediaQuery.of(context).size.width * 0.9,
-                          ),
-                          child: FutureBuilder(
-                            future: _initializeVideoPlayerFuture,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                if (videoUrl == null) {
-                                  return const Center(
-                                    child: Text('No Video Available'),
-                                  );
-                                } else {
-                                  return AspectRatio(
-                                    aspectRatio: controller.value.aspectRatio,
-                                    child: Stack(
-                                      children: [
-                                        VideoPlayer(controller),
-                                        Positioned(
-                                          bottom: 20.0,
-                                          right: 20.0,
-                                          child: FloatingActionButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (controller.value.isPlaying) {
-                                                  controller.pause();
-                                                } else {
-                                                  controller.play();
-                                                }
-                                              });
-                                            },
-                                            child: Icon(
-                                              controller.value.isPlaying
-                                                  ? Icons.pause
-                                                  : Icons.play_arrow,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/athlete_follow_list',
+                                arguments: {'uid': athlete['uid']});
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                '$followerCount',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'RobotoSlab'),
+                              ),
+                              const SizedBox(width: 7),
+                              const Text(
+                                'followers',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'RobotoSlab'),
+                              ),
+                            ],
                           ),
                         ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: IconButton(
+                        const SizedBox(height: 15),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/athlete_following_list',
+                                arguments: {'uid': athlete['uid']});
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                '$followingCount',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'RobotoSlab'),
+                              ),
+                              const SizedBox(width: 7),
+                              const Text(
+                                'following',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'RobotoSlab'),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                isLoading
+                    ? const Text("Loading...")
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 60),
+                          Text(
+                            athleteDetails[0]['name'],
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
+                          ),
+                        ],
+                      ),
+                const SizedBox(height: 10),
+                isLoading
+                    ? const Text("Loading...")
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 60),
+                          Text(
+                            accountEmail,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RobotoSlab'),
+                          ),
+                        ],
+                      ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const SizedBox(width: 40),
+                    ElevatedButton(
                       onPressed: () async {
                         setState(() {
-                          isLiked = !isLiked;
-                          isLiked ? likeCount += 1 : likeCount -= 1;
+                          isFollowing = !isFollowing;
+                          isFollowing ? followerCount += 1 : followerCount -= 1;
                         });
-                        if (isLiked) {
+                        if (isFollowing) {
                           await supabase
-                              .from('like')
-                              .insert({'like': follower, 'liked_by': uId});
+                              .from('follow')
+                              .insert({'follower': follower, 'followed_by': uId});
+                          await supabase
+                              .from('profile')
+                              .update({'follower_count': followerCount}).eq(
+                                  'user_id', athleteDetails[0]['user_id']);
                         } else {
                           await supabase
-                              .from('like')
+                              .from('follow')
                               .delete()
-                              .eq('like', follower)
-                              .eq('liked_by', uId);
+                              .eq('follower', follower)
+                              .eq('followed_by', uId);
+                          await supabase
+                              .from('profile')
+                              .update({'follower_count': followerCount}).eq(
+                                  'user_id', athleteDetails[0]['user_id']);
                         }
                       },
-                      iconSize: 30,
-                      icon: Icon(
-                        isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: isLiked ? Colors.red : Colors.grey,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: isFollowing ? Colors.black : Colors.white,
+                        backgroundColor: isFollowing ? Colors.white : Colors.blue,
+                        minimumSize: const Size(110.0, 36.0),
+                      ),
+                      child: Text(
+                        isFollowing ? 'Following' : 'Follow',
+                        style: const TextStyle(fontFamily: 'RobotoSlab'),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/athlete_like_list',
-                          arguments: {'uid': athlete['uid']});
-                    },
-                    child: Text(
-                      likeCount > 1 ? '$likeCount likes' : '$likeCount like',
-                      style: const TextStyle(fontSize: 20.0),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () async {
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(context, '/chat_page',
+                            arguments: {'user_to': follower});
+                      },
+                      child: const Text(
+                        'Message',
+                        style: TextStyle(fontFamily: 'RobotoSlab'),
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/athlete_view_achievement', arguments: {'userId':follower});
+                      },
+                      icon: const Icon(
+                        Icons.view_list,
+                        color: Colors.black,
+                      ),
+                      label: const Text(
+                        'View Achievement',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'RobotoSlab',
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+        
+                isLoading
+                    ? const Text("Loading...")
+                    : videoUrl == null
+                        ? const Text('No Video Available')
+                        : ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.4,
+                              maxWidth: MediaQuery.of(context).size.width * 0.9,
+                            ),
+                            child: FutureBuilder(
+                              future: _initializeVideoPlayerFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (videoUrl == null) {
+                                    return const Center(
+                                      child: Text('No Video Available'),
+                                    );
+                                  } else {
+                                    return AspectRatio(
+                                      aspectRatio: controller.value.aspectRatio,
+                                      child: Stack(
+                                        children: [
+                                          VideoPlayer(controller),
+                                          Positioned(
+                                            bottom: 20.0,
+                                            right: 20.0,
+                                            child: FloatingActionButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (controller.value.isPlaying) {
+                                                    controller.pause();
+                                                  } else {
+                                                    controller.play();
+                                                  }
+                                                });
+                                              },
+                                              child: Icon(
+                                                controller.value.isPlaying
+                                                    ? Icons.pause
+                                                    : Icons.play_arrow,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: IconButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLiked = !isLiked;
+                            isLiked ? likeCount += 1 : likeCount -= 1;
+                          });
+                          if (isLiked) {
+                            await supabase
+                                .from('like')
+                                .insert({'like': follower, 'liked_by': uId});
+                          } else {
+                            await supabase
+                                .from('like')
+                                .delete()
+                                .eq('like', follower)
+                                .eq('liked_by', uId);
+                          }
+                        },
+                        iconSize: 30,
+                        icon: Icon(
+                          isLiked ? Icons.favorite : Icons.favorite_border,
+                          color: isLiked ? Colors.red : Colors.grey,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/athlete_like_list',
+                            arguments: {'uid': athlete['uid']});
+                      },
+                      child: Text(
+                        likeCount > 1 ? '$likeCount likes' : '$likeCount like',
+                        style: const TextStyle(fontSize: 20.0),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

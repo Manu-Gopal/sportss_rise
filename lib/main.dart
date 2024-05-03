@@ -19,6 +19,7 @@ import 'package:sportss_rise/screens/athlete_profile.dart';
 import 'package:sportss_rise/screens/athlete_profile_video.dart';
 import 'package:sportss_rise/screens/athlete_search.dart';
 import 'package:sportss_rise/screens/athlete_swimming.dart';
+import 'package:sportss_rise/screens/athlete_view_achievement.dart';
 import 'package:sportss_rise/screens/athlete_volleyball.dart';
 import 'package:sportss_rise/screens/coach_add_news.dart';
 import 'package:sportss_rise/screens/coach_athlete_connect.dart';
@@ -88,6 +89,7 @@ class SportsRise extends StatelessWidget {
         '/athlete_coach_search' :(context) => const AthleteCoachSearch(),
         '/athlete_like_list' :(context) => const AthleteLikeList(),
         '/athlete_add_achievement':(context) => const AddAchievement(),
+        '/athlete_view_achievement':(context) => const AthleteViewAchievement(),
         '/sai_homepage':(context) => const SaiHomePage(),
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),
