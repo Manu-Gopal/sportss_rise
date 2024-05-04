@@ -46,6 +46,15 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
           'SportsRise',
           style: TextStyle(fontFamily: 'Poppins'),
         ),
+        actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.message),
+              onPressed: () {
+                // Action to perform when the message icon is pressed
+                Navigator.pushNamed(context, '/athlete_message_list');
+              },
+            ),
+          ],
       ),
       // drawer: const CustomDrawer(),
       body: RefreshIndicator(
@@ -155,7 +164,7 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                               ),
                                               if (athlete['verified'])
                                                 IconButton(
-                                                  icon: Icon(Icons.verified),
+                                                  icon: const Icon(Icons.verified),
                                                   color: Colors.blue,
                                                   onPressed: () {
                                                     // Handle onPressed action
@@ -222,16 +231,6 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                                       color: Colors.black,
                                                     )),
                                               )
-                                              // const SizedBox(width: 10),
-                                              // Add the verified icon button here
-                                              // if (athlete['verified'])
-                                              //   IconButton(
-                                              //     icon: Icon(Icons.verified),
-                                              //     color: Colors.blue,
-                                              //     onPressed: () {
-                                              //       // Handle onPressed action
-                                              //     },
-                                              //   ),
                                             ],
                                           ),
                                           Row(

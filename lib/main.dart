@@ -23,16 +23,19 @@ import 'package:sportss_rise/screens/athlete_view_achievement.dart';
 import 'package:sportss_rise/screens/athlete_volleyball.dart';
 import 'package:sportss_rise/screens/coach_add_news.dart';
 import 'package:sportss_rise/screens/coach_athlete_connect.dart';
+import 'package:sportss_rise/screens/coach_athlete_message_list.dart';
 import 'package:sportss_rise/screens/coach_athlete_search.dart';
 import 'package:sportss_rise/screens/coach_athlete_search_page.dart';
 import 'package:sportss_rise/screens/coach_homepage.dart';
 import 'package:sportss_rise/screens/coach_login.dart';
 import 'package:sportss_rise/screens/coach_manage_news.dart';
+import 'package:sportss_rise/screens/coach_message_list.dart';
 import 'package:sportss_rise/screens/homepage.dart';
 import 'package:sportss_rise/screens/athlete_account.dart';
 import 'package:sportss_rise/screens/athlete_home.dart';
 import 'package:sportss_rise/screens/athlete_login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sportss_rise/screens/athlete_message_list.dart';
 import 'package:sportss_rise/screens/news_search.dart';
 import 'package:sportss_rise/screens/news_view.dart';
 import 'package:sportss_rise/screens/picture_view.dart';
@@ -90,6 +93,8 @@ class SportsRise extends StatelessWidget {
         '/athlete_like_list' :(context) => const AthleteLikeList(),
         '/athlete_add_achievement':(context) => const AddAchievement(),
         '/athlete_view_achievement':(context) => const AthleteViewAchievement(),
+        '/athlete_message_list':(context) => const AthleteMessageList(),
+        '/coach_message_list':(context) => const CoachMessageList(),
         '/sai_homepage':(context) => const SaiHomePage(),
         '/add_coach':(context) => const SaiAddCoach(),
         '/sai_coaches_search':(context) => const SaiCoachesSearch(),
@@ -100,6 +105,7 @@ class SportsRise extends StatelessWidget {
         '/coach_athlete_search':(context) => const CoachAthleteSearch(),
         'coach_athlete_search_page':(context) => const CoachAthleteSearchPage(),
         '/coach_athlete_connect':(context) => const CoachAthleteConnect(),
+        '/coach_athlete_message_list':(context) => const CoachAthleteMessageList(),
         '/picture_view':(context) => const PictureView(),
         '/add_news':(context) => const CoachAddNews(),
         '/news_search':(context) => const NewsSearch(),

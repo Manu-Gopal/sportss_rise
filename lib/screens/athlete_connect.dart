@@ -126,9 +126,9 @@ class _AthleteConnectState extends State<AthleteConnect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        title: const Text('Profile'),
-      ),
+          backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+          title: const Text('Profile')
+        ),
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: () async {

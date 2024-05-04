@@ -31,10 +31,10 @@ class _AthleteMainState extends State<AthleteMain> {
       body: IndexedStack(
         index: _selectedIndex,
         children: const [
-          AthleteHome(),
-          AthleteCoachView(),
-          AthleteNews(),
           AthleteNetwork(),
+          AthleteNews(),
+          AthleteCoachView(),
+          AthleteHome(),
           AthleteProfile(),
         ],
       ),
@@ -43,12 +43,8 @@ class _AthleteMainState extends State<AthleteMain> {
         index: _selectedIndex,
         items: const [
           CurvedNavigationBarItem(
-            child: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          CurvedNavigationBarItem(
             child: Icon(Icons.group),
-            label: 'Coaches',
+            label: 'Athletes',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.newspaper_outlined),
@@ -56,7 +52,11 @@ class _AthleteMainState extends State<AthleteMain> {
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.group),
-            label: 'Athletes',
+            label: 'Coaches',
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.sports),
+            label: 'Sport',
           ),
           CurvedNavigationBarItem(
             child: Icon(Icons.person),

@@ -55,6 +55,15 @@ class _CoachAthleteProfileViewState extends State<CoachAthleteProfileView> {
         title: const Text('SportsRise',
             style: TextStyle(fontFamily: 'Poppins', color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.message),
+              onPressed: () {
+                // Action to perform when the message icon is pressed
+                Navigator.pushNamed(context, '/coach_athlete_message_list');
+              },
+            ),
+          ],
       ),
       drawer: const CustomDrawer(),
       body: Center(
