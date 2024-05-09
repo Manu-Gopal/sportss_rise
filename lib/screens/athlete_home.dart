@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AthleteHome extends StatelessWidget {
-  const AthleteHome({super.key});
+class AthleteHome extends StatefulWidget {
+  const AthleteHome({Key? key}) : super(key: key);
+
+  @override
+  _AthleteHomeState createState() => _AthleteHomeState();
+}
+
+class _AthleteHomeState extends State<AthleteHome> {
+  final supabase = Supabase.instance.client;
+  dynamic userId = Supabase.instance.client.auth.currentUser!.id;
+  bool isLoading = false;
+  dynamic sport;
+  dynamic athleteSport;
+
+
+  @override
+  void initState() {
+    super.initState();
+    getSport();
+  }
+
+  Future getSport() async {
+    setState(() {
+      isLoading = true;
+    });
+    sport = await supabase.from('profile').select('sport').eq('user_id', userId);
+    athleteSport = sport[0]['sport'];
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +97,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_cricket');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -117,10 +146,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_football');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -166,10 +195,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_badminton');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -215,10 +244,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_basketball');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -264,10 +293,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_volleyball');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -313,10 +342,10 @@ class AthleteHome extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
+                              onTap: athleteSport == null ? () {
                                 Navigator.pushNamed(
                               context, '/athlete_swimming');
-                              },
+                              } : null,
                               child:
                                   Container(),
                             ),
@@ -333,70 +362,70 @@ class AthleteHome extends StatelessWidget {
   }
 }
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({super.key});
+// class CustomDrawer extends StatefulWidget {
+//   const CustomDrawer({super.key});
 
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
+//   @override
+//   State<CustomDrawer> createState() => _CustomDrawerState();
+// }
 
-class _CustomDrawerState extends State<CustomDrawer> {
+// class _CustomDrawerState extends State<CustomDrawer> {
 
-  final supabase = Supabase.instance.client;
-  dynamic useremail = '';
-  dynamic username = '';
+//   final supabase = Supabase.instance.client;
+//   dynamic useremail = '';
+//   dynamic username = '';
 
-  @override
-  void initState() {
-    super.initState();
-    useremail = supabase.auth.currentUser!.email;
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     useremail = supabase.auth.currentUser!.email;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Colors.white,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          UserAccountsDrawerHeader(
-            accountName: const Text(
-              '',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            accountEmail: Text(useremail,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            decoration: const BoxDecoration(
-              color: Colors.green,
-              image: DecorationImage(
-                image: AssetImage('images/sai_logo.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              // Navigator.pushNamed(context, '/visitor_bookings');
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
-            },
-            leading: const Icon(
-              Icons.newspaper_outlined,
-              color: Colors.black,
-            ),
-            title: const Text(
-              "Latest News",
-              style: TextStyle(
-                // fontFamily: 'RobotoSlab',
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//       backgroundColor: Colors.white,
+//       child: ListView(
+//         padding: EdgeInsets.zero,
+//         children: [
+//           UserAccountsDrawerHeader(
+//             accountName: const Text(
+//               '',
+//               style: TextStyle(
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: 20,
+//               ),
+//             ),
+//             accountEmail: Text(useremail,
+//                 style: const TextStyle(fontWeight: FontWeight.bold)),
+//             decoration: const BoxDecoration(
+//               color: Colors.green,
+//               image: DecorationImage(
+//                 image: AssetImage('images/sai_logo.png'),
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//           ListTile(
+//             onTap: () {
+//               // Navigator.pushNamed(context, '/visitor_bookings');
+//               // Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitorBookings()));
+//             },
+//             leading: const Icon(
+//               Icons.newspaper_outlined,
+//               color: Colors.black,
+//             ),
+//             title: const Text(
+//               "Latest News",
+//               style: TextStyle(
+//                 // fontFamily: 'RobotoSlab',
+//                 fontSize: 20,
+//                 fontWeight: FontWeight.bold
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

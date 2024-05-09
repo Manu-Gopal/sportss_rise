@@ -36,9 +36,7 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
         .match({'coach_user_id': coachUserId});
     coachName = coachProfile[0]['name'];
     coachSport = coachProfile[0]['sport'];
-    if(coachSport=='Football'){
-
-    }
+    if (coachSport == 'Football') {}
 
     setState(() {
       // coachName = coachProfile[0]['name'];
@@ -60,11 +58,23 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SportsRise', style: TextStyle(fontFamily: 'Poppins', color: Colors.white),),
-        // centerTitle: true,
+        title: const Text(
+          'SportsRise',
+          style: TextStyle(fontFamily: 'Poppins', color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            onPressed: () async {
+              await Supabase.instance.client.auth.signOut();
+              // ignore: use_build_context_synchronously
+              Navigator.pushNamed(context, '/');
+            },
+          ),
+        ],
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -86,30 +96,26 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
                             child: Column(
                               children: [
                                 GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, '/picture_view', arguments: {
-                                        'imageUrl': imageUrl
-                                      });
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 70.0,
-                                      backgroundColor: Colors.grey,
-                                      backgroundImage:
-                                          imageUrl != null
-                                              ? NetworkImage(imageUrl)
-                                              : null,
-                                      child: imageUrl == null
-                                          ? const Icon(
-                                              Icons.person,
-                                              color: Colors.white,
-                                            )
-                                          : null,
-                                    ),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/picture_view',
+                                        arguments: {'imageUrl': imageUrl});
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 70.0,
+                                    backgroundColor: Colors.grey,
+                                    backgroundImage: imageUrl != null
+                                        ? NetworkImage(imageUrl)
+                                        : null,
+                                    child: imageUrl == null
+                                        ? const Icon(
+                                            Icons.person,
+                                            color: Colors.white,
+                                          )
+                                        : null,
                                   ),
-                                const SizedBox(
-                                    height:
-                                        14),
+                                ),
+                                const SizedBox(height: 14),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -129,8 +135,9 @@ class _CoachProfilePageState extends State<CoachProfilePage> {
                                     Text(
                                       '$coachSport Coach',
                                       style: const TextStyle(
-                                        fontFamily: 'RobotoSlab',
-                                          fontSize: 18, color: Colors.grey),
+                                          fontFamily: 'RobotoSlab',
+                                          fontSize: 18,
+                                          color: Colors.grey),
                                     ),
                                   ],
                                 )
@@ -155,7 +162,6 @@ class BuildCoverImage extends StatefulWidget {
 }
 
 class _BuildCoverImageState extends State<BuildCoverImage> {
-
   final double coverHeight = 280;
   dynamic supabase = Supabase.instance.client;
   dynamic coachUserId = Supabase.instance.client.auth.currentUser!.id;
@@ -170,27 +176,26 @@ class _BuildCoverImageState extends State<BuildCoverImage> {
     getCoachProfile();
   }
 
-  Future getCoachProfile() async{
+  Future getCoachProfile() async {
     coachProfile = await supabase
         .from('coach_profile')
         .select()
         .match({'coach_user_id': coachUserId});
     setState(() {
-      
-    coachSport = coachProfile[0]['sport'];
-    if(coachSport=='Football'){
-      url = 'images/football_2BW.jpg';
-    } else if(coachSport=='Cricket'){
-      url = 'images/cricket_2BW.jpg';
-    } else if(coachSport=='Badminton'){
-      url = 'images/badminton_4.jpg';
-    } else if(coachSport=='Basketball'){
-      url = 'images/basketball_5.png';
-    } else if(coachSport=='Swimming'){
-      url = 'images/swim_4.png';
-    } else{
-      url = 'images/volley_1.jpg';
-    }
+      coachSport = coachProfile[0]['sport'];
+      if (coachSport == 'Football') {
+        url = 'images/football_2BW.jpg';
+      } else if (coachSport == 'Cricket') {
+        url = 'images/cricket_2BW.jpg';
+      } else if (coachSport == 'Badminton') {
+        url = 'images/badminton_4.jpg';
+      } else if (coachSport == 'Basketball') {
+        url = 'images/basketball_5.png';
+      } else if (coachSport == 'Swimming') {
+        url = 'images/swim_4.png';
+      } else {
+        url = 'images/volley_1.jpg';
+      }
       isLoading = false;
     });
   }
@@ -199,9 +204,7 @@ class _BuildCoverImageState extends State<BuildCoverImage> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey,
-      child: isLoading
-                      ? const Text("Loading..."):
-      Image.asset(url),
+      child: isLoading ? const Text("Loading...") : Image.asset(url),
       // child: Image.network(),
       // width: double.infinity,
       // height: coverHeight,

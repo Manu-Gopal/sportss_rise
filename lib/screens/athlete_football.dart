@@ -45,7 +45,10 @@ class _AthleteFootballState extends State<AthleteFootball> {
               const SizedBox(height: 50),
               const Text(
                 'Choose Your Position',
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 20.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10.0),
               ListTile(
@@ -135,10 +138,13 @@ class _AthleteFootballState extends State<AthleteFootball> {
                                 await supabase.from('profile').update({
                                   'sport': 'Football',
                                   'position': pos.name,
-                                  'achievement_image': true,
+                                  // 'achievement_image': true,
                                 }).match({'user_id': uId});
-                                
-                                final String profileId =  await supabase.from('profile').select('id').match({'user_id':uId});
+
+                                final String profileId = await supabase
+                                    .from('profile')
+                                    .select('id')
+                                    .match({'user_id': uId});
                                 if (imageFile != null) {
                                   await Supabase.instance.client.storage
                                       .from('achievement')
@@ -146,20 +152,21 @@ class _AthleteFootballState extends State<AthleteFootball> {
                                         'achievement_images/$profileId',
                                         imageFile,
                                         fileOptions: const FileOptions(
-                                            cacheControl: '3600', upsert: false),
+                                            cacheControl: '3600',
+                                            upsert: false),
                                       );
-                                    final String publicUrl = Supabase
-                                    .instance.client.storage
-                                    .from('images')
-                                    .getPublicUrl('achievement_images/$profileId');
-      
-                                    await supabase
-                                    .from('profile')
-                                    .update({'achievement_image_url': publicUrl}).match(
-                                        {'id': profileId});
-                                  }
+                                  final String publicUrl = Supabase
+                                      .instance.client.storage
+                                      .from('images')
+                                      .getPublicUrl(
+                                          'achievement_images/$profileId');
+
+                                  await supabase.from('profile').update({
+                                    'achievement_image_url': publicUrl
+                                  }).match({'id': profileId});
+                                }
                               }
-      
+
                               // ignore: use_build_context_synchronously
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
@@ -167,7 +174,8 @@ class _AthleteFootballState extends State<AthleteFootball> {
                                 duration: Duration(seconds: 3),
                               ));
                               // ignore: use_build_context_synchronously
-                              Navigator.pushNamed(context, '/athlete_main');
+                              Navigator.pushNamed(context, '/athlete_main')
+                                  .then((value) => setState(() => {}));
                             }
                           : null,
                       style: ElevatedButton.styleFrom(

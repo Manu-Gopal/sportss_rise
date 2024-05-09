@@ -99,17 +99,46 @@ class _AthleteFollowingListState extends State<AthleteFollowingList> {
                         } else {
                           final userDetails = snapshot.data!;
                           return Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      Colors.grey),
-                              borderRadius: BorderRadius.circular(
-                                  5.0), 
-                            ),
-                            child: Text(userDetails[
-                                'name'], style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'RobotoSlab')), 
-                          );
+                                    padding: const EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundImage:
+                                              userDetails['image_url'] != null
+                                                  ? NetworkImage(
+                                                      userDetails['image_url'])
+                                                  : null,
+                                          radius: 30,
+                                          child: userDetails['image_url'] == null
+                                              ? const Icon(Icons.person,
+                                                  size: 40)
+                                              : null,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        GestureDetector(
+                                          onTap: () {
+                                            // ignore: use_build_context_synchronously
+                                            // Navigator.pushNamed(
+                                            //     context, '/chat_page',
+                                            //     arguments: {
+                                            //       'user_to': details['user_id']
+                                            //     });
+                                          },
+                                          child: Text(
+                                            userDetails['name'],
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'RobotoSlab'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                         }
                       },
                     );

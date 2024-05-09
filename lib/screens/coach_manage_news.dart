@@ -231,6 +231,19 @@ class _CoachManageNewsState extends State<CoachManageNews> {
                                                               newsList.removeAt(
                                                                   index);
                                                             });
+                                                            // ignore: use_build_context_synchronously
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    const SnackBar(
+                                                              content: Text(
+                                                                  'News Deleted Successfully.'),
+                                                              duration:
+                                                                  Duration(
+                                                                      seconds:
+                                                                          3),
+                                                            ));
+                                                            // ignore: use_build_context_synchronously
                                                             Navigator.pop(
                                                                 context); // Close the dialog
                                                           },

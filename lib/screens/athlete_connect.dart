@@ -127,7 +127,14 @@ class _AthleteConnectState extends State<AthleteConnect> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-          title: const Text('Profile')
+          title: const Text('Profile'),
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/athlete_main')
+                .then((value) => setState(() => {}));
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         ),
       body: SingleChildScrollView(
         child: RefreshIndicator(

@@ -127,7 +127,7 @@ class _SaiNewsViewState extends State<SaiNewsView> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Text(
                           newsDetails[0]['description'] ?? "",

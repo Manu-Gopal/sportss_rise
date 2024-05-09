@@ -110,7 +110,7 @@ class _NewsViewState extends State<NewsView> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 18),
                       Expanded(
                         child: Text(
                           newsDetails[0]['description'] ?? "",

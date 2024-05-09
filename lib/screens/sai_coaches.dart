@@ -220,7 +220,7 @@ class _SaiCoachesState extends State<SaiCoaches> {
                   Navigator.pushNamed(context, '/add_coach');
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 231, 162, 87),
+                  backgroundColor: const Color.fromARGB(255, 11, 72, 103),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         20), // Adjust the value for circular edges

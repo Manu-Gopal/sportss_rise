@@ -155,20 +155,19 @@ class _AthleteCoachProfileState extends State<AthleteCoachProfile> {
           const SizedBox(
             height: 140,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  print(uId);
-                  // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, '/chat_page',
-                          arguments: {'user_to': uId});
-                },
-                child: const Text('Message'),
-              ),
-            ],
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     ElevatedButton(
+          //       onPressed: () {
+          //         // ignore: use_build_context_synchronously
+          //             Navigator.pushNamed(context, '/chat_page',
+          //                 arguments: {'user_to': uId});
+          //       },
+          //       child: const Text('Message'),
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );

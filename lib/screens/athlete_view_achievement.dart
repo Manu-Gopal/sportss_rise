@@ -212,6 +212,7 @@ class _AthleteViewAchievementState extends State<AthleteViewAchievement> {
                         ),
                     ],
                   ),
+                  const SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -257,6 +258,7 @@ class _AthleteViewAchievementState extends State<AthleteViewAchievement> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(width: 20),
                       Flexible(
                           child: Text(
                             achievementDescription ?? "No Achievements Added",

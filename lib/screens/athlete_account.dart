@@ -209,6 +209,11 @@ class _AthleteAccountState extends State<AthleteAccount> {
                           onPressed: () {
                             uploadImage();
                           },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 11, 72, 103),
+                            ),
+                          ),
                           child: const Text("Upload Profile Image")),
                       const SizedBox(height: 35.0),
                       ElevatedButton(
@@ -246,42 +251,43 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                     .signUp(email: email, password: password);
 
                                 if (imageFile != null) {
-                                image = true;
-                              }
+                                  image = true;
+                                }
 
-                              final Map<String, dynamic> userDetails = {
-                                'user_id': res.user!.id,
-                                'name': name,
-                                'phone': phone,
-                                'dob': dob,
-                                'image': image,
-                              };
+                                final Map<String, dynamic> userDetails = {
+                                  'user_id': res.user!.id,
+                                  'name': name,
+                                  'phone': phone,
+                                  'dob': dob,
+                                  'image': image,
+                                };
 
-                              final response = await supabase
-                                  .from('profile')
-                                  .insert(userDetails)
-                                  .select();
+                                final response = await supabase
+                                    .from('profile')
+                                    .insert(userDetails)
+                                    .select();
 
-                              final String profileId = response[0]['id'];
+                                final String profileId = response[0]['id'];
 
-                              if (imageFile != null) {
-                                await Supabase.instance.client.storage
-                                    .from('images')
-                                    .upload(
-                                      'item_images/$profileId',
-                                      imageFile,
-                                      fileOptions: const FileOptions(
-                                          cacheControl: '3600', upsert: false),
-                                    );
+                                if (imageFile != null) {
+                                  await Supabase.instance.client.storage
+                                      .from('images')
+                                      .upload(
+                                        'item_images/$profileId',
+                                        imageFile,
+                                        fileOptions: const FileOptions(
+                                            cacheControl: '3600',
+                                            upsert: false),
+                                      );
                                   final String publicUrl = Supabase
-                                  .instance.client.storage
-                                  .from('images')
-                                  .getPublicUrl('item_images/$profileId');
+                                      .instance.client.storage
+                                      .from('images')
+                                      .getPublicUrl('item_images/$profileId');
 
                                   await supabase
-                                  .from('profile')
-                                  .update({'image_url': publicUrl}).match(
-                                      {'id': profileId});
+                                      .from('profile')
+                                      .update({'image_url': publicUrl}).match(
+                                          {'id': profileId});
                                 }
 
                                 // final existingUser = await supabase.auth.(email: email);
@@ -293,14 +299,15 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                 //   return;
                                 // }
                                 // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Account Created Successfully.'),
-                                duration: Duration(seconds: 3),
-                              ));
-                              // ignore: use_build_context_synchronously
-                          Navigator.pushNamed(context, '/athlete_login');
-                                } on PostgrestException catch (error) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content:
+                                      Text('Account Created Successfully.'),
+                                  duration: Duration(seconds: 3),
+                                ));
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushNamed(context, '/athlete_login');
+                              } on PostgrestException catch (error) {
                                 print(error.toString());
                                 if (error
                                     .toString()
@@ -317,17 +324,14 @@ class _AthleteAccountState extends State<AthleteAccount> {
                                   print(error.toString());
                                 }
                               } catch (error) {
-
                                 print(error.toString());
                               }
-                              
                             }
                           }
-                          
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              const Color.fromARGB(255, 99, 172, 172),
+                              const Color.fromARGB(255, 11, 72, 103),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 65, vertical: 17),
                           shape: RoundedRectangleBorder(

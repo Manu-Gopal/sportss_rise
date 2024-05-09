@@ -427,22 +427,22 @@ class _AthleteProfileState extends State<AthleteProfile> {
                 ],
               ),
               const SizedBox(height: 15),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/athlete_view_achievement');
-                },
-                child: const Row(
-                  children: [
-                    Text(
-                      'View Achievements',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'RobotoSlab',
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pushNamed(context, '/athlete_view_achievement');
+              //   },
+              //   child: const Row(
+              //     children: [
+              //       Text(
+              //         'View Achievements',
+              //         style: TextStyle(
+              //           fontSize: 25,
+              //           fontFamily: 'RobotoSlab',
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

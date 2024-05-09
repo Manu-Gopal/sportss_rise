@@ -8,7 +8,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 174, 173, 173)
+        color: Colors.white
+        // color: Color.fromARGB(255, 174, 173, 173)
       // ),
       //     gradient: LinearGradient(
       //       begin: Alignment.topCenter,

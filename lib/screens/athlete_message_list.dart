@@ -50,8 +50,6 @@ class _AthleteMessageListState extends State<AthleteMessageList> {
         messageList.remove(coachId);
       }
     }
-
-    print(messageList);
     setState(() {
       isLoading = false;
     });
@@ -83,9 +81,9 @@ class _AthleteMessageListState extends State<AthleteMessageList> {
                   SizedBox(width: 30),
                   Expanded(
                     child: Text(
-                      'Messages',
+                      'Athlete Messages',
                       style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontFamily: 'Poppins'),

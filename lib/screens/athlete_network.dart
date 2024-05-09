@@ -189,6 +189,9 @@ class _AthleteNetworkState extends State<AthleteNetwork> {
                                                     onPressed: () {
                                                       if (athlete['user_id'] ==
                                                           userId) {
+                                                              // Navigator.pushNamed(
+                                                              // context,
+                                                              // '/athlete_profile');
                                                         if (athlete[
                                                                 'video_url'] !=
                                                             null) {

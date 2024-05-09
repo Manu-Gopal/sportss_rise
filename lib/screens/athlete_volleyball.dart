@@ -23,6 +23,7 @@ class _AthleteVolleyballState extends State<AthleteVolleyball> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Volleyball', style: TextStyle(fontFamily: 'Poppins'),),
+        backgroundColor: const Color.fromARGB(255, 11, 72, 103),
       ),
       body: Center(
         child: Column(
@@ -32,12 +33,13 @@ class _AthleteVolleyballState extends State<AthleteVolleyball> {
                 : ElevatedButton(
                     onPressed: () async {
                       uploadVideo();
-                      Navigator.pushNamed(context,
-                            '/athlete_main');
                             await supabase
                                   .from('profile')
                                   .update({'sport': 'Volleyball'}).match(
                                       {'user_id': uId});
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushNamed(context, '/athlete_main')
+                .then((value) => setState(() => {}));
                     },
                     style: ButtonStyle(
                       backgroundColor:

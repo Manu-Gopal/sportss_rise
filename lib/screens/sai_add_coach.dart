@@ -50,9 +50,6 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                 Colors.white,
               Colors.white54,
               Colors.white
-            // Color.fromARGB(255, 3, 144, 163),
-            // Color.fromARGB(255, 3, 201, 227),
-            // Color.fromARGB(255, 2, 155, 175)
           ])),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -150,9 +147,6 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                       TextFormField(
                         controller: phoneController,
                         keyboardType: TextInputType.number,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   FilteringTextInputFormatter.digitsOnly
-                        // ],
                         decoration: const InputDecoration(
                             hintText: 'Phone No',
                             labelText: 'Phone No',
@@ -173,10 +167,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                         ),
                         const SizedBox(width: 15),
                         DropdownButton(
-                          // Initial Value
                           value: dropdownvalue,
-      
-                          // Down Arrow Icon
                           icon: const Icon(Icons.keyboard_arrow_down),
       
                           // Array list of items
@@ -186,8 +177,6 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                               child: Text(items),
                             );
                           }).toList(),
-                          // After selecting the desired option,it will
-                          // change button value to selected value
                           onChanged: (String? newValue) {
                             setState(() {
                               dropdownvalue = newValue!;
@@ -316,7 +305,7 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              const Color.fromARGB(255, 99, 172, 172),
+                              const Color.fromARGB(255, 11, 72, 103),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 65, vertical: 17),
                           shape: RoundedRectangleBorder(
@@ -325,12 +314,9 @@ class _SaiAddCoachState extends State<SaiAddCoach> {
                         child: const Text(
                           'Add Coach',
                           style: TextStyle(
-                            // color: Colors.black,
                             color: Colors.white,
                             fontSize: 23.0,
                             fontFamily: 'RobotoSlab'
-                            // fontFamily: 'NovaSquare',
-                            // fontFamily: 'RobotoSlab',
                           ),
                         ),
                       ),

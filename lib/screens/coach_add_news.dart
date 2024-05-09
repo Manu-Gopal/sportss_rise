@@ -26,7 +26,10 @@ class _CoachAddNewsState extends State<CoachAddNews> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 11, 72, 103),
-        title: const Text('Add News', style: TextStyle(fontFamily: 'Poppins'),),
+        title: const Text(
+          'Add News',
+          style: TextStyle(fontFamily: 'Poppins'),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -38,15 +41,15 @@ class _CoachAddNewsState extends State<CoachAddNews> {
               const Text(
                 'Add News',
                 style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontFamily: 'Poppins'
-                ),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontFamily: 'Poppins'),
               ),
               const SizedBox(height: 40), // Adjust spacing as needed
               TextField(
-                controller: newsHeadlineController, // Link controller to text field
+                controller:
+                    newsHeadlineController, // Link controller to text field
                 decoration: const InputDecoration(
                   labelText: 'Headline',
                   border: OutlineInputBorder(),
@@ -55,7 +58,8 @@ class _CoachAddNewsState extends State<CoachAddNews> {
               const SizedBox(height: 10),
               TextField(
                 keyboardType: TextInputType.multiline,
-                controller: newsDescriptionController, // Link controller to text field
+                controller:
+                    newsDescriptionController, // Link controller to text field
                 decoration: const InputDecoration(
                   labelText: 'Description',
                   border: OutlineInputBorder(),
@@ -73,7 +77,15 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                 onPressed: () {
                   uploadImage();
                 },
-                child: const Text('Upload Picture', style: TextStyle(fontFamily: 'RobotoSlab'),),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 11, 72, 103),
+                  ),
+                ),
+                child: const Text(
+                  'Upload Picture',
+                  style: TextStyle(fontFamily: 'RobotoSlab'),
+                ),
               ),
               const SizedBox(height: 30),
               ElevatedButton(
@@ -153,7 +165,15 @@ class _CoachAddNewsState extends State<CoachAddNews> {
                   // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, '/coach_homepage');
                 },
-                child: const Text('Add', style: TextStyle(fontFamily: 'RobotoSlab'),),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 11, 72, 103),
+                  ),
+                ),
+                child: const Text(
+                  'Add',
+                  style: TextStyle(fontFamily: 'RobotoSlab'),
+                ),
               ),
             ],
           ),

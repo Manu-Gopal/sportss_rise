@@ -71,11 +71,13 @@ class _AthleteCricketState extends State<AthleteCricket> {
                         ? () async {
                             pos = _selectedPosition!;
                             uploadVideo();
-                            Navigator.pushNamed(context, '/athlete_main');
                             await supabase.from('profile').update({
                               'sport': 'Cricket',
                               'position': pos.name
                             }).match({'user_id': uId});
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushNamed(context, '/athlete_main')
+                .then((value) => setState(() => {}));
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
